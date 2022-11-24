@@ -128,7 +128,6 @@ char	*ft_join_arg(t_shell *mini)
 	str = malloc(sizeof(char) * ft_strlen(mini->all_line) + len_word2(mini->all_line, ' ') + 1);
 	j = 0;
 	save_i = 0;
-	exit (0);
 	while (mini->parse[j])
 	{
 		i = 0;
@@ -208,22 +207,6 @@ char	*switch_to_parse(char *tmp, int	prs_index, t_shell *mini)
 	free(mini->parse[prs_index]);
 	return (str);
 }
-
-//ahmet kaan $HOME
-
-
-int	ft_memcmp_env(const void *s1, const void *s2, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (((unsigned char *)s1)[i] == ((unsigned char *)s2)[i] && n - 1 > i)
-		i++;
-	return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
-}
-
 
 char	*get_env_osman(char *str, t_shell *mini)
 {
@@ -308,6 +291,52 @@ char	*switch_to_zero(int	prs_index, t_shell *mini)
 	return (create_switch_to_zero(i, j, prs_index, mini));
 }
 
+int	count_null(t_shell *mini, int count_parse)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < count_parse)
+	{
+		if (mini->parse[i][0] == 0)
+			j++;
+		i++;
+	}
+	return (j);
+}
+
+char	**check_or_fix_switch(t_shell *mini, int count_parse)
+{
+	char	**mini_parse;
+	int		null;
+	int		i;
+	int		j;
+
+	null = count_null(mini, count_parse);
+	if (null == 0)
+		return (mini->parse);
+	i = 0;
+	j = 0;
+	mini_parse = malloc(sizeof(char *) * count_parse - null + 1);
+	while (i < count_parse)
+	{
+		if (mini->parse[i][0] != 0)
+		{
+			mini_parse[j] = ft_strdup(mini->parse[i]);
+			j++;
+		}
+		i++;
+	}
+	mini_parse[j] = 0;
+	i = -1;
+	while (++i < count_parse)
+		free(mini->parse[i]);
+	free(mini->parse);
+	return (mini_parse);
+}
+
 char	**find_dollar_and_change(t_shell *mini)
 {
 	char	*tmp;
@@ -332,14 +361,7 @@ char	**find_dollar_and_change(t_shell *mini)
 		}
 		i++;
 	}
-	i = 0;
-	while (mini->parse[i])
-	{
-		printf("c%da\n", mini->parse[i][0]);
-		i++;
-	}
-	exit (0);
-	return (0);
+	return (check_or_fix_switch(mini, i));
 }
 
 void	ft_parse(t_shell *mini)
@@ -350,6 +372,7 @@ void	ft_parse(t_shell *mini)
 	mini->parse = ft_mysplit(mini->all_line, ' ');
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini);
+	printf("%s", mini->all_line);
 	exit (0);
 	mini->parse = ft_mysplit(mini->all_line, '|');
 	ft_create_struct(mini);
