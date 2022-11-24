@@ -29,13 +29,24 @@ typedef struct s_command
 	struct s_command	*next;
 } t_command;
 
-//parse/parse.c
+//Parser/find_dollar.c
+char	**find_dollar_and_change(t_shell *mini);
+char	*get_after_dollar_osman(char *parse, int index);
+char	*get_env_osman(char *str, t_shell *mini);
+char	**check_or_fix_switch(t_shell *mini, int count_parse);
+
+//Parser/switch_to.c
+char	*switch_to_parse(char *tmp, int	prs_index, t_shell *mini);
+char	*create_switch_to_zero(int i, int j, int prs_index, t_shell *mini);
+char	*switch_to_zero(int	prs_index, t_shell *mini);
+
+//Parser/parse.c
 void	ft_parse(t_shell *mini);
 
-//parse/ft_mysplit.c
+//Parser/ft_mysplit.c
 char	**ft_mysplit(char *str, char c);
 
-//parse/building.c
+//Parser/building.c
 void    ft_building();
 
 //main.c

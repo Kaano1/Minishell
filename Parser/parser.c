@@ -104,17 +104,16 @@ int	ft_redirect(t_shell *mini)
 	return (0);
 }
 
-size_t	len_word2(char const *s, char c)
+size_t	len_word2(char **s)
 {
+	size_t	i;
 	size_t	len;
 
+	i = -1;
 	len = 0;
-	while (*s != '\0')
-	{
-		if (*s != c && (s[1] == '\0' || s[1] == c))
-			len++;
-		s++;
-	}
+	while (s[++i])
+		len += ft_strlen(s[i]);
+	len += i;
 	return (len);
 }
 
@@ -125,7 +124,7 @@ char	*ft_join_arg(t_shell *mini)
 	int		j;
 	int		save_i;
 
-	str = malloc(sizeof(char) * ft_strlen(mini->all_line) + len_word2(mini->all_line, ' ') + 1);
+	str = malloc(sizeof(char) * len_word2(mini->parse));
 	j = 0;
 	save_i = 0;
 	while (mini->parse[j])
@@ -143,225 +142,8 @@ char	*ft_join_arg(t_shell *mini)
 		j++;
 	}
     str[save_i + 1] = 0;
+	free(mini->all_line);
     return (str);
-}
-
-char	*get_after_dollar_osman(char *parse, int index)
-{
-	char	*str;
-	int		i;
-
-	i = index;
-	while (parse[i] != ' ' && parse[i] != 0)
-		i++;
-	if (i == index)
-		return (0);
-	str = malloc(sizeof(char) * (i - index) + 1);
-	i = 0;
-	while (parse[index] != ' ' && parse[index] != 0)
-	{
-		str[i] = parse[index];
-		i++;
-		index++;
-	}
-	str[i] = 0;
-	return (str);
-}
-
-char	*switch_to_parse(char *tmp, int	prs_index, t_shell *mini)
-{
-	char	*str;
-	int		tm_i;
-	int		j;
-	int		i;
-	int		key;
-
-	
-	tm_i = 0;
-	i = 0;
-	j = 0;
-	key = 1;
-	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
-	while (ft_strlen(mini->parse[prs_index]) > j)
-	{
-		if (mini->parse[prs_index][j] == '$' && key)
-		{		
-			key = 0;
-			while (mini->parse[prs_index][j] != ' ' && mini->parse[prs_index][j] != 0)
-				j++;
-			while (tmp[tm_i])
-			{
-				str[i] = tmp[tm_i];
-				i++;
-				tm_i++;
-			}
-		}
-		else
-		{
-			str[i] = mini->parse[prs_index][j];
-			i++;
-			j++;
-		}
-	}
-	str[i] = 0;
-	free(mini->parse[prs_index]);
-	return (str);
-}
-
-char	*get_env_osman(char *str, t_shell *mini)
-{
-	char	*string;
-	int		i;
-	int		j;
-	int		d;
-	int		longg;
-
-	i = 0;
-	string = 0;
-	while (mini->env[i])
-	{
-		if ((ft_memcmp(mini->env[i], str, ft_strlen(str))) == 0)
-		{
-			if (mini->env[i][ft_strlen(str)] == '=')
-			{
-				d = 0;
-				longg = ft_strlen(mini->env[i]) - ft_strlen(str);
-				string = malloc(sizeof(char) * longg);
-				j = ft_strlen(str) + 1;
-				while (longg > d)
-				{
-					string[d] = mini->env[i][j];
-					d++;
-					j++;
-				}
-			}
-		}
-		i++;
-	}
-	if (!string)
-		return (NULL);
-	return (string);
-}
-
-char	*create_switch_to_zero(int i, int j, int prs_index, t_shell *mini)
-{
-	char	*str;
-	int		z;
-	int		key;
-
-	z = 0;
-	key = 0;
-	str = malloc(sizeof(char) * (ft_strlen(mini->parse[prs_index]) - j) + 1);
-	j = 0;
-	while (mini->parse[prs_index][j])
-	{
-		if (key == 0 && mini->parse[prs_index][j] == '$')
-		{
-			j = i;
-			key = 1;
-		}
-		str[z] = mini->parse[prs_index][j];
-		z++;
-		j++;
-	}	
-	str[z] = 0;
-	return (str);
-}
-
-char	*switch_to_zero(int	prs_index, t_shell *mini)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (mini->parse[prs_index][i])
-	{
-		if (mini->parse[prs_index][i] == '$' && mini->parse[prs_index][i + 1] !=  ' ' && mini->parse[prs_index][i] != 0)
-		{
-			while (mini->parse[prs_index][i] != 32 && mini->parse[prs_index][i] != 0)
-			{
-				i++;
-				j++;
-			}
-			break;
-		}
-		i++;
-	}
-	return (create_switch_to_zero(i, j, prs_index, mini));
-}
-
-int	count_null(t_shell *mini, int count_parse)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (i < count_parse)
-	{
-		if (mini->parse[i][0] == 0)
-			j++;
-		i++;
-	}
-	return (j);
-}
-
-char	**check_or_fix_switch(t_shell *mini, int count_parse)
-{
-	char	**mini_parse;
-	int		null;
-	int		i;
-	int		j;
-
-	null = count_null(mini, count_parse);
-	if (null == 0)
-		return (mini->parse);
-	i = 0;
-	j = 0;
-	mini_parse = malloc(sizeof(char *) * count_parse - null + 1);
-	while (i < count_parse)
-	{
-		if (mini->parse[i][0] != 0)
-		{
-			mini_parse[j] = ft_strdup(mini->parse[i]);
-			j++;
-		}
-		i++;
-	}
-	mini_parse[j] = 0;
-	i = -1;
-	while (++i < count_parse)
-		free(mini->parse[i]);
-	free(mini->parse);
-	return (mini_parse);
-}
-
-char	**find_dollar_and_change(t_shell *mini)
-{
-	char	*tmp;
-	int	i;
-	int	j;
-
-	i = 0;
-	while (mini->parse[i])
-	{
-		j = 0;
-		while (mini->parse[i][j])
-		{
-			if (mini->parse[i][j] == '$' && mini->parse[i][j + 1] != ' ' && mini->parse[i][j + 1] != 0)
-			{
-				tmp = get_env_osman(get_after_dollar_osman(mini->parse[i], j + 1), mini);
-				if (!tmp)
-					mini->parse[i] = switch_to_zero(i, mini);
-				else
-					mini->parse[i] = switch_to_parse(tmp, i, mini);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (check_or_fix_switch(mini, i));
 }
 
 void	ft_parse(t_shell *mini)
@@ -372,9 +154,9 @@ void	ft_parse(t_shell *mini)
 	mini->parse = ft_mysplit(mini->all_line, ' ');
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini);
-	printf("%s", mini->all_line);
-	exit (0);
 	mini->parse = ft_mysplit(mini->all_line, '|');
+	printf("%s", mini->parse[0]);
+	exit (0);
 	ft_create_struct(mini);
 	mini->iter = mini->first_struct;
 	while (mini->iter)

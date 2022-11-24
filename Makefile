@@ -9,7 +9,9 @@ SRC	= main.c \
 	ft_error.c \
 	./Lexer/lexer.c \
 	./Parser/ft_mysplit.c \
-	./Parser/parser.c
+	./Parser/parser.c \
+	./Parser/find_dollar.c \
+	./Parser/switch_to.c
 
 OBJ = $(SRC:.c=.o)
 
