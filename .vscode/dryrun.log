@@ -1,7 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Users/ayumusak/Desktop/commm'
-make -C libft
- 
-gcc main.c ./Parse/ft_mysplit.c ./Parse/parse.c ft_error.c ./lexer/lexer.c ./libft/libft.a  -Wextra -Werror -Wall  -o minishell -lreadline
-make: Leaving directory `/Users/ayumusak/Desktop/commm'
- 

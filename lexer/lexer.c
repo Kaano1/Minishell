@@ -52,7 +52,7 @@ void	control(char *tmp)
 	*/
 }
 
-void    ft_lexer()
+void    ft_lexer(t_shell *mini)
 {
     int i;
     int j;
@@ -61,19 +61,19 @@ void    ft_lexer()
     char *tmp;
 
     i = 0;
-    while (mini.parse[i])
+    while (mini->parse[i])
     {
 		j = 0;
-        while (mini.parse[i][j] == ' ')
+        while (mini->parse[i][j] == ' ')
             j++;
         c = j;
-        while (mini.parse[i][c] != ' ')
+        while (mini->parse[i][c] != ' ')
             c++;
 		tmp = malloc(sizeof(char) * c - j + 1);
 		k = 0;
-        while (mini.parse[i][j] != ' ')
+        while (mini->parse[i][j] != ' ')
         {
-            tmp[k] = mini.parse[i][j];
+            tmp[k] = mini->parse[i][j];
             k++;
             j++;
         }

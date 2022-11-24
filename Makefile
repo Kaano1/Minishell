@@ -1,22 +1,32 @@
-NAME = minishell
-SRC = main.c ./Parse/ft_mysplit.c ./Parse/parse.c ft_error.c ./lexer/lexer.c ./libft/libft.a
-CC = gcc
-LBFT = libft/libft.a
-CFLGAS = -Wextra -Werror -Wall 
-READLİME = -lreadline
-RM = rm -rf
-OBJ = $(SRC: .c=.o)
+CC	= gcc
+RM	= rm -rf
+NAME	= minishell
+LIBFT	= ./Libft/libft.a
+CFLGAS	= #-Wextra -Werror -Wall
+READLİME = -lreadline -lncurses
 
-all : $(LBFT) $(NAME)
+SRC	= main.c \
+	ft_error.c \
+	./Lexer/lexer.c \
+	./Parser/ft_mysplit.c \
+	./Parser/parser.c
+
+OBJ = $(SRC:.c=.o)
+
+all : $(LIBFT) $(NAME)
 		
 $(NAME): $(OBJ)
-	$(CC) $(SRC)  $(CFLGAS) -o $(NAME) $(READLİME)
+	$(CC) $(CFLGAS) $(SRC) $(LIBFT) -o $(NAME) $(READLİME)
 
-$(LBFT): 
-		make -C libft
+$(LIBFT): 
+	make -sC ./Libft
+
 clean:
-	$(RM) minishell
-	make -C ./libft fclean
+	make clean -sC ./Libft
+	$(RM) $(OBJ)
 
-rec:  clean all
-	./minishell
+fclean: clean
+	$(RM) $(NAME)
+	$(RM) $(LIBFT)
+
+re: clean all

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_contqoute()
+void	ft_contqoute(t_shell *mini)
 {
 	int		i;
 	int		once;
@@ -9,11 +9,11 @@ void	ft_contqoute()
 	once = 0;
 	twice = 0;
 	i = 0;
-	while (mini.all_line[i])
+	while (mini->all_line[i])
 	{
-		if (mini.all_line[i] == 39 && twice == 0)
+		if (mini->all_line[i] == 39 && twice == 0)
 			once++;
-		else if (mini.all_line[i] == 34 && once == 0)
+		else if (mini->all_line[i] == 34 && once == 0)
 			twice++;
 		i++;
 		if (once == 2 || twice == 2)
@@ -24,30 +24,29 @@ void	ft_contqoute()
 	}
 	if (once % 2 != 0 || twice % 2 != 0)
 		ft_error("Missing character!");
-	add_history(mini.all_line);
+	add_history(mini->all_line);
 }
 
 int main(int ac, char **av, char **clone_env)
 {
 	int i;
+	t_shell mini;
 
 	i = 0;
 	ac = 0;
-	mini.c = 0;
 	av = 0;
 	mini.env = clone_env;
 	do
 	{
 		mini.all_line = readline("MiniShell$ ");
-		ft_contqoute();
-		ft_pipecheck();
-		ft_pipe_count();
-		ft_parse();
+		ft_contqoute(&mini);
+		ft_pipecheck(&mini);
+		ft_pipe_count(&mini);
+		ft_parse(&mini);
 		//ft_lexer();
 	} while (mini.all_line != 0);
 	return (0);
 }
-
 
 //redirectionları tanımlayıp siliceğiz
 //structa değerlerin gelip gelmediğene bakıcağız

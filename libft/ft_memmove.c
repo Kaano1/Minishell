@@ -22,7 +22,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 	if (((unsigned long int)dest) - ((unsigned long int)src) < n)
 	{
 		i = n - 1;
-		while (i >= 0 && i < n)
+		while ((int)i >= 0 && i < n)
 		{
 			((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
 			i--;
