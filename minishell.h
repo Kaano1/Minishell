@@ -4,9 +4,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include "./Libft/libft.h"
+# include "./libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
+
+typedef struct s_command
+{
+	char		*command;
+	char		*flag;
+	char		*string;
+	int 		redirect;
+	char		*file_name;
+	struct s_command	*next;
+} t_command;
 
 typedef struct s_shell
 {
@@ -18,16 +28,6 @@ typedef struct s_shell
 	int					c;
 	int					pipe_count;
 } t_shell;
-
-typedef struct s_command
-{
-	char		*command;
-	char		*flag;
-	char		*string;
-	int 		redirect;
-	char		*file_name;
-	struct s_command	*next;
-} t_command;
 
 //Parser/find_dollar.c
 char	**find_dollar_and_change(t_shell *mini);

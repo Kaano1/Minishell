@@ -103,7 +103,19 @@ char	*get_after_dollar_osman(char *parse, int index)
 	return (str);
 }
 
-int	check_single_quotes_dollar_space(t_shell *mini, int i, int j)//continue...
+int	check_double_quotes(t_shell *mini, int i, int j)
+{
+	int	i;
+
+	i = 0;
+	while (mini->all_line[i])
+	{
+		if (mini->all_line[i] ==  34)
+			i++;
+	}
+}
+
+int	check_single_quotes(t_shell *mini, int i, int j)//continue...
 {
 	int	index;
 	int	len;
@@ -128,6 +140,8 @@ int	check_single_quotes_dollar_space(t_shell *mini, int i, int j)//continue...
 	}
 	if (mini->all_line[index] == 39)
 		return (0);
+	else if (mini->all_line[index] == 34)
+		return (check_double_quotes(mini, i, j));
 	return (1);
 }
 
@@ -143,8 +157,9 @@ char	**find_dollar_and_change(t_shell *mini)
 		j = 0;
 		while (mini->parse[i][j])
 		{
-			if (mini->parse[i][j] == '$' && check_single_quotes_dollar_space(mini, i, j))
+			if (mini->parse[i][j] == '$' && check_single_quotes(mini, i, j))
 			{
+				printf("%s", mini->parse[i]);
 				tmp = get_env_osman(get_after_dollar_osman(mini->parse[i], j + 1), mini);
 				if (!tmp)
 					mini->parse[i] = switch_to_zero(i, mini);

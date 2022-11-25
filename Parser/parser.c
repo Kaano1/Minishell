@@ -138,11 +138,11 @@ char	*ft_join_arg(t_shell *mini)
 			i++;
 			save_i++;
 		}
-        str[save_i++] = 32;
+		if (mini->parse[j] != 0)
+        	str[save_i++] = 32;
 		j++;
 	}
     str[save_i + 1] = 0;
-	free(mini->all_line);
     return (str);
 }
 
