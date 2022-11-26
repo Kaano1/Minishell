@@ -44,7 +44,7 @@ char	*switch_to_zero(int	prs_index, t_shell *mini);
 void	ft_parse(t_shell *mini);
 
 //Parser/ft_mysplit.c
-char	**ft_mysplit(char *str, char c);
+char	**ft_mysplit(char *str, char c, int key);
 
 //Parser/building.c
 void    ft_building();

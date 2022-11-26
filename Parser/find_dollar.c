@@ -103,23 +103,10 @@ char	*get_after_dollar_osman(char *parse, int index)
 	return (str);
 }
 
-int	check_double_quotes(t_shell *mini, int i, int j)
-{
-	int	i;
-
-	i = 0;
-	while (mini->all_line[i])
-	{
-		if (mini->all_line[i] ==  34)
-			i++;
-	}
-}
-
-int	check_single_quotes(t_shell *mini, int i, int j)//continue...
+int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes)//continue...
 {
 	int	index;
 	int	len;
-	int	key;
 
 	if (mini->parse[i][j] == ' ' || mini->parse[i][j] == 0)
 		return (0);
@@ -127,21 +114,13 @@ int	check_single_quotes(t_shell *mini, int i, int j)//continue...
 	len = 0;
 	while (mini->all_line[index])
 	{
-		if (mini->all_line[index] != ' ' && key == 0)
-		{
+		if (mini->all_line[index] == '$')
 			len++;
-			key = 1;
-		}
-		else if (mini->all_line[index] == ' ')
-			key = 0;
-		if (len == i)
-			break;
+		if (len == c_quotes)
+			if (mini->all_line[index - 1] == 39)
+				return (0);
 		index++;
 	}
-	if (mini->all_line[index] == 39)
-		return (0);
-	else if (mini->all_line[index] == 34)
-		return (check_double_quotes(mini, i, j));
 	return (1);
 }
 
@@ -150,22 +129,24 @@ char	**find_dollar_and_change(t_shell *mini)
 	char	*tmp;
 	int	i;
 	int	j;
+	int	c_quotes;
 
 	i = 0;
+	c_quotes = 0;
 	while (mini->parse[i])
 	{
 		j = 0;
 		while (mini->parse[i][j])
 		{
-			if (mini->parse[i][j] == '$' && check_single_quotes(mini, i, j))
-			{
-				printf("%s", mini->parse[i]);
-				tmp = get_env_osman(get_after_dollar_osman(mini->parse[i], j + 1), mini);
-				if (!tmp)
-					mini->parse[i] = switch_to_zero(i, mini);
-				else
-					mini->parse[i] = switch_to_parse(tmp, i, mini);
-			}
+			if (mini->parse[i][j] == '$')
+				if (check_single_quotes(mini, i, j + 1, ++c_quotes))
+				{
+					tmp = get_env_osman(get_after_dollar_osman(mini->parse[i], j + 1), mini);
+					if (!tmp)
+						mini->parse[i] = switch_to_zero(i, mini);
+					else
+						mini->parse[i] = switch_to_parse(tmp, i, mini);
+				}
 			j++;
 		}
 		i++;

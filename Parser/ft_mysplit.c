@@ -32,20 +32,20 @@ int count_word(char *str)
 	return (0);
 }
 
-size_t	if_word_len(char const *s, char c)
+size_t	if_word_len(char const *s, char c, int key)
 {
 	size_t	len;
 
 	len = 0;
 	while (s[len] != '\0' && s[len] != c)
 	{
-		if (s[len] == 34)
+		if (s[len] == 34 && key == 0)
 		{
 			len++;
 			while (s[len] != 34 && s[len] != 0)
 				len++;
 		}
-		else if (s[len] == 39)
+		else if (s[len] == 39 && key == 0)
 		{
 			len++;
 			while (s[len] != 39 && s[len] != 0)
@@ -57,7 +57,7 @@ size_t	if_word_len(char const *s, char c)
 	return (len);
 }
 
-size_t	len_word(char const *s, char c)
+size_t	len_word(char const *s, char c, int key2)
 {
 	size_t	len;
 	int		key;
@@ -66,7 +66,7 @@ size_t	len_word(char const *s, char c)
 	key = 0;
 	while (*s != '\0')
 	{
-		if (*s == 34 || *s == 39)
+		if ((*s == 34 || *s == 39) && key2 == 0)
 			key += 1;
 		if (*s != c && (s[1] == '\0' || s[1] == c) && key % 2 == 0)
 			len++;
@@ -75,7 +75,7 @@ size_t	len_word(char const *s, char c)
 	return (len);
 }
 
-char	**ft_mysplit(char *s, char c)
+char	**ft_mysplit(char *s, char c, int key)
 {
 	char	**res;
 	size_t	index;
@@ -85,7 +85,7 @@ char	**ft_mysplit(char *s, char c)
 
 	if (!s)
 		return (0);
-	word_len = len_word(s, c);
+	word_len = len_word(s, c, key);
 	res = (char **)malloc(sizeof(char *) * word_len + 1);
 	if (res == 0)
 		return (0);
@@ -95,13 +95,13 @@ char	**ft_mysplit(char *s, char c)
 	{
 		while (*s == c && *s != '\0')
 		{
-			if (*s == 34)
+			if (*s == 34 && key == 0)
 			{
 				s++;
 				while (*s != 34 && *s != 0)
 					s++;
 			}
-			else if (*s == 39)
+			else if (*s == 39 && key == 0)
 			{
 				s++;
 				while (*s != 39 && *s != 0)
@@ -110,18 +110,18 @@ char	**ft_mysplit(char *s, char c)
 			else
 				s++;
 		}
-		res[index] = (char *)malloc(sizeof(char) * if_word_len(s, c) + 1);
+		res[index] = (char *)malloc(sizeof(char) * if_word_len(s, c, key) + 1);
 		two_index = 0;
 		while (*s != c && *s != '\0')
 		{
-			if (*s == 34)
+			if (*s == 34 && key == 0)
 			{
 				s++;
 				while (*s != 34 && *s != 0)
 					res[index][two_index++] = *s++;
 				s++;
 			}
-			else if (*s == 39)
+			else if (*s == 39 && key == 0)
 			{
 				s++;
 				while (*s != 39 && *s != 0)

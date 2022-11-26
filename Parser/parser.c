@@ -142,7 +142,7 @@ char	*ft_join_arg(t_shell *mini)
         	str[save_i++] = 32;
 		j++;
 	}
-    str[save_i + 1] = 0;
+    str[save_i] = 0;
     return (str);
 }
 
@@ -151,11 +151,10 @@ void	ft_parse(t_shell *mini)
 	int		i;
 
 	i = 0;
-	mini->parse = ft_mysplit(mini->all_line, ' ');
+	mini->parse = ft_mysplit(mini->all_line, ' ', 0);
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini);
-	mini->parse = ft_mysplit(mini->all_line, '|');
-	printf("%s", mini->parse[0]);
+	mini->parse = ft_mysplit(mini->all_line, '|', 1);
 	exit (0);
 	ft_create_struct(mini);
 	mini->iter = mini->first_struct;
