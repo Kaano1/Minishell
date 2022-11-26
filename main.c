@@ -53,4 +53,7 @@ int main(int ac, char **av, char **clone_env)
 //command kontrolleri yapabiliriz
 //builtin yapabiliriz echo, cd, env, pwd, vb...
 //executebale mı diye kontrol et
-//"$" ve '$' olayını halletmemiz gerekiyor.
+//"$" ve '$' olayını halletmemiz gerekiyor. //OK
+
+//çift tırnak arasındaki '|' ları görmemesi gerekiyor //OK
+//command - "echo " "    ahmet" şeklinde veya "echo" "      ahmet" şeklinde gelmiş olabilir. bu durumda hangisi çalışacak bunun ayarlanması gerekiyor.

@@ -49,6 +49,9 @@ char	**ft_mysplit(char *str, char c, int key);
 //Parser/building.c
 void    ft_building();
 
+//Parser/add_struct.c
+void	ft_add_struct(t_shell *mini);
+
 //main.c
 void	ft_contqoute(t_shell *mini);
 

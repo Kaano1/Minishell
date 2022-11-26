@@ -103,7 +103,7 @@ char	*get_after_dollar_osman(char *parse, int index)
 	return (str);
 }
 
-int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes)//continue...
+int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes)
 {
 	int	index;
 	int	len;

@@ -11,7 +11,8 @@ SRC	= main.c \
 	./Parser/ft_mysplit.c \
 	./Parser/parser.c \
 	./Parser/find_dollar.c \
-	./Parser/switch_to.c
+	./Parser/switch_to.c \
+	./Parser/add_struct.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -20,7 +21,7 @@ all : $(LIBFT) $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(CFLGAS) $(SRC) $(LIBFT) -o $(NAME) $(READLİME)
 
-$(LIBFT): 
+$(LIBFT):
 	make -sC ./Libft
 
 clean:
