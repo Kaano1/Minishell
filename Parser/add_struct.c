@@ -7,10 +7,9 @@ int	where_is_start(int key, int index, t_shell *mini)
 	int	j;
 
 	j = 0;
+	i = save;
 	if (key == 1)
 		i = 0;
-	else
-		i = save;
 	if (ft_strlen(mini->parse[index]) <= i)
 		return (-42);
 	while (mini->parse[index][i] == ' ')
@@ -35,7 +34,7 @@ char	*ft_add(int row, int column, t_shell *mini)
 
 	i = row;
 	str = 0;
-	if (row == -42)
+	if (row == -1)
 		return (NULL);
 	while (mini->parse[column][i] != ' ')
 		i++;
@@ -53,21 +52,72 @@ char	*ft_add(int row, int column, t_shell *mini)
 	return (str);
 }
 
+int	getcheck_flag(char *str, int i)
+{
+	int	key;
+
+	key = 0;
+	while (str[i] != 0 && str[i] != '|')
+	{
+		if (str[i] == 34 && key == 0)
+			key = 1;
+		else if (str[i] == 39 && key == 0)
+			key = 2;
+		if (str[i] == '-')
+			if ((str[i + 1] >= 97 && str[i + 1] <= 122) || (str[i + 1] >= 65 && str[i + 1] <= 90))
+				break;
+		i++;
+		if (str[i] == 34 && key == 1)
+			key = 0;
+		else if (str[i] == 39 && key == 2)
+			key = 0;
+	}
+	if (str[i] == '-')
+	{
+		//if (key == 1)
+			//close_double();
+		//else if (key == 2)
+			//close_single();
+		return (i);
+	}
+	return (-1);
+}
+
+char	*ft_flags_add(t_shell *mini, int index)
+{
+	char	*str;
+	int		i;
+	int		quotes;
+
+	i = get_string_start(mini->all_line, i);
+	i = getcheck_flag(mini->all_line, i);
+	if (i == -1)
+		return (0);
+	
+	quotes = 0;
+}
+
 void	ft_add_struct(t_shell *mini)
 {
 	int	i;
 
 	i = 0;
+	printf("%s", mini->parse[0]);
+	exit (0);
 	while (i < mini->pipe_count + 1)
 	{
-        printf("HELLO");
-        printf("%s\n", mini->parse[i]);
-		mini->first_struct->command = ft_add(where_is_start(1, i, mini), i, mini);
-		mini->first_struct->flag = ft_add(where_is_start(3, i, mini), i, mini);
-		mini->first_struct->string = ft_add(where_is_start(0, i, mini), i, mini);
+		mini->first_struct->command = ft_add(where_is_command(i, mini), i, mini);
+		mini->first_struct->flag = ft_flags_add(mini, i);
+		printf("COMMAND: %s\n", mini->first_struct->command);
+		printf("FLAGS: %s\n", mini->first_struct->flag);
+		//mini->first_struct->string = ft_add(where_is_start(0, i, mini), i, mini);
 		if (mini->first_struct->redirect != 0)
+		{
 			mini->first_struct->file_name = ft_add(where_is_start(0, i, mini), i, mini);
+		}
 		i++;
 	}
     exit (0);
 }
+//where is command, where is flags, where is string and where is file_name yapalım
+//ortak noktaları olursa onları bir fonksiyonda kullanalım

@@ -101,9 +101,9 @@ void	ft_parse(t_shell *mini)
 	mini->all_line = ft_join_arg(mini);
 	mini->parse = ft_mysplit(mini->all_line, '|', 0);
 	ft_create_struct(mini);
-	exit (0);
 	mini->iter = mini->first_struct;
 	ft_add_struct(mini);
+	exit (0);
 	printf("command: %s\n", mini->first_struct->command);
 	printf("flags: %s\n", mini->first_struct->flag);
 	printf("string: %s\n", mini->first_struct->string);

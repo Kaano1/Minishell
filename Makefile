@@ -12,7 +12,9 @@ SRC	= main.c \
 	./Parser/parser.c \
 	./Parser/find_dollar.c \
 	./Parser/switch_to.c \
-	./Parser/add_struct.c
+	./Parser/add_struct.c \
+	./Parser/parser_help/add_command.c \
+	./Parser/parser_help/add_flags.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -29,6 +29,10 @@ typedef struct s_shell
 	int					pipe_count;
 } t_shell;
 
+//Parser/parser_help/add_command.c
+int where_is_command(int index, t_shell *mini);
+int	get_string_start(char *str, int c_pipe);
+
 //Parser/find_dollar.c
 char	**find_dollar_and_change(t_shell *mini);
 char	*get_after_dollar_osman(char *parse, int index);
