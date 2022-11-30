@@ -75,29 +75,30 @@ size_t	len_word(char const *s, char c, int key2)
 	return (len);
 }
 
-void	mysplit_section(char ***res, char **s, int index, size_t *two_index, int key)
+char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int key)
 {
 	int	i;
+	int	j;
 
 	i = *two_index;
+	j = 0;
 	if (key == 1)
-		res[0][index][i++] = *s[0];
-	if (*s[0] == 34)
+		res[0][index][i++] = s[j];
+	if (s[j] == 34)
 	{
-		*s[0]++;
-		while (*s[0] != 34 && *s[0] != 0)
-			res[0][index][i++] = *s[0]++;
+		while (s[++j] != 34 && s[j] != 0)
+			res[0][index][i++] = s[j];
 	}
-	else if (*s[0] == 39)
+	else if (s[j] == 39)
 	{
-		*s[0]++;
-		while (*s[0] != 39 && *s[0] != 0)
-			res[0][index][i++] = *s[0]++;
+		while (s[++j] != 39 && s[j] != 0)
+			res[0][index][i++] = s[j];
 	}
 	if (key == 1)
-		res[0][index][i++] = *s[0];
-	*s[0]++;
+		res[0][index][i++] = s[j++];
+	j++;
 	*two_index = i;
+	return ((char *)(s + j));
 }
 
 char	**ft_mysplit(char *s, char c, int key)
@@ -135,7 +136,7 @@ char	**ft_mysplit(char *s, char c, int key)
 		two_index = 0;
 		while (*s != c && *s != '\0')
 			if (*s == 34 || *s == 39)
-				mysplit_section(&res, &s, index, &two_index, key);
+				s = mysplit_section(&res, s, index, &two_index, key);
 			else
 				res[index][two_index++] = *s++;
 		res[index][two_index] = '\0';

@@ -13,7 +13,7 @@ typedef struct s_command
 	char		*command;
 	char		*flag;
 	char		*string;
-	int 		redirect;
+	int 		redirect; 
 	char		*file_name;
 	struct s_command	*next;
 } t_command;
@@ -22,6 +22,7 @@ typedef struct s_shell
 {
 	char				*all_line;
 	char				**parse;
+	char				**check_parser;
 	char				**env;
 	struct s_command	*first_struct;
 	struct s_command	*iter;

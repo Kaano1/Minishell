@@ -85,16 +85,20 @@ int	getcheck_flag(char *str, int i)
 
 char	*ft_flags_add(t_shell *mini, int index)
 {
-	char	*str;
-	int		i;
-	int		quotes;
+	int	i;
+	int	len;
 
-	i = get_string_start(mini->all_line, i);
-	i = getcheck_flag(mini->all_line, i);
-	if (i == -1)
-		return (0);
+	i = -1;
+	len = 0;
+	while (len != index && mini->check_parser[++i])
+		if (mini->check_parser[i][0] == '|')
+			len++;
+	i += 2;
+	if (mini->check_parser[i] == 0)
+		i++;
 	
-	quotes = 0;
+	exit (0);
+	return (0);
 }
 
 void	ft_add_struct(t_shell *mini)
@@ -102,14 +106,13 @@ void	ft_add_struct(t_shell *mini)
 	int	i;
 
 	i = 0;
-	printf("%s", mini->parse[0]);
-	exit (0);
 	while (i < mini->pipe_count + 1)
 	{
 		mini->first_struct->command = ft_add(where_is_command(i, mini), i, mini);
 		mini->first_struct->flag = ft_flags_add(mini, i);
 		printf("COMMAND: %s\n", mini->first_struct->command);
 		printf("FLAGS: %s\n", mini->first_struct->flag);
+		exit (0);
 		//mini->first_struct->string = ft_add(where_is_start(0, i, mini), i, mini);
 		if (mini->first_struct->redirect != 0)
 		{
@@ -121,3 +124,10 @@ void	ft_add_struct(t_shell *mini)
 }
 //where is command, where is flags, where is string and where is file_name yapalım
 //ortak noktaları olursa onları bir fonksiyonda kullanalım
+// ahmet
+// -d
+// mehmet
+// |
+// ceren
+// -c
+//

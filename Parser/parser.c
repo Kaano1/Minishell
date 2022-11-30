@@ -97,6 +97,7 @@ void	ft_parse(t_shell *mini)
 
 	i = -1;
 	mini->parse = ft_mysplit(mini->all_line, ' ', 1);
+	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1);
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini);
 	mini->parse = ft_mysplit(mini->all_line, '|', 0);
