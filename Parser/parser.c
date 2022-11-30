@@ -106,7 +106,7 @@ void	ft_parse(t_shell *mini)
 	ft_add_struct(mini);
 	exit (0);
 	printf("command: %s\n", mini->first_struct->command);
-	printf("flags: %s\n", mini->first_struct->flag);
+	printf("flags: %s\n", mini->first_struct->flag[0]);
 	printf("string: %s\n", mini->first_struct->string);
 	printf("file_name: %s\n", mini->first_struct->file_name);
 	exit (0);

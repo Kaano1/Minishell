@@ -11,7 +11,7 @@
 typedef struct s_command
 {
 	char		*command;
-	char		*flag;
+	char		**flag;
 	char		*string;
 	int 		redirect; 
 	char		*file_name;
