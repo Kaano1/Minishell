@@ -30,6 +30,9 @@ typedef struct s_shell
 	int					pipe_count;
 } t_shell;
 
+//Parser/parser_help/add_flags.c
+char	**ft_flags_add(t_shell *mini, int index);
+
 //Parser/parser_help/add_command.c
 int where_is_command(int index, t_shell *mini);
 int	get_string_start(char *str, int c_pipe);
