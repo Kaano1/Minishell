@@ -76,7 +76,7 @@ size_t	len_word(char const *s, char c, int key2)
 }
 
 char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int key)
-{
+{// we have to look at this function.
 	int	i;
 	int	j;
 

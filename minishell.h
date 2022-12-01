@@ -32,6 +32,8 @@ typedef struct s_shell
 
 //Parser/parser_help/add_flags.c
 char	**ft_flags_add(t_shell *mini, int index);
+int	where_start_to_checkparser(t_shell *mini, int index);
+int		flags_check(int	i, t_shell *mini);
 
 //Parser/parser_help/add_command.c
 int where_is_command(int index, t_shell *mini);

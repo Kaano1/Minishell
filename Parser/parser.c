@@ -6,7 +6,6 @@ int	ft_redirect(t_shell *mini)
 	static int j = 0;
 
 	i = 0;
-
 	while (mini->parse[j][i])
 	{
 		if (mini->parse[j][i] == '>')
@@ -35,7 +34,7 @@ void	ft_create_struct(t_shell *mini)
 	mini->first_struct = malloc(sizeof(t_command));
 	first = mini->first_struct;
 	i = 0;
-	while (i < mini->pipe_count)
+	while (i < mini->pipe_count + 1)
 	{
 		mini->first_struct->next = malloc(sizeof(t_command));
 		mini->first_struct->command = 0;
@@ -100,7 +99,8 @@ void	ft_parse(t_shell *mini)
 	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1);
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini);
-	mini->parse = ft_mysplit(mini->all_line, '|', 0);
+	mini->parse = ft_mysplit(mini->all_line, ' ', 0);
+	printf("%s", mini->parse[0]);
 	ft_create_struct(mini);
 	mini->iter = mini->first_struct;
 	ft_add_struct(mini);

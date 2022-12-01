@@ -47,23 +47,31 @@ char	*double_flags_add(t_shell *mini, int index)
 	return (str);
 }
 
-char	**ft_flags_add(t_shell *mini, int index)
+int	where_start_to_checkparser(t_shell *mini, int index)
 {
-	char	**str;
-	int	tmp_i;
-	int	j;
 	int	i;
 	int	len;
 
-	i = 0;
-	j = 0;
 	len = 0;
+	i = 0;
 	while (len != index && mini->check_parser[i] != 0)
 	{
 		if (mini->check_parser[i][0] == '|')
 			len++;
 		i++;
 	}
+	return (i);
+}
+
+char	**ft_flags_add(t_shell *mini, int index)
+{
+	char	**str;
+	int	tmp_i;
+	int	j;
+	int	i;
+
+	i = where_start_to_checkparser(mini, index);
+	j = 0;
 	if (mini->check_parser[i] == 0)
 		return (0);
 	i++;
