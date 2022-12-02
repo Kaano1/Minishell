@@ -44,8 +44,8 @@ int	get_string_start(char *str, int c_pipe);
 
 //Parser/find_dollar.c
 char	**find_dollar_and_change(t_shell *mini);
-char	*get_after_dollar_osman(char *parse, int index);
-char	*get_env_osman(char *str, t_shell *mini);
+char	*get_after_dollar(char *parse, int index);
+char	*get_env(char *str, t_shell *mini);
 char	**check_or_fix_switch(t_shell *mini, int count_parse);
 
 //Parser/switch_to.c
@@ -65,12 +65,14 @@ void    ft_building();
 //Parser/add_struct.c
 void	ft_add_struct(t_shell *mini);
 
-//main.c
-void	ft_contqoute(t_shell *mini);
-
 //ft_error.c
 void	ft_error(char *str);
+
+//check_main.c
 void 	ft_pipecheck(t_shell *mini);
+void	ft_contqoute(t_shell *mini);
+
+//main.c
 void	ft_pipe_count(t_shell *mini);
 
 #endif

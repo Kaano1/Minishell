@@ -16,22 +16,22 @@ int	count_null(t_shell *mini, int count_parse)
 	return (j);
 }
 
-char	**check_or_fix_switch(t_shell *mini, int count_parse)
+char	**check_or_fix_switch(t_shell *mini, int count_parse) //parserı tekrar oluşturuyoruz arada bulunan NULL lardan ayıklayıp yeni haline getiriyoruz.
 {
 	char	**mini_parse;
 	int		null;
 	int		i;
 	int		j;
 
-	null = count_null(mini, count_parse);
+	null = count_null(mini, count_parse); //bazı yerlere null 
 	if (null == 0)
 		return (mini->parse);
 	i = 0;
 	j = 0;
 	mini_parse = malloc(sizeof(char *) * count_parse - null + 1);
-	while (i < count_parse)
+	while (i < count_parse) //parserın NULLlarda dahil uzunlugu kadar ilerleyecek
 	{
-		if (mini->parse[i][0] != 0)
+		if (mini->parse[i][0] != 0) // NULL degilse ekleme yapılacak
 		{
 			mini_parse[j] = ft_strdup(mini->parse[i]);
 			j++;
@@ -46,7 +46,7 @@ char	**check_or_fix_switch(t_shell *mini, int count_parse)
 	return (mini_parse);
 }
 
-char	*get_env_osman(char *str, t_shell *mini)
+char	*get_env(char *str, t_shell *mini) // mainden aldigimiz 3. parametre char **env degisgeninde arama yapip '=' işaretten sonrasini donuyoruz.
 {
 	char	*string;
 	int		i;
@@ -81,19 +81,19 @@ char	*get_env_osman(char *str, t_shell *mini)
 	return (string);
 }
 
-char	*get_after_dollar_osman(char *parse, int index)
+char	*get_after_dollar(char *parse, int index) //$HOME gibi bir ifadeyi HOME seklinde returnledi.
 {
 	char	*str;
 	int		i;
 
 	i = index;
-	while (parse[i] != ' ' && parse[i] != 0)
+	while (parse[i] != ' ' && parse[i] != 0 && parse[i] != 34 && parse[i] != 39)
 		i++;
 	if (i == index)
 		return (0);
 	str = malloc(sizeof(char) * (i - index) + 1);
 	i = 0;
-	while (parse[index] != ' ' && parse[index] != 0)
+	while (parse[index] != ' ' && parse[index] != 0 && parse[index] != 34 && parse[index] != 39)
 	{
 		str[i] = parse[index];
 		i++;
@@ -103,7 +103,7 @@ char	*get_after_dollar_osman(char *parse, int index)
 	return (str);
 }
 
-int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes)
+int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes) //tek tırnak icerisinde bulunursa bunu dogrudan yazdirmamiz gerekiyor karar asamasi burda gerceklesiyor
 {
 	int	index;
 	int	len;
@@ -124,12 +124,12 @@ int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes)
 	return (1);
 }
 
-char	**find_dollar_and_change(t_shell *mini)
+char	**find_dollar_and_change(t_shell *mini) //dolarlari anlamladirmak icin kullaniyoruz $HOME = /home/ayumusak
 {
 	char	*tmp;
-	int	i;
-	int	j;
-	int	c_quotes;
+	int		i;
+	int		j;
+	int		c_quotes;
 
 	i = 0;
 	c_quotes = 0;
@@ -141,11 +141,11 @@ char	**find_dollar_and_change(t_shell *mini)
 			if (mini->parse[i][j] == '$')
 				if (check_single_quotes(mini, i, j + 1, ++c_quotes))
 				{
-					tmp = get_env_osman(get_after_dollar_osman(mini->parse[i], j + 1), mini);
+					tmp = get_env(get_after_dollar(mini->parse[i], j + 1), mini);
 					if (!tmp)
-						mini->parse[i] = switch_to_zero(i, mini);
+						mini->parse[i] = switch_to_zero(i, mini); //NULL oldugu durumda yapmasini istedigimiz
 					else
-						mini->parse[i] = switch_to_parse(tmp, i, mini);
+						mini->parse[i] = switch_to_parse(tmp, i, mini); //normal ekleme islemi.
 				}
 			j++;
 		}

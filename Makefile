@@ -6,6 +6,7 @@ CFLGAS	= #-Wextra -Werror -Wall
 READLİME = -lreadline -lncurses
 
 SRC	= main.c \
+	check_main.c \
 	ft_error.c \
 	./Lexer/lexer.c \
 	./Parser/ft_mysplit.c \

@@ -9,7 +9,7 @@ char	*switch_to_zero(int	prs_index, t_shell *mini)
 	j = 0;
 	while (mini->parse[prs_index][i])
 	{
-		if (mini->parse[prs_index][i] == '$' && mini->parse[prs_index][i + 1] !=  ' ' && mini->parse[prs_index][i] != 0)
+		if (mini->parse[prs_index][i] == '$' && mini->parse[prs_index][i + 1] !=  ' ' && mini->parse[prs_index][i + 1] != 0)
 		{
 			while (mini->parse[prs_index][i] != 32 && mini->parse[prs_index][i] != 0)
 			{
@@ -48,42 +48,41 @@ char	*create_switch_to_zero(int i, int j, int prs_index, t_shell *mini)
 	return (str);
 }
 
-char	*switch_to_parse(char *tmp, int	prs_index, t_shell *mini)
+char	*switch_to_parse(char *tmp, int	prs_index, t_shell *mini) //dogrudan ekleme islemi yapar ve stringi degistirir.
 {
 	char	*str;
 	int		tm_i;
 	int		j;
 	int		i;
 	int		key;
-
 	
 	tm_i = 0;
 	i = 0;
 	j = 0;
 	key = 1;
-	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
+	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1); //bosluklardan her bir kelime ayrildigi icin yanlizca $HOME(/home/ayumusak) kadar alan alinsa yeter.
 	while (ft_strlen(mini->parse[prs_index]) > j)
 	{
-		if (mini->parse[prs_index][j] == '$' && key)
+		if (mini->parse[prs_index][j] == '$' && key) //$HOME bulunduysa giriceğiz
 		{		
 			key = 0;
-			while (mini->parse[prs_index][j] != ' ' && mini->parse[prs_index][j] != 0)
+			while (mini->parse[prs_index][j] != ' ' && mini->parse[prs_index][j] != 0) //$HOME sonuna gidiyoruz burada eğer string "$HOME ahmet" şeklinde verildiyse $HOME kısmına /home/ayumusak yazdıktan sonra "ahmet" kelimesinide ekleyebilsin.
 				j++;
 			while (tmp[tm_i])
 			{
-				str[i] = tmp[tm_i];
+				str[i] = tmp[tm_i]; //$HOME kısma karşılık gelen veri teker teker yazdırılıyor.
 				i++;
 				tm_i++;
 			}
 		}
 		else
 		{
-			str[i] = mini->parse[prs_index][j];
+			str[i] = mini->parse[prs_index][j]; //normal icerisine ekleme islemi yapiliyor. yani /home/ayumusaktan sonra gelen ahmet burada yazdırılıyor.
 			i++;
 			j++;
 		}
 	}
 	str[i] = 0;
-	free(mini->parse[prs_index]);
+	//free(mini->parse[prs_index]); //buna MAC te bakıcağım şuan pek emin olamadım doğru çalışıp çalışmadığından.
 	return (str);
 }

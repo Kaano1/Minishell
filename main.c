@@ -1,30 +1,16 @@
 #include "minishell.h"
 
-void	ft_contqoute(t_shell *mini)
+void	ft_pipe_count(t_shell *mini) //pipe sayimizi tutuyor ileride pipe counta gore struct ve fork yapicaz.
 {
-	int		i;
-	int		once;
-	int		twice;
+	int i;
 
-	once = 0;
-	twice = 0;
 	i = 0;
 	while (mini->all_line[i])
 	{
-		if (mini->all_line[i] == 39 && twice == 0)
-			once++;
-		else if (mini->all_line[i] == 34 && once == 0)
-			twice++;
+		if (mini->all_line[i] == '|')
+			mini->pipe_count++;
 		i++;
-		if (once == 2 || twice == 2)
-		{
-			once = 0;
-			twice = 0;
-		}
 	}
-	if (once % 2 != 0 || twice % 2 != 0)
-		ft_error("Missing character!");
-	add_history(mini->all_line);
 }
 
 int main(int ac, char **av, char **clone_env)

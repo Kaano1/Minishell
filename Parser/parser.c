@@ -61,14 +61,14 @@ size_t	len_word2(char **s)
 	return (len);
 }
 
-char	*ft_join_arg(t_shell *mini)
+char	*ft_join_arg(t_shell *mini) //double pointerli degiskenimizi single pointerli yapiyoruz.
 {
 	char	*str;
 	int		i;
 	int		j;
 	int		save_i;
 
-	str = malloc(sizeof(char) * len_word2(mini->parse));
+	str = malloc(sizeof(char) * len_word2(mini->parse)); //butun stringlerin uzunluguna gore alan ayiriyoruz
 	j = 0;
 	save_i = 0;
 	while (mini->parse[j])
@@ -96,14 +96,14 @@ void	ft_parse(t_shell *mini)
 
 	i = -1;
 	mini->parse = ft_mysplit(mini->all_line, ' ', 1);
-	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1);
+	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
 	mini->parse = find_dollar_and_change(mini);
-	mini->all_line = ft_join_arg(mini);
-	mini->parse = ft_mysplit(mini->all_line, '|', 0);
 	printf("%s", mini->parse[0]);
-	ft_create_struct(mini);
-	mini->iter = mini->first_struct;
-	ft_add_struct(mini);
+	mini->all_line = ft_join_arg(mini);
+	mini->parse = ft_mysplit(mini->all_line, '|', 0); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
+	ft_create_struct(mini); //t_command structını pipe sayısı kadar üretiyoruz
+	mini->iter = mini->first_struct; //başlangıç adresini elimizde tutuyoruz ne olur ne olmaz.
+	ft_add_struct(mini); //continue again
 	exit (0);
 	printf("command: %s\n", mini->first_struct->command);
 	printf("flags: %s\n", mini->first_struct->flag[0]);
