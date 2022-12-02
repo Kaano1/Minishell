@@ -67,7 +67,6 @@ void	ft_add_struct(t_shell *mini)
 		printf("RED: %d\n", mini->first_struct->redirect);
 		printf("STRING: %s\n", mini->first_struct->string);
 		exit (0);
-		//mini->first_struct->string = ft_add(where_is_start(0, i, mini), i, mini);
 		if (mini->first_struct->redirect != 0)
 		{
 			mini->first_struct->file_name = ft_add(where_is_start(0, i, mini), i, mini);

@@ -98,7 +98,6 @@ void	ft_parse(t_shell *mini)
 	mini->parse = ft_mysplit(mini->all_line, ' ', 1);
 	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
 	mini->parse = find_dollar_and_change(mini);
-	printf("%s", mini->parse[0]);
 	mini->all_line = ft_join_arg(mini);
 	mini->parse = ft_mysplit(mini->all_line, '|', 0); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
 	ft_create_struct(mini); //t_command structını pipe sayısı kadar üretiyoruz

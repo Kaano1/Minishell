@@ -9,7 +9,7 @@ char	*switch_to_zero(int	prs_index, t_shell *mini)
 	j = 0;
 	while (mini->parse[prs_index][i])
 	{
-		if (mini->parse[prs_index][i] == '$' && mini->parse[prs_index][i + 1] !=  ' ' && mini->parse[prs_index][i + 1] != 0)
+		if (mini->parse[prs_index][i] == '$' && mini->parse[prs_index][i + 1] !=  ' ' && mini->parse[prs_index][i] != 0)
 		{
 			while (mini->parse[prs_index][i] != 32 && mini->parse[prs_index][i] != 0)
 			{
@@ -66,7 +66,8 @@ char	*switch_to_parse(char *tmp, int	prs_index, t_shell *mini) //dogrudan ekleme
 		if (mini->parse[prs_index][j] == '$' && key) //$HOME bulunduysa giriceğiz
 		{		
 			key = 0;
-			while (mini->parse[prs_index][j] != ' ' && mini->parse[prs_index][j] != 0) //$HOME sonuna gidiyoruz burada eğer string "$HOME ahmet" şeklinde verildiyse $HOME kısmına /home/ayumusak yazdıktan sonra "ahmet" kelimesinide ekleyebilsin.
+			while (mini->parse[prs_index][j] != ' ' && mini->parse[prs_index][j] != 0 && \
+				mini->parse[prs_index][j] != 34 && mini->parse[prs_index][j] != 39) //$HOME sonuna gidiyoruz burada eğer string "$HOME ahmet" şeklinde verildiyse $HOME kısmına /home/ayumusak yazdıktan sonra "ahmet" kelimesinide ekleyebilsin.
 				j++;
 			while (tmp[tm_i])
 			{
