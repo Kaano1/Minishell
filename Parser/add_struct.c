@@ -50,6 +50,27 @@ char	*ft_add(int row, int column, t_shell *mini) //ekleme işlemi yapıyor verdi
 	return (str);
 }
 
+char	*ft_add_string(t_shell *mini, int index, int start) //ahmet -d < "ceren" < noli naber | ceren < naptin
+{
+	char	**str;
+	char	*result;
+	int	j;
+	int	i;
+
+	str = malloc(sizeof(char *) * (len_word(mini->parse[index], 32) - start) + 1);
+	j = 0;
+	i = 0;
+	while (start <= len_word(mini->parse[index], 32))
+	{
+		i = where_is_start(start, mini->parse[index]);
+		str[j] = ft_add(i, index, mini);
+		start++;
+		j++;
+	}
+	result = ft_join_arg(str);
+	return (result);
+}
+
 void	ft_add_struct(t_shell *mini)
 {
 	int	start;
@@ -69,21 +90,3 @@ void	ft_add_struct(t_shell *mini)
 	}
     exit (0);
 }
-
-//where is command, where is flags, where is string and where is file_name yapalım
-//ortak noktaları olursa onları bir fonksiyonda kullanalım
-// ahmet
-// -d
-// mehmet
-// |
-// ceren
-// -c
-//
-
-//redirectleri ekle
-//redirectlerin oldugu bölüme boşluk ata
-//ardından her zaman başındaki komuttur
-//diger gelenlerin '-' isaretlerine bakılacak ve onlarda flags olarak adlandırılacak ve commanda eklenecek
-//sona kalan kısım stringdir ağabey ondandır onları doğrudan alıp yazdıracağızda amma ve lakin 34 ve 39 silineceğinden ötürü düşünüyorum
-//nasıl alabileceğimizi
-//
