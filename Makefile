@@ -16,7 +16,8 @@ SRC	= main.c \
 	./Parser/add_struct.c \
 	./Parser/parser_help/add_command.c \
 	./Parser/parser_help/add_flags.c \
-	./Parser/parser_help/add_string.c
+	./Parser/parser_help/add_string.c \
+	./Parser/parser_help/add_redirect.c
 
 OBJ = $(SRC:.c=.o)
 

@@ -1,37 +1,5 @@
 #include "../minishell.h"
 
-int count_word(char *str)
-{
-	int i;
-	int key;
-	int word;
-
-	i = 0;
-	word = 0;
-	key = 1;
-	while (str[i])
-	{
-		if (str[i] == 39)
-		{
-			while (str[i] != 39 && str[i] != 0)
-				i++;
-			word++;
-		}
-		else if (str[i] == 34)
-		{
-			while (str[i] != 34 && str[i] != 0)
-				i++;
-			word++;
-		}
-		if (str[i] == ' ' && key)
-		{
-			word++;
-			key = 0;
-		}
-	}
-	return (0);
-}
-
 size_t	if_word_len(char const *s, char c, int key)
 {
 	size_t	len;
@@ -57,7 +25,7 @@ size_t	if_word_len(char const *s, char c, int key)
 	return (len);
 }
 
-size_t	len_word(char const *s, char c, int key2)
+size_t	len_word(char const *s, char c)
 {
 	size_t	len;
 	int		key;
@@ -76,13 +44,13 @@ size_t	len_word(char const *s, char c, int key2)
 }
 
 char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int key)
-{// we have to look at this function. ex = "ahmet"mehmet"
+{
 	int	i;
 	int	j;
 
 	i = *two_index;
 	j = 0;
-	if (key == 1) //burda tinagi dahil edip etmiyecegimize karar veriyoruz
+	if (key == 1) //burda tirnagi dahil edip etmiyecegimize karar veriyoruz
 		res[0][index][i++] = s[j];
 	if (s[j] == 34)
 	{
@@ -96,7 +64,8 @@ char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int ke
 	}
 	if (key == 1) //tirnagi dahil ediyoruz ayni sekilde
 		res[0][index][i++] = s[j++];
-	j++;
+	else
+		j++;
 	*two_index = i;
 	return ((char *)(s + j));
 }
@@ -132,7 +101,7 @@ char	**ft_mysplit(char *s, char c, int key) //normal split gibi tek degisiklik k
 
 	if (!s)
 		return (0);
-	word_len = len_word(s, c, key);
+	word_len = len_word(s, c);
 	res = (char **)malloc(sizeof(char *) * word_len + 1);
 	if (res == 0)
 		return (0);

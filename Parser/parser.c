@@ -1,31 +1,5 @@
 #include "../minishell.h"
 
-int	ft_redirect(t_shell *mini)
-{
-	int	i;
-	static int j = 0;
-
-	i = 0;
-	while (mini->parse[j][i])
-	{
-		if (mini->parse[j][i] == '>')
-		{
-			if (mini->parse[j][i + 1] == '>')
-				return (4);
-			return (2);
-		}
-		else if (mini->parse[j][i] == '<')
-		{
-			if (mini->parse[j][i + 1] == '<')
-				return (3);
-			return (1);
-		}
-		i++;
-	}
-	j++;
-	return (0);
-}
-
 void	ft_create_struct(t_shell *mini)
 {
 	t_command	*first;
@@ -38,13 +12,12 @@ void	ft_create_struct(t_shell *mini)
 	{
 		mini->first_struct->next = malloc(sizeof(t_command));
 		mini->first_struct->command = 0;
-		mini->first_struct->flag = 0;
 		mini->first_struct->string = 0;
-		mini->first_struct->redirect = ft_redirect(mini);
-		mini->first_struct->file_name = 0;
+		mini->first_struct->redirect = 0;
 		mini->first_struct = mini->first_struct->next;
 		i++;
 	}
+	mini->first_struct->next = 0;
 	mini->first_struct = first;
 }
 
@@ -90,24 +63,23 @@ char	*ft_join_arg(t_shell *mini) //double pointerli degiskenimizi single pointer
     return (str);
 }
 
+
 void	ft_parse(t_shell *mini)
 {
 	int		i;
 
-	i = -1;
+	i = 0;
+	ft_create_struct(mini); //t_command structını pipe sayısı kadar üretiyoruz
+	mini->iter = mini->first_struct; //başlangıç adresini elimizde tutuyoruz ne olur ne olmaz.
+	mini->parse = ft_mysplit(mini->all_line, '|', 1);
+	rediretion_cut_add(mini); //ahmet -d < "ceren" < noli | ceren < naptin
+	mini->all_line = ft_join_arg(mini);
 	mini->parse = ft_mysplit(mini->all_line, ' ', 1);
 	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini);
-	mini->parse = ft_mysplit(mini->all_line, '|', 0); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
-	ft_create_struct(mini); //t_command structını pipe sayısı kadar üretiyoruz
-	mini->iter = mini->first_struct; //başlangıç adresini elimizde tutuyoruz ne olur ne olmaz.
+	mini->parse = ft_mysplit(mini->all_line, '|', 1); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
 	ft_add_struct(mini); //continue again
-	exit (0);
-	printf("command: %s\n", mini->first_struct->command);
-	printf("flags: %s\n", mini->first_struct->flag[0]);
-	printf("string: %s\n", mini->first_struct->string);
-	printf("file_name: %s\n", mini->first_struct->file_name);
 	exit (0);
 	while (mini->parse[i])
 	{

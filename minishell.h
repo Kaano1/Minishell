@@ -10,11 +10,9 @@
 
 typedef struct s_command
 {
-	char		*command;
-	char		**flag;
+	char		**command;
 	char		*string;
-	int 		redirect; 
-	char		*file_name;
+	char 		**redirect;
 	struct s_command	*next;
 } t_command;
 
@@ -30,6 +28,9 @@ typedef struct s_shell
 	int					pipe_count;
 } t_shell;
 
+//Parser/parser_help/add_redirect.c
+void	rediretion_cut_add(t_shell *mini);
+
 //Parser/parser_help/add_string.c
 char	*ft_add_string(t_shell *mini, int index);
 
@@ -39,7 +40,7 @@ int	where_start_to_checkparser(t_shell *mini, int index);
 int		flags_check(int	i, t_shell *mini);
 
 //Parser/parser_help/add_command.c
-int where_is_command(int index, t_shell *mini);
+char **where_is_command(int index, t_shell *mini);
 int	get_string_start(char *str, int c_pipe);
 
 //Parser/find_dollar.c
@@ -57,12 +58,15 @@ char	*switch_to_zero(int	prs_index, t_shell *mini);
 void	ft_parse(t_shell *mini);
 
 //Parser/ft_mysplit.c
+size_t	len_word(char const *s, char c);
 char	**ft_mysplit(char *str, char c, int key);
 
 //Parser/building.c
 void    ft_building();
 
 //Parser/add_struct.c
+char	*ft_add(int row, int column, t_shell *mini);
+int	where_is_start(int count_word, char *str);
 void	ft_add_struct(t_shell *mini);
 
 //ft_error.c
