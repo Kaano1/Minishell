@@ -32,7 +32,7 @@ typedef struct s_shell
 void	rediretion_cut_add(t_shell *mini);
 
 //Parser/parser_help/add_string.c
-char	*ft_add_string(t_shell *mini, int index);
+char	*ft_add_string(t_shell *mini, int index, int start);
 
 //Parser/parser_help/add_flags.c
 char	**ft_flags_add(t_shell *mini, int index);
@@ -40,7 +40,7 @@ int	where_start_to_checkparser(t_shell *mini, int index);
 int		flags_check(int	i, t_shell *mini);
 
 //Parser/parser_help/add_command.c
-char **where_is_command(int index, t_shell *mini);
+char **where_is_command(int index, t_shell *mini, int *catch);
 int	get_string_start(char *str, int c_pipe);
 
 //Parser/find_dollar.c
@@ -56,6 +56,7 @@ char	*switch_to_zero(int	prs_index, t_shell *mini);
 
 //Parser/parse.c
 void	ft_parse(t_shell *mini);
+char	*ft_join_arg(char **mini);
 
 //Parser/ft_mysplit.c
 size_t	len_word(char const *s, char c);

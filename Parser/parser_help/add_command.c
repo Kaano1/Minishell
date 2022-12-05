@@ -17,7 +17,7 @@ int	check_string(char *str, int i) //we can fix this code and we could do it // 
 	return (1);
 }
 
-char	**where_is_command(int index, t_shell *mini)
+char	**where_is_command(int index, t_shell *mini, int *catch)
 {
     int i;
 	int	j;
@@ -30,7 +30,7 @@ char	**where_is_command(int index, t_shell *mini)
 	mini->first_struct->command = ft_calloc(sizeof(char *), len_word(mini->parse[index], ' ') + 1);
 	mini->first_struct->command[0] = ft_add(start, index, mini);
 	i++;
-	while (i < len_word(mini->parse[index], ' '))
+	while (1)
 	{
 		start = where_is_start(i, mini->parse[index]);
 		j = start;
@@ -42,7 +42,6 @@ char	**where_is_command(int index, t_shell *mini)
 			break;
 		i++;
 	}
-	printf("|%s\n", mini->first_struct->command[2]);
-	exit (0);
-    return (0);
+	*catch = i;
+    return (mini->first_struct->command);
 }

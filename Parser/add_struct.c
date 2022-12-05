@@ -52,28 +52,24 @@ char	*ft_add(int row, int column, t_shell *mini) //ekleme işlemi yapıyor verdi
 
 void	ft_add_struct(t_shell *mini)
 {
+	int	start;
 	int	i;
 
 	i = 0;
-	i = where_is_start(1, mini->parse[i]);
-	printf("%c", mini->parse[0][i]);
 	while (i < mini->pipe_count + 1)
 	{
-		mini->first_struct->command = where_is_command(i, mini);// probably we must change this addition process
-		//mini->first_struct->string = ft_add_string(mini, i);
+		mini->first_struct->command = where_is_command(i, mini, &start);
+		mini->first_struct->string = ft_add_string(mini, i, start);
+		printf("%s", mini->first_struct->string);
 		exit (0);
 		printf("COMMAND: %s\n", mini->first_struct->command[0]);
 		printf("RED: %s\n", mini->first_struct->redirect[0]);
 		printf("STRING: %s\n", mini->first_struct->string);
-		exit (0);
-		if (mini->first_struct->redirect != 0)
-		{
-			//mini->first_struct->file_name = ft_add(where_is_start(0, i, mini), i, mini);
-		}
 		i++;
 	}
     exit (0);
 }
+
 //where is command, where is flags, where is string and where is file_name yapalım
 //ortak noktaları olursa onları bir fonksiyonda kullanalım
 // ahmet

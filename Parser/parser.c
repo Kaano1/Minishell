@@ -34,28 +34,28 @@ size_t	len_word2(char **s)
 	return (len);
 }
 
-char	*ft_join_arg(t_shell *mini) //double pointerli degiskenimizi single pointerli yapiyoruz.
+char	*ft_join_arg(char **mini) //double pointerli degiskenimizi single pointerli yapiyoruz.
 {
 	char	*str;
 	int		i;
 	int		j;
 	int		save_i;
 
-	str = malloc(sizeof(char) * len_word2(mini->parse)); //butun stringlerin uzunluguna gore alan ayiriyoruz
+	str = malloc(sizeof(char) * len_word2(mini)); //butun stringlerin uzunluguna gore alan ayiriyoruz
 	j = 0;
 	save_i = 0;
-	while (mini->parse[j])
+	while (mini[j])
 	{
 		i = 0;
-		if (mini->parse[j][i] == 0 && mini->parse[j + 1][i] != 0)
+		if (mini[j][i] == 0 && mini[j + 1][i] != 0)
 			j++;
-		while (mini->parse[j][i])
+		while (mini[j][i])
 		{
-			str[save_i] = mini->parse[j][i];
+			str[save_i] = mini[j][i];
 			i++;
 			save_i++;
 		}
-		if (mini->parse[j + 1] != 0)
+		if (mini[j + 1] != 0)
         	str[save_i++] = 32;
 		j++;
 	}
@@ -73,11 +73,11 @@ void	ft_parse(t_shell *mini)
 	mini->iter = mini->first_struct; //başlangıç adresini elimizde tutuyoruz ne olur ne olmaz.
 	mini->parse = ft_mysplit(mini->all_line, '|', 1);
 	rediretion_cut_add(mini); //ahmet -d < "ceren" < noli | ceren < naptin
-	mini->all_line = ft_join_arg(mini);
+	mini->all_line = ft_join_arg(mini->parse);
 	mini->parse = ft_mysplit(mini->all_line, ' ', 1);
 	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
 	mini->parse = find_dollar_and_change(mini);
-	mini->all_line = ft_join_arg(mini);
+	mini->all_line = ft_join_arg(mini->parse);
 	mini->parse = ft_mysplit(mini->all_line, '|', 1); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
 	ft_add_struct(mini); //continue again
 	exit (0);
