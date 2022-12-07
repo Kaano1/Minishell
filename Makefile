@@ -1,8 +1,8 @@
-CC	= gcc
+CC	= gcc -g
 RM	= rm -rf
 NAME	= minishell
 LIBFT	= ./Libft/libft.a
-CFLGAS	= #-Wextra -Werror -Wall
+CFLGAS	= -g #-fsanitize=address
 READLİME = -lreadline -lncurses
 
 SRC	= main.c \
@@ -16,7 +16,12 @@ SRC	= main.c \
 	./Parser/add_struct.c \
 	./Parser/parser_help/add_command.c \
 	./Parser/parser_help/add_redirect.c \
-	./Parser/parser_help/add_redirect2.c
+	./Parser/parser_help/add_redirect2.c \
+	./builtin/echo.c \
+	./builtin/cd.c \
+	./builtin/exit.c \
+	./builtin/env.c \
+	./builtin/builtin_utils.c
 
 OBJ = $(SRC:.c=.o)
 

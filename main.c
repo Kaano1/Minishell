@@ -29,7 +29,7 @@ int main(int ac, char **av, char **clone_env)
 		ft_pipecheck(&mini);
 		ft_pipe_count(&mini);
 		ft_parse(&mini);
-		//ft_lexer();
+		ft_lexer(&mini);
 	} while (mini.all_line != 0);
 	return (0);
 }

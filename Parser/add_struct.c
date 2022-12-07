@@ -34,13 +34,13 @@ char	*ft_add(int row, int column, t_shell *mini) //ekleme işlemi yapıyor verdi
 	str = 0;
 	if (row == -1)
 		return (NULL);
-	while (mini->parse[column][i] != ' ')
+	while (mini->parse[column][i] != ' ' && mini->parse[column][i])
 		i++;
-	str = malloc(sizeof(char) *  (i - row) + 1);
+	str = malloc(sizeof(char) *  (i - row + 1));
 	if (!str)
 		exit (-1);
 	i = 0;
-	while (mini->parse[column][row] != ' ')
+	while (mini->parse[column][row] && mini->parse[column][row] != ' ')
 	{
 		str[i] = mini->parse[column][row];
 		row++;
@@ -74,19 +74,21 @@ char	*ft_add_string(t_shell *mini, int index, int start) //ahmet -d < "ceren" < 
 void	ft_add_struct(t_shell *mini)
 {
 	int	start;
-	int	i;
 
-	i = 0;
+	mini->path = ft_mysplit(get_env("PATH", mini), ':', 1);
+	int i = 0;
+		while(mini->path[i])
+		{
+			printf("%s:", mini->path[i]);
+			i++;
+		}
+	exit (0);
 	while (i < mini->pipe_count + 1)
-	{
+	{write(1, "0k1\n", 4);
 		mini->first_struct->command = where_is_command(i, mini, &start);
+		write(1, "02\n", 4);
 		mini->first_struct->string = ft_add_string(mini, i, start);
-		printf("%s", mini->first_struct->string);
-		exit (0);
-		printf("COMMAND: %s\n", mini->first_struct->command[0]);
-		printf("RED: %s\n", mini->first_struct->redirect[0]);
-		printf("STRING: %s\n", mini->first_struct->string);
+		mini->path = ft_mysplit(get_env("PATH", mini), ':', 1);
 		i++;
 	}
-    exit (0);
 }

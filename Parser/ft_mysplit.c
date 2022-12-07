@@ -102,7 +102,7 @@ char	**ft_mysplit(char *s, char c, int key) //normal split gibi tek degisiklik k
 	if (!s)
 		return (0);
 	word_len = len_word(s, c);
-	res = (char **)malloc(sizeof(char *) * word_len + 1);
+	res = (char **)malloc(sizeof(char *) * (word_len + 1));
 	if (res == 0)
 		return (0);
 	index = 0;

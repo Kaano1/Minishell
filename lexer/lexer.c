@@ -29,56 +29,30 @@ void function_exec(char *tmp)
 	free(exec);
 }
 
-void	control(char *tmp)
+void	control(char *tmp, t_shell *mini)
 {
-	tmp = 0;
-	/*
-	if (ft_strcmp(tmp, "echo"))
-		echo();
-	else if(ft_strcmp(tmp, "cd"))
-		cd();
-	else if(ft_strcmp(tmp, "pwd"))
+	if (ft_strncmp(tmp, "echo", 4))
+		ft_echo(mini);
+	else if(ft_strncmp(tmp, "cd", 2))
+		ft_cd(mini);
+	else if(ft_strncmp(tmp, "env", 3))
+		ft_env(mini);
+	else if(ft_strncmp(tmp, "exit", 4))
+		ft_exit(mini);
+	/*else if(ft_strcmp(tmp, "pwd"))
 		pwd();
 	else if(ft_strcmp(tmp, "export"))
 		export();
 	else if(ft_strcmp(tmp, "unset"))
-		unset();
-	else if(ft_strcmp(tmp, "env"))
-		env();
-	else if(ft_strcmp(tmp, "exit"))
-		funcition_exit();
-	else
-		function_exec(tmp);
-	*/
+		unset();*/
+
+	//else
+		//function_exec(tmp);
 }
 
 void    ft_lexer(t_shell *mini)
 {
-    int i;
-    int j;
-    int k;
-    int c;
-    char *tmp;
-
-    i = 0;
-    while (mini->parse[i])
-    {
-		j = 0;
-        while (mini->parse[i][j] == ' ')
-            j++;
-        c = j;
-        while (mini->parse[i][c] != ' ')
-            c++;
-		tmp = malloc(sizeof(char) * c - j + 1);
-		k = 0;
-        while (mini->parse[i][j] != ' ')
-        {
-            tmp[k] = mini->parse[i][j];
-            k++;
-            j++;
-        }
-		tmp[k] = 0;
-		control(tmp);
-		i++;
-    }
+	exit (0);
+	control(mini->first_struct->command[0], mini);
+	exit (0);
 }

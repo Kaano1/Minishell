@@ -26,10 +26,13 @@ size_t	len_word2(char **s)
 	size_t	i;
 	size_t	len;
 
-	i = -1;
+	i = 0;
 	len = 0;
-	while (s[++i])
+	while (s[i])
+	{
 		len += ft_strlen(s[i]);
+		i++;
+	}
 	len += i;
 	return (len);
 }
@@ -80,10 +83,4 @@ void	ft_parse(t_shell *mini)
 	mini->all_line = ft_join_arg(mini->parse);
 	mini->parse = ft_mysplit(mini->all_line, '|', 1); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
 	ft_add_struct(mini); //continue again
-	exit (0);
-	while (mini->parse[i])
-	{
-		printf("%s\n", mini->parse[i]);
-		i++;
-	}
 }

@@ -24,6 +24,7 @@ typedef struct s_shell
 	char				**env;
 	struct s_command	*first_struct;
 	struct s_command	*iter;
+	char				**path;
 	int					c;
 	int					pipe_count;
 } t_shell;
@@ -89,5 +90,16 @@ void	ft_contqoute(t_shell *mini);
 
 //main.c
 void	ft_pipe_count(t_shell *mini);
+
+//builtin
+int	ft_cd(t_shell *mini);
+int	ft_echo(t_shell *mini);
+int	ft_exit(t_shell *mini);
+int	ft_env(t_shell *mini);
+static void	put_error(char *str);
+void	put_str_fd(int fd, char *str);
+
+//lexer
+void    ft_lexer(t_shell *mini);
 
 #endif

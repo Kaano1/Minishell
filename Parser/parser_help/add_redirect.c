@@ -118,7 +118,7 @@ void	rediretion_cut_add(t_shell *mini)
 	i = 0;
 	while (i < mini->pipe_count + 1)
 	{
-		mini->first_struct->redirect = malloc(sizeof(char *) * ft_redirect_len(mini->parse[i] + 1)); // baktığımız 1. pipe stringinin içerisinde kaç adet redirect var.
+		mini->first_struct->redirect = malloc(sizeof(char *) * ft_redirect_len(mini->parse[i]) + 1); // baktığımız 1. pipe stringinin içerisinde kaç adet redirect var.
 		mini->first_struct->redirect = ft_redirection_add(mini, i); //redirectleri t_command structının içersindeki redirection değişkenimize tanımlıyoruz
 		mini->parse[i] = ft_redirection_clean(mini, i); //tanımlanan redirectlerin yerine boşluk ataması yapıyoruz
 		mini->parse[i] = pipe_add(mini->parse[i], mini->pipe_count, i); // eğer varsa pipe atıp devam ediyoruz.
