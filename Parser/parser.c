@@ -81,6 +81,7 @@ void	ft_parse(t_shell *mini)
 	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
 	mini->parse = find_dollar_and_change(mini);
 	mini->all_line = ft_join_arg(mini->parse);
-	mini->parse = ft_mysplit(mini->all_line, '|', 1); //pipelardan bolme ve tirnak temizleme islemi yapiyoruz
+	mini->parse = ft_mysplit(mini->all_line, '|', 1); 
+	//pipelardan bolme ve tirnak temizleme islemi yapiyoruz
 	ft_add_struct(mini); //continue again
 }

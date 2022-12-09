@@ -110,7 +110,7 @@ char	**ft_mysplit(char *s, char c, int key) //normal split gibi tek degisiklik k
 	{
 		while (*s == c && *s != '\0')
 			s = continue_mysplit(s, key); // ileriyoruz bir sonraki alinicak kelimeye kadar ama burdaki kod yanlizca ilerlemiyor tirnakta silebiliyor.
-		res[index] = (char *)malloc(sizeof(char) * if_word_len(s, c, key) + 1);
+		res[index] = (char *)malloc(sizeof(char) * (if_word_len(s, c, key) + 1));
 		two_index = 0;
 		while (*s != c && *s != '\0')
 			if (*s == 34 || *s == 39)

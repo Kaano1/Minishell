@@ -29,6 +29,8 @@ int main(int ac, char **av, char **clone_env)
 		ft_pipecheck(&mini);
 		ft_pipe_count(&mini);
 		ft_parse(&mini);
+		printf("FINISH");
+		exit (0);
 		ft_lexer(&mini);
 	} while (mini.all_line != 0);
 	return (0);

@@ -12,7 +12,7 @@ int	check_string(char *str, int i) //we can fix this code and we could do it // 
 	}
 	while (str[i] != 32 && str[i] != 0 && str[i] != 34 && str[i] != 39)
 		i++;
-	if ((key == 1 && str[i] != 39) || (key == 1 && str[i] != 34))
+	if (key == 1 && str[i] != 39 && str[i] != 34)
 		return (0);
 	return (1);
 }
