@@ -49,7 +49,7 @@ char	**where_is_command(int index, t_shell *mini, int *catch)
 
 	i = 1;
 	start = where_is_start(i, mini->parse[index]);
-	if (!check_string(mini->parse[index], start))
+	if (start == -1 || !check_string(mini->parse[index], start))
 		return (0);
 	mini->first_struct->command = ft_calloc(sizeof(char *), len_word(mini->parse[index], ' ') + 1);
 	mini->first_struct->command[0] = ft_add(start, index, mini);
@@ -62,7 +62,7 @@ char	**where_is_command(int index, t_shell *mini, int *catch)
 		while (mini->parse[index][j] == 34 || mini->parse[index][j] == 39)
 			j++;
 		if (mini->parse[index][j] == '-' && check_string(mini->parse[index], start))
-			mini->first_struct->command[i - 1] = ft_add(j, index, mini);
+			mini->first_struct->command[i - 1] = ft_add(start, index, mini);
 		else
 			break;
 		i++;

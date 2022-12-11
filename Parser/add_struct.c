@@ -9,7 +9,9 @@ int	where_is_start(int count_word, char *str) //kaçıncı kelimeye gitmek isted
 	i = 0;
 	key = 0;
 	len = 0;
-	while (str[i])
+	if (!str)
+		return (-1);
+	while (str[i] != 0)
 	{
 		if (str[i] != 32 && key == 0)
 		{
@@ -25,25 +27,61 @@ int	where_is_start(int count_word, char *str) //kaçıncı kelimeye gitmek isted
 	return (i);
 }
 
-char	*ft_add(int row, int column, t_shell *mini) //ekleme işlemi yapıyor verdiğimiz başlangıç adresinden ilerliyip bunu yapıyor.
+int	where_is_end(int column, int start, t_shell *mini, int type)
+{
+	while (mini->parse[column][start] && mini->parse[column][start] != 32)
+		start++;
+	while (mini->parse[column][start] == type)
+		start--;
+	return (start);
+}
+
+char	*ft_add_quotes(int column, int start, t_shell *mini, int type)
+{
+	char	*str;
+	int		i;
+	int		end;
+
+	while (mini->parse[column][start] == type)
+		start++;
+	end = where_is_end(column, start, mini, type);
+	if (start >= end)
+		return (NULL);
+	str = malloc(sizeof(char) * (1 + end - start));
+	i = 0;
+	while (start < end)
+	{
+		while (mini->parse[column][start] == 34 || mini->parse[column][start] == 39)
+			start++;
+		str[i] = mini->parse[column][start];
+		start++;
+		i++;
+	}
+	str[i] = 0;
+	return (str);
+}
+
+char	*ft_add(int start, int column, t_shell *mini) //ekleme işlemi yapıyor verdiğimiz başlangıç adresinden ilerliyip bunu yapıyor.
 {
 	int	i;
 	char *str;
 
-	i = row;
+	i = start;
 	str = 0;
-	if (row == -1)
+	if (start == -1)
 		return (NULL);
-	while (mini->parse[column][i] != ' ' && mini->parse[column][i] && mini->parse[column][i] != 34 && mini->parse[column][i] != 39)
-		i++;
-	str = malloc(sizeof(char) *  (i - row + 1));
+	if (mini->parse[column][i] == 34 || mini->parse[column][i] == 39)
+		return (ft_add_quotes(column, start, mini, mini->parse[column][i]));
+	str = malloc(sizeof(char) *  (i - start + 1));
 	if (!str)
 		exit (-1);
 	i = 0;
-	while (mini->parse[column][row] && mini->parse[column][row] != ' ' && mini->parse[column][row] != 34 && mini->parse[column][row] != 39)
+	while (mini->parse[column][start] && mini->parse[column][start] != ' ')
 	{
-		str[i] = mini->parse[column][row];
-		row++;
+		while (mini->parse[column][start] == 34 || mini->parse[column][start] == 39)
+			start++;
+		str[i] = mini->parse[column][start];
+		start++;
 		i++;
 	}
 	str[i] = 0;
@@ -56,7 +94,10 @@ char    *ft_add_string(t_shell *mini, int index, int start) //ahmet -d < "ceren"
     char    *result;
     int j;
     int i;
-    str = ft_calloc(sizeof(char *), (len_word(mini->parse[index], 32) - start) + 1);
+
+	if (mini->parse[index] == 0)
+		return (0); // genel string NULL or ft_strdup("") indexede NULL biz genel stringe NULL atadık burada.
+	str = ft_calloc(sizeof(char *), (len_word(mini->parse[index], 32) - start) + 1);
     j = 0;
     i = 0;
     while (start <= len_word(mini->parse[index], 32))

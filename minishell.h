@@ -10,6 +10,8 @@
 
 typedef struct s_command
 {
+	pid_t		pid;
+	int			fd[2];
 	char		**command;
 	char		*string;
 	char 		**redirect;
@@ -18,6 +20,7 @@ typedef struct s_command
 
 typedef struct s_shell
 {
+	int					parent_pid;
 	char				*all_line;
 	char				**parse;
 	char				**check_parser;

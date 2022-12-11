@@ -2,23 +2,24 @@
 
 void	ft_create_struct(t_shell *mini)
 {
-	t_command	*first;
 	int i;
 
 	mini->first_struct = malloc(sizeof(t_command));
-	first = mini->first_struct;
+	mini->iter = mini->first_struct;
 	i = 0;
 	while (i < mini->pipe_count + 1)
 	{
+		pipe(mini->first_struct->fd);
+		mini->first_struct->pid = -1;
 		mini->first_struct->next = malloc(sizeof(t_command));
-		mini->first_struct->command = 0;
-		mini->first_struct->string = 0;
-		mini->first_struct->redirect = 0;
+		mini->first_struct->command = ft_calloc(sizeof(char *), 1);
+		mini->first_struct->string = ft_calloc(sizeof(char *), 1);
+		mini->first_struct->redirect = ft_calloc(sizeof(char *), 1);
 		mini->first_struct = mini->first_struct->next;
 		i++;
 	}
 	mini->first_struct->next = 0;
-	mini->first_struct = first;
+	mini->first_struct = mini->iter;
 }
 
 size_t	len_word2(char **s)
@@ -73,7 +74,6 @@ void	ft_parse(t_shell *mini)
 
 	i = 0;
 	ft_create_struct(mini); //t_command structını pipe sayısı kadar üretiyoruz
-	mini->iter = mini->first_struct; //başlangıç adresini elimizde tutuyoruz ne olur ne olmaz.
 	mini->parse = ft_mysplit(mini->all_line, '|', 1);
 	rediretion_cut_add(mini); //ahmet -d < "ceren" < noli | ceren < naptin
 	mini->all_line = ft_join_arg(mini->parse);

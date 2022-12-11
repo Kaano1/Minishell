@@ -15,6 +15,7 @@ void	ft_pipe_count(t_shell *mini) //pipe sayimizi tutuyor ileride pipe counta go
 
 int main(int ac, char **av, char **clone_env)
 {
+	char	*input;
 	int i;
 	t_shell mini;
 
@@ -22,16 +23,23 @@ int main(int ac, char **av, char **clone_env)
 	ac = 0;
 	av = 0;
 	mini.env = clone_env;
+	mini.parent_pid = getpid();
 	do
 	{
-		mini.all_line = readline("MiniShell$ ");
-		ft_contqoute(&mini);
-		ft_pipecheck(&mini);
-		ft_pipe_count(&mini);
-		ft_parse(&mini);
-		printf("FINISH");
-		exit (0);
-		ft_lexer(&mini);
+		write(1, "\033[33m", 5);
+		input = readline("MiniShell$ ");
+		write(1, "\033[0m", 4);
+		if (*input)
+		{
+			mini.all_line = ft_strdup(input);
+			ft_contqoute(&mini);
+			ft_pipecheck(&mini);
+			ft_pipe_count(&mini);
+			ft_parse(&mini);
+			printf("%s\n", mini.first_struct->string);
+			//ft_lexer(&mini);
+		}
+		free(input);
 	} while (mini.all_line != 0);
 	return (0);
 }
