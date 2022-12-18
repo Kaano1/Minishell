@@ -31,20 +31,20 @@ void function_exec(char *tmp)
 
 void	control(char *tmp, t_shell *mini)
 {
-	if (ft_strncmp(tmp, "echo", 4))
-		ft_echo(mini);
-	else if(ft_strncmp(tmp, "cd", 2))
-		ft_cd(mini);
-	else if(ft_strncmp(tmp, "env", 3))
-		ft_env(mini);
-	else if(ft_strncmp(tmp, "exit", 4))
-		ft_exit(mini);
-	/*else if(ft_strcmp(tmp, "pwd"))
-		pwd();
-	else if(ft_strcmp(tmp, "export"))
-		export();
-	else if(ft_strcmp(tmp, "unset"))
-		unset();*/
+	if (!ft_strncmp(tmp, "echo", 4))
+		ft_echo();
+	else if(!ft_strncmp(tmp, "cd", 2))
+		ft_cd();
+	else if(!ft_strncmp(tmp, "env", 3))
+		ft_env();
+	else if(!ft_strncmp(tmp, "exit", 4))
+		ft_exit();
+	else if(!ft_strncmp(tmp, "pwd", 3))
+		ft_pwd();
+	else if(!ft_strncmp(tmp, "export", 6))
+		ft_export();
+	else if(!ft_strncmp(tmp, "unset", 5))
+		ft_unset();
 
 	//else
 		//function_exec(tmp);
@@ -52,7 +52,5 @@ void	control(char *tmp, t_shell *mini)
 
 void    ft_lexer(t_shell *mini)
 {
-	exit (0);
-	control(mini->first_struct->command[0], mini);
-	exit (0);
+	control(mini->iter->command[0], mini);
 }

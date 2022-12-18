@@ -19,7 +19,7 @@ int	if_while_quotes(char *str, int c)
 	return (c);
 }
 
-char	**ft_redirection_add(t_shell *mini, int i) // redirectionları alıyoruz burada
+void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burada
 {
 	int	rc;
 	int	r;
@@ -27,69 +27,72 @@ char	**ft_redirection_add(t_shell *mini, int i) // redirectionları alıyoruz bu
 
 	c = 0;
 	r = 0;
-	while (r <= ft_redirect_len(mini->parse[i]))
+	while (r <= ft_redirect_len(parse[i]))
 	{
-		while (mini->parse[i][c] != '>' && mini->parse[i][c] != '<' && mini->parse[i][c] != 0)
+		while (parse[i][c] != '>' && parse[i][c] != '<' && parse[i][c] != 0)
 		{
-			c = if_while_quotes(mini->parse[i], c); //eğer bir tırnak varsa kapanana kadar c yi artırır
+			c = if_while_quotes(parse[i], c); //eğer bir tırnak varsa kapanana kadar c yi artırır
 			c++;
 		}
-		if (mini->parse[i][c] == 0)
+		if (parse[i][c] == 0)
 			break;
-		mini->first_struct->redirect[r] = ft_redirect(mini, i, c); //hangi redirect işareti olduğunu ekliyoruz
-		if (mini->first_struct->redirect[r][1] == '<' || mini->first_struct->redirect[r][1] == '>')
+		mini.iter->redirect[r] = ft_redirect(parse, i, c); //hangi redirect işareti olduğunu ekliyoruz
+		if (mini.iter->redirect[r][1] == '<' || mini.iter->redirect[r][1] == '>')
 			c++;
 		c++;
 		r++;
-		while (mini->parse[i][c] == ' ')
+		while (parse[i][c] == ' ')
 			c++;
-		while (mini->parse[i][c] == 34 || mini->parse[i][c] == 39) //tırnakları geçiyoruz
+		while (parse[i][c] == 34 || parse[i][c] == 39) //tırnakları geçiyoruz
 			c++;
-		mini->first_struct->redirect[r] = malloc(sizeof(char) * redirect_of_string_len(mini, i, c) + 1);
+		mini.iter->redirect[r] = ft_calloc(sizeof(char), redirect_of_string_len(parse, i, c) + 1);
 		rc = 0;
-		while (mini->parse[i][c] != 0 && mini->parse[i][c] != 32 && mini->parse[i][c] != 34 && mini->parse[i][c] != 39)
+		while (parse[i][c] != 0 && parse[i][c] != 32)
 		{
-			mini->first_struct->redirect[r][rc] = mini->parse[i][c];
+			while (parse[i][c] && (parse[i][c] == 34 || parse[i][c] == 39))
+				c++;
+			if (parse[i][c] == 32)
+				break;
+			mini.iter->redirect[r][rc] = parse[i][c];
 			c++;
 			rc++;
 		}
-		while (mini->parse[i][c] == 34 || mini->parse[i][c] == 39) //sonda kalan tırnakları geçiyoruz.
+		while (parse[i][c] == 34 || parse[i][c] == 39) //sonda kalan tırnakları geçiyoruz.
 			c++;
-		mini->first_struct->redirect[r][rc] = 0;
+		mini.iter->redirect[r][rc] = 0;
 		r++;
 	}
-	return (mini->first_struct->redirect);
+	mini.iter->redirect[r] = 0;
 }
 
-char	*ft_redirection_clean(t_shell *mini, int i) //ahmet -d < "ceren"< noli | ceren < naptin bu şekilde olursa nasıl silebiliriz.
+void	ft_redirection_clean(int i) //ahmet -d < "ceren"< noli | ceren < naptin bu şekilde olursa nasıl silebiliriz.
 {
 	int c;
 	int	r;
 
 	c = 0;
 	r = 0;
-	while (r <= ft_redirect_len(mini->parse[i]))
+	while (r <= ft_redirect_len(mini.parse[i]))
 	{
-		while (mini->parse[i][c] != '>' && mini->parse[i][c] != '<' && mini->parse[i][c] != 0)
+		while (mini.parse[i][c] != '>' && mini.parse[i][c] != '<' && mini.parse[i][c] != 0)
 		{
-			c = if_while_quotes(mini->parse[i], c);
+			c = if_while_quotes(mini.parse[i], c);
 			c++;
 		}
-		if (mini->parse[i][c] == 0)
+		if (mini.parse[i][c] == 0)
 			break;
-		mini->parse[i][c] = 32;
+		mini.parse[i][c] = 32;
 		c++;
-		if (mini->parse[i][c] == '>' || mini->parse[i][c] == '<')
-			mini->parse[i][c] = 32;
-		while (mini->parse[i][c] == ' ')
+		if (mini.parse[i][c] == '>' || mini.parse[i][c] == '<')
+			mini.parse[i][c] = 32;
+		while (mini.parse[i][c] == ' ')
 			c++;
-		while (mini->parse[i][c] != 0 && mini->parse[i][c] != 32 && mini->parse[i][c] != '<' && mini->parse[i][c] != '>')
+		while (mini.parse[i][c] != 0 && mini.parse[i][c] != 32 && mini.parse[i][c] != '<' && mini.parse[i][c] != '>')
 		{
-			mini->parse[i][c] = 32;
+			mini.parse[i][c] = 32;
 			c++;
 		}
 	}
-	return (mini->parse[i]);
 }
 
 char	*pipe_add(char *str, int count, int index)
@@ -111,21 +114,22 @@ char	*pipe_add(char *str, int count, int index)
 	return (result);
 }
 
-void	rediretion_cut_add(t_shell *mini)
+void	rediretion_cut_add(void)
 {
 	int	i;
 
 	i = 0;
-	while (i < mini->pipe_count + 1)
+	mini.iter = mini.first_struct;
+	while (i < mini.pipe_count + 1)
 	{
-		mini->first_struct->redirect = malloc(sizeof(char *) * ft_redirect_len(mini->parse[i]) + 1); // baktığımız 1. pipe stringinin içerisinde kaç adet redirect var.
-		mini->first_struct->redirect = ft_redirection_add(mini, i); //redirectleri t_command structının içersindeki redirection değişkenimize tanımlıyoruz
-		mini->parse[i] = ft_redirection_clean(mini, i); //tanımlanan redirectlerin yerine boşluk ataması yapıyoruz
-		mini->parse[i] = pipe_add(mini->parse[i], mini->pipe_count, i); // eğer varsa pipe atıp devam ediyoruz.
-		mini->first_struct = mini->first_struct->next; //ilerliyoruz.
+		mini.iter->redirect = ft_calloc(sizeof(char *), ft_redirect_len(mini.parse[i]) + 1); // baktığımız 1. pipe stringinin içerisinde kaç adet redirect var.
+		ft_redirection_add(mini.parse, i); //redirectleri t_command structının içersindeki redirection değişkenimize tanımlıyoruz
+		ft_redirection_clean(i); //tanımlanan redirectlerin yerine boşluk ataması yapıyoruz
+		mini.parse[i] = pipe_add(mini.parse[i], mini.pipe_count, i); // eğer varsa pipe atıp devam ediyoruz.
+		mini.iter = mini.iter->next; //ilerliyoruz.
 		i++;
 	}
-	mini->first_struct = mini->iter;
+	mini.iter = mini.first_struct;
 }
 
 //kafamdaki yapı

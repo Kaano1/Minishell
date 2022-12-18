@@ -1,28 +1,28 @@
 #include "../../minishell.h"
 
-char	*ft_redirect(t_shell *mini, int j, int i)
+char	*ft_redirect(char **parse, int j, int i)
 {
-	if (mini->parse[j][i] == '>')
+	if (parse[j][i] == '>')
 	{
-		if (mini->parse[j][i + 1] == '>')
+		if (parse[j][i + 1] == '>')
 			return (strdup(">>"));
 		return (strdup(">"));
 	}
-	else if (mini->parse[j][i] == '<')
+	else if (parse[j][i] == '<')
 	{
-		if (mini->parse[j][i + 1] == '<')
+		if (parse[j][i + 1] == '<')
 			return (strdup("<<"));
 		return (strdup("<"));
 	}
 	return (NULL);
 }
 
-int redirect_of_string_len(t_shell *mini, int i, int c) //ne kadar bir alan ayırmamız gerekiyor onu buluyoruz filename için.
+int redirect_of_string_len(char **parse, int i, int c) //ne kadar bir alan ayırmamız gerekiyor onu buluyoruz filename için.
 {
 	int	len;
 
 	len = 0;
-	while (mini->parse[i][c] != 0 && mini->parse[i][c] != 32 && mini->parse[i][c] != 34 && mini->parse[i][c] != 39)
+	while (parse[i][c] != 0 && parse[i][c] != 32)
 	{
 		len++;
 		c++;

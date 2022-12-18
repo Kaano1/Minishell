@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int	count_null(t_shell *mini, int count_parse)
+int	count_null(char **parse, int count_parse)
 {
 	int	i;
 	int	j;
@@ -9,31 +9,31 @@ int	count_null(t_shell *mini, int count_parse)
 	j = 0;
 	while (i < count_parse)
 	{
-		if (mini->parse[i][0] == 0)
+		if (parse[i][0] == 0)
 			j++;
 		i++;
 	}
 	return (j);
 }
 
-char	**check_or_fix_switch(t_shell *mini, int count_parse) //parserı tekrar oluşturuyoruz arada bulunan NULL lardan ayıklayıp yeni haline getiriyoruz.
+char	**check_or_fix_switch(int count_parse) //parserı tekrar oluşturuyoruz arada bulunan NULL lardan ayıklayıp yeni haline getiriyoruz.
 {
 	char	**mini_parse;
 	int		null;
 	int		i;
 	int		j;
 
-	null = count_null(mini, count_parse); //bazı yerlere null 
+	null = count_null(mini.parse, count_parse); //bazı yerlere null 
 	if (null == 0)
-		return (mini->parse);
+		return (mini.parse);
 	i = 0;
 	j = 0;
 	mini_parse = malloc(sizeof(char *) * count_parse - null + 1);
 	while (i < count_parse) //parserın NULLlarda dahil uzunlugu kadar ilerleyecek
 	{
-		if (mini->parse[i][0] != 0) // NULL degilse ekleme yapılacak
+		if (mini.parse[i][0] != 0) // NULL degilse ekleme yapılacak
 		{
-			mini_parse[j] = ft_strdup(mini->parse[i]);
+			mini_parse[j] = ft_strdup(mini.parse[i]);
 			j++;
 		}
 		i++;
@@ -41,12 +41,12 @@ char	**check_or_fix_switch(t_shell *mini, int count_parse) //parserı tekrar olu
 	mini_parse[j] = 0;
 	i = -1;
 	while (++i < count_parse)
-		free(mini->parse[i]);
-	free(mini->parse);
+		free(mini.parse[i]);
+	free(mini.parse);
 	return (mini_parse);
 }
 
-char	*get_env(char *str, t_shell *mini) // mainden aldigimiz 3. parametre char **env degisgeninde arama yapip '=' işaretten sonrasini donuyoruz.
+char	*get_env(char *str) // mainden aldigimiz 3. parametre char **env degisgeninde arama yapip '=' işaretten sonrasini donuyoruz.
 {
 	char	*string;
 	int		i;
@@ -56,19 +56,19 @@ char	*get_env(char *str, t_shell *mini) // mainden aldigimiz 3. parametre char *
 
 	i = 0;
 	string = 0;
-	while (mini->env[i])
+	while (mini.env[i])
 	{
-		if ((ft_memcmp(mini->env[i], str, ft_strlen(str))) == 0)
+		if ((ft_memcmp(mini.env[i], str, ft_strlen(str))) == 0)
 		{
-			if (mini->env[i][ft_strlen(str)] == '=')
+			if (mini.env[i][ft_strlen(str)] == '=')
 			{
 				d = 0;
-				longg = ft_strlen(mini->env[i]) - ft_strlen(str);
+				longg = ft_strlen(mini.env[i]) - ft_strlen(str);
 				string = malloc(sizeof(char) * longg);
 				j = ft_strlen(str) + 1;
 				while (longg > d)
 				{
-					string[d] = mini->env[i][j];
+					string[d] = mini.env[i][j];
 					d++;
 					j++;
 				}
@@ -103,28 +103,28 @@ char	*get_after_dollar(char *parse, int index) //$HOME gibi bir ifadeyi HOME sek
 	return (str);
 }
 
-int	check_single_quotes(t_shell *mini, int i, int j, int c_quotes) //tek tırnak icerisinde bulunursa bunu dogrudan yazdirmamiz gerekiyor karar asamasi burda gerceklesiyor
+int	check_single_quotes(int i, int j, int c_quotes) //tek tırnak icerisinde bulunursa bunu dogrudan yazdirmamiz gerekiyor karar asamasi burda gerceklesiyor
 {
 	int	index;
 	int	len;
 
-	if (mini->parse[i][j] == ' ' || mini->parse[i][j] == 0)
+	if (mini.parse[i][j] == ' ' || mini.parse[i][j] == 0)
 		return (0);
 	index = 0;
 	len = 0;
-	while (mini->all_line[index])
+	while (mini.all_line[index])
 	{
-		if (mini->all_line[index] == '$')
+		if (mini.all_line[index] == '$')
 			len++;
 		if (len == c_quotes)
-			if (mini->all_line[index - 1] == 39)
+			if (mini.all_line[index - 1] == 39)
 				return (0);
 		index++;
 	}
 	return (1);
 }
 
-char	**find_dollar_and_change(t_shell *mini) //dolarlari anlamladirmak icin kullaniyoruz $HOME = /home/ayumusak
+char	**find_dollar_and_change(void) //dolarlari anlamladirmak icin kullaniyoruz $HOME = /home/ayumusak
 {
 	char	*tmp;
 	int		i;
@@ -133,23 +133,23 @@ char	**find_dollar_and_change(t_shell *mini) //dolarlari anlamladirmak icin kull
 
 	i = 0;
 	c_quotes = 0;
-	while (mini->parse[i])
+	while (mini.parse[i])
 	{
 		j = 0;
-		while (mini->parse[i][j])
+		while (mini.parse[i][j])
 		{
-			if (mini->parse[i][j] == '$')
-				if (check_single_quotes(mini, i, j + 1, ++c_quotes))
+			if (mini.parse[i][j] == '$')
+				if (check_single_quotes(i, j + 1, ++c_quotes))
 				{
-					tmp = get_env(get_after_dollar(mini->parse[i], j + 1), mini);
+					tmp = get_env(get_after_dollar(mini.parse[i], j + 1));
 					if (!tmp)
-						mini->parse[i] = switch_to_zero(i, mini); //NULL oldugu durumda yapmasini istedigimiz
+						mini.parse[i] = switch_to_zero(i); //NULL oldugu durumda yapmasini istedigimiz
 					else
-						mini->parse[i] = switch_to_parse(tmp, i, mini); //normal ekleme islemi.
+						mini.parse[i] = switch_to_parse(tmp, i); //normal ekleme islemi.
 				}
 			j++;
 		}
 		i++;
 	}
-	return (check_or_fix_switch(mini, i));
+	return (check_or_fix_switch(i));
 }

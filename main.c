@@ -1,46 +1,59 @@
 #include "minishell.h"
 
-void	ft_pipe_count(t_shell *mini) //pipe sayimizi tutuyor ileride pipe counta gore struct ve fork yapicaz.
-{
-	int i;
+t_shell	mini;
 
-	i = 0;
-	while (mini->all_line[i])
+void	ctrl_d(char *input)
+{
+	if (!input)
 	{
-		if (mini->all_line[i] == '|')
-			mini->pipe_count++;
-		i++;
+		printf("exit\n");
+		exit (mini.error);	
 	}
+}
+
+void	ctrl_c(int sig)
+{
+	(void)sig;
+	mini.ignore = TRUE;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	write(1, "\033[A", 3);
+}
+
+void	init_app(char **env)
+{
+	mini.error = 0;
+	mini.path = NULL;
+	mini.parent_pid = getpid();
+	mini.env = set_env(env);
+	set_paths();
 }
 
 int main(int ac, char **av, char **clone_env)
 {
 	char	*input;
-	int i;
-	t_shell mini;
 
-	i = 0;
-	ac = 0;
-	av = 0;
-	mini.env = clone_env;
-	mini.parent_pid = getpid();
-	do
+	init_app(clone_env);
+	while (av && ac)
 	{
-		write(1, "\033[33m", 5);
+		mini.ignore = FALSE;
+		signal(SIGINT, &ctrl_c);
+		signal(SIGQUIT, SIG_IGN);
+		write(1, "\033[32m", 5);
 		input = readline("MiniShell$ ");
 		write(1, "\033[0m", 4);
+		ctrl_d(input);
 		if (*input)
 		{
+			add_history(input);
+			ft_contqoute(input);
+			ft_pipecheck(input);
+			ft_pipe_count(input);
 			mini.all_line = ft_strdup(input);
-			ft_contqoute(&mini);
-			ft_pipecheck(&mini);
-			ft_pipe_count(&mini);
-			ft_parse(&mini);
-			printf("%s\n", mini.first_struct->string);
-			//ft_lexer(&mini);
+			ft_parse();
+			ft_lexer(&mini);
 		}
 		free(input);
-	} while (mini.all_line != 0);
+	}
 	return (0);
 }
 

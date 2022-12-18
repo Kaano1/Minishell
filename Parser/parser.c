@@ -1,25 +1,34 @@
 #include "../minishell.h"
 
-void	ft_create_struct(t_shell *mini)
+t_command	*init_struct(void)
+{
+	t_command	*command;
+
+	command = ft_calloc(sizeof(t_command), 1);
+	pipe(command->fd);
+	command->pid = -1;
+	command->command = ft_calloc(sizeof(char *), 1);
+	command->string = ft_calloc(sizeof(char), 1);
+	command->redirect = ft_calloc(sizeof(char *), 1);
+	command->next = NULL;
+	return (command);
+}
+
+void	ft_create_struct(void)
 {
 	int i;
 
-	mini->first_struct = malloc(sizeof(t_command));
-	mini->iter = mini->first_struct;
-	i = 0;
-	while (i < mini->pipe_count + 1)
+	mini.iter = init_struct();
+	mini.first_struct = mini.iter;
+	i = 1;
+	while (i < mini.pipe_count + 1)
 	{
-		pipe(mini->first_struct->fd);
-		mini->first_struct->pid = -1;
-		mini->first_struct->next = malloc(sizeof(t_command));
-		mini->first_struct->command = ft_calloc(sizeof(char *), 1);
-		mini->first_struct->string = ft_calloc(sizeof(char *), 1);
-		mini->first_struct->redirect = ft_calloc(sizeof(char *), 1);
-		mini->first_struct = mini->first_struct->next;
+		pipe(mini.iter->fd);
+		mini.iter->next = init_struct();
+		mini.iter = mini.iter->next;
 		i++;
 	}
-	mini->first_struct->next = 0;
-	mini->first_struct = mini->iter;
+	mini.iter = mini.first_struct;
 }
 
 size_t	len_word2(char **s)
@@ -68,20 +77,37 @@ char	*ft_join_arg(char **mini) //double pointerli degiskenimizi single pointerli
 }
 
 
-void	ft_parse(t_shell *mini)
+void	ft_parse(void)
 {
-	int		i;
-
-	i = 0;
-	ft_create_struct(mini); //t_command structını pipe sayısı kadar üretiyoruz
-	mini->parse = ft_mysplit(mini->all_line, '|', 1);
-	rediretion_cut_add(mini); //ahmet -d < "ceren" < noli | ceren < naptin
-	mini->all_line = ft_join_arg(mini->parse);
-	mini->parse = ft_mysplit(mini->all_line, ' ', 1);
-	mini->check_parser = ft_mysplit(mini->all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
-	mini->parse = find_dollar_and_change(mini);
-	mini->all_line = ft_join_arg(mini->parse);
-	mini->parse = ft_mysplit(mini->all_line, '|', 1); 
+	ft_create_struct(); //t_command structını pipe sayısı kadar üretiyoruz
+	mini.parse = ft_mysplit(mini.all_line, '|', 1);
+	rediretion_cut_add(); //ahmet -d < "ceren" < noli | ceren < naptin
+	free(mini.all_line);
+	mini.all_line = ft_join_arg(mini.parse);
+	mini.parse = ft_mysplit(mini.all_line, ' ', 1);
+	mini.check_parser = ft_mysplit(mini.all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
+	mini.parse = find_dollar_and_change();
+	mini.all_line = ft_join_arg(mini.parse);
+	mini.parse = ft_mysplit(mini.all_line, '|', 1); 
 	//pipelardan bolme ve tirnak temizleme islemi yapiyoruz
-	ft_add_struct(mini); //continue again
+	ft_add_struct(); //continue again
+	
+	
+	
+	/*while (mini.iter) //parser deneme
+	{
+		printf("command[0] = %s\n", mini.iter->command[0]);
+		printf("flag = %s\n", mini.iter->command[1]);
+		printf("string = %s\n", mini.iter->string);
+		int	j;
+		j = 0;
+		while (mini.iter->redirect[j])
+		{
+			printf("redirect[%d] = %s\n", j, mini.iter->redirect[j]);
+			j++;
+		}
+		i++;
+		printf("\n\n\n");
+		mini.iter = mini.iter->next;
+	}*/
 }
