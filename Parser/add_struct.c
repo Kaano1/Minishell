@@ -29,8 +29,12 @@ int	where_is_start(int count_word, char *str)
 
 int	where_is_end(int column, int start, char **parse, int type)
 {
-	while (parse[column][start] && parse[column][start] != 32)
+	while (parse[column][start])
+	{
 		start++;
+		if (parse[column][start - 1] == type && parse[column][start] == 32)
+			break;
+	}
 	while (parse[column][start] == type)
 		start--;
 	return (start);

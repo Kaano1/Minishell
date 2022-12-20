@@ -50,7 +50,8 @@ int main(int ac, char **av, char **clone_env)
 			ft_pipe_count(input);
 			mini.all_line = ft_strdup(input);
 			ft_parse();
-			start_cmd();
+			ft_lexer();
+			//start_cmd();
 		}
 		free(input);
 	}
