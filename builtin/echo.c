@@ -8,49 +8,49 @@ void	put_str(char *str, int i)
 		i++;
 	}
 }
-// -n flag varsa index yoksa 0 döndürür
-// command[1][i] 
-// ----- kontrolü yap
 
 int	ft_echo_flag_check(void)
 {
-	int i;
-	int is_nflag;
+	int		i;
+	int		is_nflag;
+	int		j;
 
 	i = 0;
+	j = 1;
 	is_nflag = 0;
-	while(mini.iter->string[i] == '-' || mini.iter->string[i] == ' ')
+	while (mini.iter->command[j])
 	{
-		if((mini.iter->string[i] == '-') && (mini.iter->string[i + 1] == 'n'))
-		{
-			i++;
-			while(mini.iter->string[i] == 'n' && mini.iter->string[i + 1] == 'n')
-				i++;
+		if (mini.iter->command[j][i] == '-' && \
+		mini.iter->command[j][i + 1] == 'n')
 			is_nflag = 1;
+		else
+		{
+			put_str(mini.iter->command[j], 0);
+			write(1, " ", 1);
 		}
-		i++;
+		j++;
 	}
-	if(!is_nflag)
-		return(0);
-	return(1);
+	if (!is_nflag)
+		return (0);
+	return (1);
 }
 
 int	ft_echo(void)
 {
-	int	i;
+	int		j;
+	int		i;
 
-    i = ft_echo_flag_check();
-	if (!mini.iter->string[i])
+	j = 0;
+	i = ft_echo_flag_check();
+	if (!mini.iter->string[j])
 	{
 		write(1, "\n", 1);
 		return (0);
-    }
-	put_str(mini.iter->string, i);
-    i = ft_echo_flag_check();
-    if(!i)
-        write(1, "\n", 1);
-	/*if (!is_parent())
-		exit(EXIT_SUCCESS);*/
-    return(0);
-
+	}
+	put_str(mini.iter->string, j);
+	if (!i)
+		write(1, "\n", 1);
+	if (!is_parent())
+		exit(EXIT_SUCCESS);
+	return (0);
 }

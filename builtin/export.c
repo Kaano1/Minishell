@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-
 int	check_env(char *str)
 {
 	char	*head;
@@ -35,7 +34,7 @@ void	add_env(char *str)
 	}
 	new_env[i] = ft_strdup(str);
 	free_array(mini.env);
-	mini.env= new_env;
+	mini.env = new_env;
 }
 
 int	is_include(char *str)
@@ -66,10 +65,10 @@ void	ft_export(void)
 {
 	int		pos;
 	char	*tmp;
-    int i;
+	int		i;
 
-    i = 0;
-    while (mini.iter->string[i])
+	i = 0;
+	while (mini.iter->string[i])
 	{
 		if (check_env(mini.iter->string))
 		{
@@ -86,6 +85,6 @@ void	ft_export(void)
 		mini.iter->string++;
 	}
 	set_paths();
-	/*if (!is_parent())
-		exit (EXIT_SUCCESS);*/
+	if (!is_parent())
+		exit (EXIT_SUCCESS);
 }

@@ -1,26 +1,27 @@
 #include "../minishell.h"
 
-char	*switch_to_zero(int	prs_index)
+char	*switch_to_zero(int k)
 {
 	int	i;
 	int	j;
 
 	i = 0;
 	j = 0;
-	while (mini.parse[prs_index][i])
+	while (mini.parse[k][i])
 	{
-		if (mini.parse[prs_index][i] == '$' && mini.parse[prs_index][i + 1] !=  ' ' && mini.parse[prs_index][i] != 0)
+		if (mini.parse[k][i] == '$' && mini.parse[k][i + 1] != ' '\
+		&& mini.parse[k][i] != 0)
 		{
-			while (mini.parse[prs_index][i] != 32 && mini.parse[prs_index][i] != 0)
+			while (mini.parse[k][i] != 32 && mini.parse[k][i] != 0)
 			{
 				i++;
 				j++;
 			}
-			break;
+			break ;
 		}
 		i++;
 	}
-	return (create_switch_to_zero(i, j, prs_index));
+	return (create_switch_to_zero(i, j, k));
 }
 
 char	*create_switch_to_zero(int i, int j, int prs_index)
@@ -48,42 +49,45 @@ char	*create_switch_to_zero(int i, int j, int prs_index)
 	return (str);
 }
 
-char	*switch_to_parse(char *tmp, int	prs_index) //dogrudan ekleme islemi yapar ve stringi degistirir.
+char	*switch_shorter(int k, int i, int j, char *tmp)
 {
-	char	*str;
 	int		tm_i;
+	char	*str;
+
+	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
+	tm_i = 0;
+	while (mini.parse[k][j] != ' ' && mini.parse[k][j] != 0 && \
+	mini.parse[k][j] != 34 && mini.parse[k][j] != 39)
+		j++;
+	while (tmp[tm_i])
+	{
+		str[i] = tmp[tm_i];
+		i++;
+		tm_i++;
+	}
+	return (str);
+}
+
+char	*switch_to_parse(char *tmp, int k)
+{
 	int		j;
 	int		i;
 	int		key;
-	
-	tm_i = 0;
+	char	*str;
+
 	i = 0;
 	j = 0;
 	key = 1;
-	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1); //bosluklardan her bir kelime ayrildigi icin yanlizca $HOME(/home/ayumusak) kadar alan alinsa yeter.
-	while (ft_strlen(mini.parse[prs_index]) > j)
+	while (ft_strlen(mini.parse[k]) > j)
 	{
-		if (mini.parse[prs_index][j] == '$' && key) //$HOME bulunduysa giriceğiz
-		{		
+		if (mini.parse[k][j] == '$' && key)
+		{
 			key = 0;
-			while (mini.parse[prs_index][j] != ' ' && mini.parse[prs_index][j] != 0 && \
-				mini.parse[prs_index][j] != 34 && mini.parse[prs_index][j] != 39) //$HOME sonuna gidiyoruz burada eğer string "$HOME ahmet" şeklinde verildiyse $HOME kısmına /home/ayumusak yazdıktan sonra "ahmet" kelimesinide ekleyebilsin.
-				j++;
-			while (tmp[tm_i])
-			{
-				str[i] = tmp[tm_i]; //$HOME kısma karşılık gelen veri teker teker yazdırılıyor.
-				i++;
-				tm_i++;
-			}
+			str = switch_shorter(k, i, j, tmp);
 		}
 		else
-		{
-			str[i] = mini.parse[prs_index][j]; //normal icerisine ekleme islemi yapiliyor. yani /home/ayumusaktan sonra gelen ahmet burada yazdırılıyor.
-			i++;
-			j++;
-		}
+			str[i++] = mini.parse[k][j++];
 	}
 	str[i] = 0;
-	//free(mini->parse[prs_index]); //buna MAC te bakıcağım şuan pek emin olamadım doğru çalışıp çalışmadığından.
 	return (str);
 }

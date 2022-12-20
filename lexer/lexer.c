@@ -29,28 +29,33 @@ void function_exec(char *tmp)
 	free(exec);
 }
 
-void	control(char *tmp, t_shell *mini)
+void	control(char *tmp)
 {
 	if (!ft_strncmp(tmp, "echo", 4))
 		ft_echo();
-	else if(!ft_strncmp(tmp, "cd", 2))
+	else if (!ft_strncmp(tmp, "cd", 2))
 		ft_cd();
-	else if(!ft_strncmp(tmp, "env", 3))
+	else if (!ft_strncmp(tmp, "env", 3))
 		ft_env();
-	else if(!ft_strncmp(tmp, "exit", 4))
+	else if (!ft_strncmp(tmp, "exit", 4))
 		ft_exit();
-	else if(!ft_strncmp(tmp, "pwd", 3))
+	else if (!ft_strncmp(tmp, "pwd", 3))
 		ft_pwd();
-	else if(!ft_strncmp(tmp, "export", 6))
+	else if (!ft_strncmp(tmp, "export", 6))
 		ft_export();
-	else if(!ft_strncmp(tmp, "unset", 5))
+	else if (!ft_strncmp(tmp, "unset", 5))
 		ft_unset();
-
+	else
+	{
+		put_str("bash: ", 0);
+		put_str(mini.iter->command[0], 0);
+		put_str(" command not found\n", 0);
+	}
 	//else
 		//function_exec(tmp);
 }
 
-void    ft_lexer(t_shell *mini)
+void    ft_lexer(void)
 {
-	control(mini->iter->command[0], mini);
+	control(mini.iter->command[0]);
 }

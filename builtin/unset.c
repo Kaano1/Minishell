@@ -36,6 +36,6 @@ void	ft_unset(void)
 		mini.iter->string++;
 	}
 	set_paths();
-	//if (!is_parent())
-		//exit (EXIT_SUCCESS);
+	if (!is_parent())
+		exit (EXIT_SUCCESS);
 }

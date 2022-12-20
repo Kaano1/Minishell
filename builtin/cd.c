@@ -11,7 +11,6 @@ static void	put_error(char *str)
 	put_str_fd(2, str);
 }
 
-
 int	ft_cd(void)
 {
 	int		err;
@@ -20,8 +19,8 @@ int	ft_cd(void)
 	if (!mini.iter->string)
 	{
 		home = getenv("HOME");
-        chdir(home);
-    }
+		chdir(home);
+	}
 	else
 	{
 		err = chdir(mini.iter->string);
@@ -31,7 +30,7 @@ int	ft_cd(void)
 			return (1);
 		}
 	}
-	/*if (!is_parent())
-		exit(errno);*/
+	if (!is_parent())
+		exit(errno);
 	return (0);
 }

@@ -11,12 +11,13 @@ t_command	*init_struct(void)
 	command->string = ft_calloc(sizeof(char), 1);
 	command->redirect = ft_calloc(sizeof(char *), 1);
 	command->next = NULL;
+	command->prev = NULL;
 	return (command);
 }
 
 void	ft_create_struct(void)
 {
-	int i;
+	int		i;
 
 	mini.iter = init_struct();
 	mini.first_struct = mini.iter;
@@ -47,14 +48,14 @@ size_t	len_word2(char **s)
 	return (len);
 }
 
-char	*ft_join_arg(char **mini) //double pointerli degiskenimizi single pointerli yapiyoruz.
+char	*ft_join_arg(char **mini)
 {
 	char	*str;
 	int		i;
 	int		j;
 	int		save_i;
 
-	str = malloc(sizeof(char) * len_word2(mini)); //butun stringlerin uzunluguna gore alan ayiriyoruz
+	str = malloc(sizeof(char) * len_word2(mini));
 	j = 0;
 	save_i = 0;
 	while (mini[j])
@@ -69,45 +70,24 @@ char	*ft_join_arg(char **mini) //double pointerli degiskenimizi single pointerli
 			save_i++;
 		}
 		if (mini[j + 1] != 0)
-        	str[save_i++] = 32;
+			str[save_i++] = 32;
 		j++;
 	}
-    str[save_i] = 0;
-    return (str);
+	str[save_i] = 0;
+	return (str);
 }
-
 
 void	ft_parse(void)
 {
-	ft_create_struct(); //t_command structını pipe sayısı kadar üretiyoruz
+	ft_create_struct();
 	mini.parse = ft_mysplit(mini.all_line, '|', 1);
-	rediretion_cut_add(); //ahmet -d < "ceren" < noli | ceren < naptin
+	rediretion_cut_add();
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
 	mini.parse = ft_mysplit(mini.all_line, ' ', 1);
-	mini.check_parser = ft_mysplit(mini.all_line, ' ', 1); //mini.parse '|' lardan arinmis ve "" lerden ayrilmis olucak bazi kontroller icin bunu yaptik
+	mini.check_parser = ft_mysplit(mini.all_line, ' ', 1);
 	mini.parse = find_dollar_and_change();
 	mini.all_line = ft_join_arg(mini.parse);
-	mini.parse = ft_mysplit(mini.all_line, '|', 1); 
-	//pipelardan bolme ve tirnak temizleme islemi yapiyoruz
-	ft_add_struct(); //continue again
-	
-	
-	
-	/*while (mini.iter) //parser deneme
-	{
-		printf("command[0] = %s\n", mini.iter->command[0]);
-		printf("flag = %s\n", mini.iter->command[1]);
-		printf("string = %s\n", mini.iter->string);
-		int	j;
-		j = 0;
-		while (mini.iter->redirect[j])
-		{
-			printf("redirect[%d] = %s\n", j, mini.iter->redirect[j]);
-			j++;
-		}
-		i++;
-		printf("\n\n\n");
-		mini.iter = mini.iter->next;
-	}*/
+	mini.parse = ft_mysplit(mini.all_line, '|', 1);
+	ft_add_struct();
 }

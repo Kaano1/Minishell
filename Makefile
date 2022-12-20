@@ -11,6 +11,7 @@ SRC	= main.c \
 	./Parser/ft_mysplit.c \
 	./Parser/parser.c \
 	./Parser/find_dollar.c \
+	./Parser/find_dollar_2.c \
 	./Parser/switch_to.c \
 	./Parser/add_struct.c \
 	./Parser/parser_help/add_command.c \
@@ -28,7 +29,7 @@ SRC	= main.c \
 	./builtin/pwd.c \
 	./builtin/export.c \
 	./builtin/unset.c \
-	./Lexer/lexer.c 
+	./Lexer/lexer.c  
 
 OBJ = $(SRC:.c=.o)
 

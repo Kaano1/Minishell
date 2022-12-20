@@ -10,6 +10,6 @@ void	ft_pwd(void)
 	else
 		put_strnl_fd(1, way);
 	free(way);
-	//if (!is_parent())
-		//exit(errno);
+	if (!is_parent())
+		exit(errno);
 }

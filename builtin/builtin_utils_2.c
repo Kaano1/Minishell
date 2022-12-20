@@ -18,21 +18,6 @@ void	free_array(char **arr)
 	free(arr);
 }
 
-/*void	set_paths(void)
-{
-	char	*paths;
-
-	if (mini.path)
-		free_array(mini.path);
-	paths = get_env("PATH");
-	if (!(*paths))
-		mini.path = NULL;
-	else
-		mini.path = ft_mysplit(paths, ':', 1);
-	free(paths);
-}*/
-
-
 int	env_len(void)
 {
 	char	**env;
@@ -41,4 +26,9 @@ int	env_len(void)
 	while (*env)
 		env++;
 	return (env - mini.env);
+}
+
+int	is_parent(void)
+{
+	return (mini.parent_pid == getpid());
 }

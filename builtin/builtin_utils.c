@@ -10,6 +10,7 @@ static void	put_error(char *str)
 	put_str_fd(2, ": ");
 	put_str_fd(2, str);
 }
+
 void	put_str_fd(int fd, char *str)
 {
 	write(fd, str, ft_strlen(str));

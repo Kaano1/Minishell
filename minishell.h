@@ -27,6 +27,7 @@ typedef struct s_command
 	char		*string;
 	char 		**redirect;
 	struct s_command	*next;
+	struct s_command	*prev;
 } t_command;
 
 typedef struct s_shell
@@ -69,11 +70,13 @@ char	*get_after_dollar(char *parse, int index);
 char	*get_env(char *str);
 int		check_single_quotes(int i, int j, int c_quotes);
 char	**check_or_fix_switch(int count_parse);
+char	*split_env(char *str);
 
 //Parser/switch_to.c
 char	*switch_to_parse(char *tmp, int	prs_index);
 char	*create_switch_to_zero(int i, int j, int prs_index);
 char	*switch_to_zero(int	prs_index);
+char	*switch_shorter(int k, int i, int j, char *tmp);
 
 //Parser/parse.c
 void	ft_parse(void);
@@ -89,13 +92,55 @@ size_t	if_word_len(char const *s, char c, int key);
 char	**ft_mysplit(char *str, char c, int key);
 
 //Parser/building.c
-void	ft_building();
+void	ft_building(void);
 
 //Parser/add_struct.c
 char	*ft_add(int row, int column, char **parse, int key);
 int		where_is_start(int count_word, char *str);
 char	*ft_add_string(int index, int start);
 void	ft_add_struct(void);
+
+//redirect/heredoc.c
+void	heredoc(int *fd, char *endline);
+void	close_heredoc(int sig);
+
+//redirect/input.c
+void	input(char *file);
+
+//redirect/output.c
+void	output(char *file, int mode);
+
+//redirect/redirect.c
+
+
+//cmd/cmd.c
+void	start_cmd(void);
+
+//builtin
+int		ft_cd(void);
+int		ft_echo(void);
+int		ft_exit(void);
+void	ft_env(void);
+static void put_error(char *str);
+void	put_str_fd(int fd, char *str);
+void	put_strnl_fd(int fd, char *str);
+void	ft_pwd(void);
+void	ft_export(void);
+void	ft_unset(void);
+int		is_whitespace(char c);
+void	free_array(char **arr);
+void	set_paths(void);
+int		env_len(void);
+int		is_parent(void);
+void	put_str(char *str, int i);
+
+//lexer/lexer.c
+void	ft_lexer(void);
+
+//utils
+void	ft_pipe_count(char *str);
+char	**set_env(char **env);
+void	set_paths(void);
 
 //ft_error.c
 void	ft_error(char *str);
@@ -108,29 +153,5 @@ void	ft_contqoute(char *str);
 //main.c
 void	init_app(char **env);
 int		main(int ac, char **av, char **clone_env);
-
-//builtin
-int	ft_cd(void);
-int	ft_echo(void);
-int	ft_exit(void);
-int	ft_env(void);
-static void	put_error(char *str);
-void	put_str_fd(int fd, char *str);
-void	put_strnl_fd(int fd, char *str);
-void	ft_pwd(void);
-void	ft_export(void);
-void	ft_unset(void);
-int		is_whitespace(char c);
-void	free_array(char **arr);
-void	set_paths(void);
-int		env_len(void);
-
-//lexer
-void    ft_lexer(t_shell *mini);
-
-//utils
-void	ft_pipe_count(char *str);
-char	**set_env(char **env);
-void	set_paths();
 
 #endif
