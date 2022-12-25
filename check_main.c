@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int ft_space_check(int len, char *str) //all_linenı [0] indisini bosluklardan gectikten sonra ilk gordugu karakter yapıyor ve 
+int pipe_space_check(int len, char *str) //all_linenı [0] indisini bosluklardan gectikten sonra ilk gordugu karakter yapıyor ve 
 {										   //arkandanda ilk gordugu karakterin indis numarasını alıyor bu sekilde bas ve sondaki ilk karakterlere bakiyoruz.
 	while (*str == ' ')
 		str++;
@@ -10,7 +10,7 @@ int ft_space_check(int len, char *str) //all_linenı [0] indisini bosluklardan g
 	return (len);
 }
 
-void 	ft_pipecheck(char *str)
+int 	ft_pipecheck(char *str)
 {
 	int len;
 	int	i;
@@ -18,9 +18,9 @@ void 	ft_pipecheck(char *str)
 
 	i = 0;
 	mini.pipe_count = 0;
-	len = ft_space_check(ft_strlen(str) - 1, str);
+	len = pipe_space_check(ft_strlen(str) - 1, str);
 	if (str[0] == '|' || str[len] == '|') //basta veya sonra pipe varsa hata mesaji basip cikiyoruz.
-		ft_error("WRONG!!!");
+		ft_error("PIPE WRONG!!!");
 	while (str[i]) //double pipe olma durumu soz konusu olursa double pipein arkasina NULL yapistiriyoruz
 	{
 		if (str[i] != ' ')
@@ -32,9 +32,10 @@ void 	ft_pipecheck(char *str)
 				str[len] = 0; //NULL yapistirma islemi oldugumuz yere kadar yapiyor.
 		}
 	}
+	return (1);
 }
 
-void	ft_contqoute(char *str) //cift tirnak veya tek tıragin kapatilip kapatilmadigina bakiyoruz.
+int	ft_contqoute(char *str) //cift tirnak veya tek tıragin kapatilip kapatilmadigina bakiyoruz.
 {
 	int		i;
 	int		once;
@@ -58,4 +59,5 @@ void	ft_contqoute(char *str) //cift tirnak veya tek tıragin kapatilip kapatilma
 	}
 	if (once % 2 != 0 || twice % 2 != 0)
 		ft_error("Missing character!");
+	return (1);
 }

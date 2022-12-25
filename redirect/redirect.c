@@ -1,12 +1,29 @@
 #include "../minishell.h"
 
-void	get_all_inputs(t_process *process)
+int	is_operator(char *str)
+{
+	if (!str)
+		return (0);
+	if (str[0] == '<' && str[1] == '<')
+		return (HERE_DOC);
+	if (str[0] == '>' && str[1] == '>')
+		return (RED_APPEND);
+	if (str[0] == '<')
+		return (RED_INPUT);
+	if (str[0] == '>')
+		return (RED_OUTPUT);
+	if (str[0] == '|')
+		return (PIPE);
+	return (0);
+}
+
+void	get_all_inputs(t_command *process)
 {
 	int		i;
 	char	**redirects;
 
 	i = 0;
-	redirects = mini.first_struct->redirect; 
+	redirects = mini.first_struct->redirect;
 	while (redirects[i])
 	{
 		if (is_operator(redirects[i]) == RED_INPUT)
@@ -17,7 +34,7 @@ void	get_all_inputs(t_process *process)
 	}
 }
 
-void	set_all_outputs(t_process *process)
+void	set_all_outputs(t_command *process)
 {
 	int		i;
 	char	**redirects;
@@ -54,41 +71,3 @@ void	fill_all_heredoc(void)
 		process = process->next;
 	}
 }
-
-
-
-
-/*int redirect(char **str)
-{
-    int i = 0;
-    char *file_name;
-
-    while(str[i])
-    {
-        if(*str[i] == '>')
-        {
-            file_name = str[i + 1];
-            input(file_name, '>');
-        }
-        else if(*str[i] == '>>')
-        {
-            file_name = str[i + 1];
-            input(file_name, '>>');
-        }
-        else if(*str)
-        i += 2;
-    }
-}
-
-int main(int ac, char **av)
-{
-    char **str;
-    str = (char **)malloc(sizeof(char *));
-    char *str[0] = '>';
-    char *str[1] = 'Ahmet';
-    char *str[2] = '>>';
-    char *str[3] = 'Mehmet';
-    
-    redirect(str);
-
-}*/

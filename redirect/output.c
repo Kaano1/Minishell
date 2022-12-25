@@ -9,6 +9,7 @@ void	output(char *file, int mode)
 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	else if (mode == APPEND)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0777);
+	printf("output: %d\n", fd);
 	if (fd == -1)
 	{
 		perror("minishell");

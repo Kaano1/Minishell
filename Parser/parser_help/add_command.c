@@ -49,12 +49,12 @@ void	where_is_command(int index, int *catch)
 
 	i = 1;
 	start = where_is_start(i, mini.parse[index]);
-	start = 0;
 	if (start == -1 || !check_string(mini.parse[index], start))
 	{
 		mini.iter->command[0] = 0;
 		return ;
 	}
+	start = 0;
 	mini.iter->command = ft_calloc(sizeof(char *), len_word(mini.parse[index], ' ') + 1);
 	mini.iter->command[0] = ft_add(start, index, mini.parse, 1);
 	word = ft_word_count(mini.parse[index]);

@@ -2,7 +2,7 @@ CC	= gcc -g
 RM	= rm -rf
 NAME	= minishell
 LIBFT	= ./Libft/libft.a
-CFLGAS	= -g #-fsanitize=address
+CFLGAS	= -g #ls-fsanitize=address
 READLİME = -lreadline -lncurses
 
 SRC	= main.c \
@@ -17,9 +17,6 @@ SRC	= main.c \
 	./Parser/parser_help/add_command.c \
 	./Parser/parser_help/add_redirect.c \
 	./Parser/parser_help/add_redirect2.c \
-	./utils/set_env.c \
-	./utils/set_paths.c \
-	./utils/ft_pipe_count.c \
 	./builtin/echo.c \
 	./builtin/cd.c \
 	./builtin/exit.c \
@@ -29,14 +26,26 @@ SRC	= main.c \
 	./builtin/pwd.c \
 	./builtin/export.c \
 	./builtin/unset.c \
-	./Lexer/lexer.c  
+	./Lexer/lexer.c \
+	./cmd/close.c \
+	./cmd/cmd.c \
+	./cmd/run_cmd.c \
+	./redirect/heredoc.c \
+	./redirect/input.c \
+	./redirect/output.c \
+	./redirect/redirect.c \
+	./utils/contain.c \
+	./utils/set_env.c \
+	./utils/set_paths.c \
+	./utils/ft_pipe_count.c \
+	./utils/just_space.c \
 
 OBJ = $(SRC:.c=.o)
 
 all : $(LIBFT) $(NAME)
 		
 $(NAME): $(OBJ)
-	$(CC) $(CFLGAS) $(SRC) $(LIBFT) -o $(NAME) $(READLİME)
+	$(CC) $(CFLGAS) $(SRC) $(LIBFT) -o $(NAME) $(READLİME) -g
 
 $(LIBFT):
 	make -sC ./Libft

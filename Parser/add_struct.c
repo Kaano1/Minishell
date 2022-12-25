@@ -104,6 +104,7 @@ char	*ft_add_string(int index, int start)
 		return (0);
 	str = ft_calloc(sizeof(char *), \
 	(len_word(mini.parse[index], 32) - start) + 1);
+    int c = (len_word(mini.parse[index], 32) - start+ 1);
 	j = 0;
 	i = 0;
 	while (start <= len_word(mini.parse[index], 32))

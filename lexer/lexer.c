@@ -1,5 +1,42 @@
 #include "../minishell.h"
 
+int builtin_check(char *tmp)
+{
+    if (!ft_strncmp(tmp, "echo", 4))
+        return (1);
+    else if (!ft_strncmp(tmp, "cd", 2))
+        return (1);
+    else if (!ft_strncmp(tmp, "env", 3))
+        return (1);
+    else if (!ft_strncmp(tmp, "exit", 4))
+        return (1);
+    else if (!ft_strncmp(tmp, "pwd", 3))
+        return (1);
+    else if (!ft_strncmp(tmp, "export", 6))
+        return (1);
+    else if (!ft_strncmp(tmp, "unset", 5))
+        return (1);
+    else
+        return (0);
+}
+void    builtin_running(char *tmp)
+{
+    if (!ft_strncmp(tmp, "echo", 4))
+        ft_echo();
+    else if (!ft_strncmp(tmp, "cd", 2))
+        ft_cd();
+    else if (!ft_strncmp(tmp, "env", 3))
+        ft_env();
+    else if (!ft_strncmp(tmp, "exit", 4))
+        ft_exit();
+    else if (!ft_strncmp(tmp, "pwd", 3))
+        ft_pwd();
+    else if (!ft_strncmp(tmp, "export", 6))
+        ft_export();
+    else if (!ft_strncmp(tmp, "unset", 5))
+        ft_unset();
+}
+
 char	*ft_exec_join(char *tmp, char *bin)
 {
 	char *str;
@@ -27,35 +64,4 @@ void function_exec(char *tmp)
 		printf("girdi");
 	}*/
 	free(exec);
-}
-
-void	control(char *tmp)
-{
-	if (!ft_strncmp(tmp, "echo", 4))
-		ft_echo();
-	else if (!ft_strncmp(tmp, "cd", 2))
-		ft_cd();
-	else if (!ft_strncmp(tmp, "env", 3))
-		ft_env();
-	else if (!ft_strncmp(tmp, "exit", 4))
-		ft_exit();
-	else if (!ft_strncmp(tmp, "pwd", 3))
-		ft_pwd();
-	else if (!ft_strncmp(tmp, "export", 6))
-		ft_export();
-	else if (!ft_strncmp(tmp, "unset", 5))
-		ft_unset();
-	else
-	{
-		put_str("bash: ", 0);
-		put_str(mini.iter->command[0], 0);
-		put_str(" command not found\n", 0);
-	}
-	//else
-		//function_exec(tmp);
-}
-
-void    ft_lexer(void)
-{
-	control(mini.iter->command[0]);
 }

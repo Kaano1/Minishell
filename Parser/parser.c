@@ -7,9 +7,9 @@ t_command	*init_struct(void)
 	command = ft_calloc(sizeof(t_command), 1);
 	pipe(command->fd);
 	command->pid = -1;
-	command->command = ft_calloc(sizeof(char *), 1);
-	command->string = ft_calloc(sizeof(char), 1);
-	command->redirect = ft_calloc(sizeof(char *), 1);
+	command->command = NULL;
+	command->string = NULL;
+	command->redirect = NULL;
 	command->next = NULL;
 	command->prev = NULL;
 	return (command);
@@ -76,7 +76,6 @@ char	*ft_join_arg(char **mini)
 	str[save_i] = 0;
 	return (str);
 }
-
 void	ft_parse(void)
 {
 	ft_create_struct();
@@ -84,10 +83,13 @@ void	ft_parse(void)
 	rediretion_cut_add();
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
+    free_array((mini.parse));
 	mini.parse = ft_mysplit(mini.all_line, ' ', 1);
-	mini.check_parser = ft_mysplit(mini.all_line, ' ', 1);
 	mini.parse = find_dollar_and_change();
+    free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
+	free_array((mini.parse));
 	mini.parse = ft_mysplit(mini.all_line, '|', 1);
 	ft_add_struct();
+	free_array(mini.parse);
 }

@@ -18,11 +18,26 @@
 
 # define TRUE 1
 # define FALSE 0
+# define CHILD_PROCESS 0
+# define MAIN_PROCESS 1
+# define REPLACE 1
+# define APPEND 0
+
+enum e_ttype
+{
+	PIPE = 1,
+	STRING,
+	HERE_DOC,
+	RED_INPUT,
+	RED_APPEND,
+	RED_OUTPUT
+};
 
 typedef struct s_command
 {
 	pid_t		pid;
 	int			fd[2];
+	int			heredoc_fd[2];
 	char		**command;
 	char		*string;
 	char 		**redirect;
@@ -36,7 +51,6 @@ typedef struct s_shell
 	int					ignore;
 	char				*all_line;
 	char				**parse;
-	char				**check_parser;
 	char				**env;
 	struct s_command	*first_struct;
 	struct s_command	*iter;
@@ -111,10 +125,27 @@ void	input(char *file);
 void	output(char *file, int mode);
 
 //redirect/redirect.c
-
+void	fill_all_heredoc(void);
+void	set_all_outputs(t_command *process);
+void	get_all_inputs(t_command *process);
+int	is_operator(char *str);
 
 //cmd/cmd.c
 void	start_cmd(void);
+void	wait_cmd(void);
+void	get_builtin(t_command *process);
+char	*get_path(char *cmd);
+void	check_dir(char *cmd);
+
+//cmd/close.c
+void	close_all_fd(void);
+void	close_heredoc_fd(t_command *process);
+
+//cmd/run_cmd.c
+void	run_cmd(t_command *process);
+void	cmd_route(t_command *process);
+void	heredoc_route(t_command *process);
+void	pipe_route(t_command *process);
 
 //builtin
 int		ft_cd(void);
@@ -133,22 +164,29 @@ void	set_paths(void);
 int		env_len(void);
 int		is_parent(void);
 void	put_str(char *str, int i);
+int		contain_heredoc(t_command *process);
+void	builtin_running(char *tmp);
+int		builtin_check(char *tmp);
+
 
 //lexer/lexer.c
-void	ft_lexer(void);
+
 
 //utils
 void	ft_pipe_count(char *str);
 char	**set_env(char **env);
-void	set_paths(void);
+int		just_space(char *str);
 
 //ft_error.c
-void	ft_error(char *str);
+int		ft_error(char *str);
+void	no_file_err(char *str);
+void	directory_err(char *str);
+void	command_err(char *str);
 
 //check_main.c
-int		ft_space_check(int len, char *str);
-void	ft_pipecheck(char *str);
-void	ft_contqoute(char *str);
+int		pipe_space_check(int len, char *str);
+int		ft_pipecheck(char *str);
+int		ft_contqoute(char *str);
 
 //main.c
 void	init_app(char **env);

@@ -42,16 +42,21 @@ int main(int ac, char **av, char **clone_env)
 		input = readline("MiniShell$ ");
 		write(1, "\033[0m", 4);
 		ctrl_d(input);
-		if (*input)
+		if (mini.ignore)
 		{
-			add_history(input);
-			ft_contqoute(input);
-			ft_pipecheck(input);
-			ft_pipe_count(input);
-			mini.all_line = ft_strdup(input);
-			ft_parse();
-			ft_lexer();
-			//start_cmd();
+			free(input);
+			input = malloc(1);
+		}
+		if (*input && !just_space(input))
+		{
+			if (ft_contqoute(input) && ft_pipecheck(input))
+			{
+				add_history(input);
+				ft_pipe_count(input);
+				mini.all_line = ft_strdup(input);
+				ft_parse();
+				start_cmd();
+			}
 		}
 		free(input);
 	}

@@ -27,6 +27,7 @@ void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burad
 
 	c = 0;
 	r = 0;
+	mini.iter->redirect = ft_calloc(sizeof(char *), 100000); 
 	while (r <= ft_redirect_len(parse[i]))
 	{
 		while (parse[i][c] != '>' && parse[i][c] != '<' && parse[i][c] != 0)
@@ -38,12 +39,12 @@ void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burad
 			break;
 		mini.iter->redirect[r] = ft_redirect(parse, i, c); //hangi redirect işareti olduğunu ekliyoruz
 		if (mini.iter->redirect[r][1] == '<' || mini.iter->redirect[r][1] == '>')
-			c++;
+			c++;	
 		c++;
 		r++;
 		while (parse[i][c] == ' ')
 			c++;
-		while (parse[i][c] == 34 || parse[i][c] == 39) //tırnakları geçiyoruz
+		while (parse[i][c] == 34 || parse[i][c] == 39) //tırnakları geçiyoruz.
 			c++;
 		mini.iter->redirect[r] = ft_calloc(sizeof(char), redirect_of_string_len(parse, i, c) + 1);
 		rc = 0;
@@ -59,8 +60,7 @@ void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burad
 		}
 		while (parse[i][c] == 34 || parse[i][c] == 39) //sonda kalan tırnakları geçiyoruz.
 			c++;
-		mini.iter->redirect[r][rc] = 0;
-		r++;
+		mini.iter->redirect[r++][rc] = 0;
 	}
 	mini.iter->redirect[r] = 0;
 }
@@ -111,6 +111,7 @@ char	*pipe_add(char *str, int count, int index)
 	}
 	result[i] = '|';
 	result[i + 1] = 0;
+	free(str);
 	return (result);
 }
 
