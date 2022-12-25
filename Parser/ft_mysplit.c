@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-size_t	if_word_len(char const *s, char c, int key)
+size_t	if_word_len(char const *s, char c)
 {
 	size_t	len;
 
@@ -43,15 +43,15 @@ size_t	len_word(char const *s, char c)
 	return (len);
 }
 
-char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int key)
+char	*mysplit_section(char ***res, char *s, int index, size_t *two_index)
 {
 	int	i;
 	int	j;
 
 	i = *two_index;
 	j = 0;
-	if (key == 1) //burda tirnagi dahil edip etmiyecegimize karar veriyoruz
-		res[0][index][i++] = s[j];
+	//burda tirnagi dahil edip etmiyecegimize karar veriyoruz
+	res[0][index][i++] = s[j];
 	if (s[j] == 34)
 	{
 		while (s[++j] != 34 && s[j] != 0)
@@ -62,37 +62,13 @@ char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int ke
 		while (s[++j] != 39 && s[j] != 0)
 			res[0][index][i++] = s[j];
 	}
-	if (key == 1) //tirnagi dahil ediyoruz ayni sekilde
-		res[0][index][i++] = s[j++];
-	else
-		j++;
+	//tirnagi dahil ediyoruz ayni sekilde
+	res[0][index][i++] = s[j++];
 	*two_index = i;
 	return ((char *)(s + j));
 }
 
-char	*continue_mysplit(char *s, int key)
-{
-	int	i;
-
-	i = 0;
-	if (*s == 34 && key == 0)
-	{
-		i++;
-		while (s[i] != 34 && s[i] != 0)
-			i++;
-	}
-	else if (*s == 39 && key == 0)
-	{
-		i++;
-		while (s[i] != 39 && s[i] != 0)
-			i++;
-	}
-	else
-		i++;
-	return ((char *)(s + i));
-}
-
-char	**ft_mysplit(char *s, char c, int key) //normal split gibi tek degisiklik keylerini kullanarak bir butun seklinde "  naber  "
+char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini kullanarak bir butun seklinde "  naber  "
 {												//gibi degerler alabiliyor olmamiz.
 	char	**res;
 	size_t	index;
@@ -109,12 +85,12 @@ char	**ft_mysplit(char *s, char c, int key) //normal split gibi tek degisiklik k
 	while (index < word_len)
 	{
 		while (*s == c && *s != '\0')
-			s = continue_mysplit(s, key); // ileriyoruz bir sonraki alinicak kelimeye kadar ama burdaki kod yanlizca ilerlemiyor tirnakta silebiliyor.
-		res[index] = (char *)malloc(sizeof(char) * (if_word_len(s, c, key) + 1));
+			s++; // ileriyoruz bir sonraki alinicak kelimeye kadar ama burdaki kod yanlizca ilerlemiyor tirnakta silebiliyor.
+		res[index] = (char *)malloc(sizeof(char) * (if_word_len(s, c) + 1));
 		two_index = 0;
 		while (*s != c && *s != '\0')
 			if (*s == 34 || *s == 39)
-				s = mysplit_section(&res, s, index, &two_index, key); //atama islemleri gerceklesiyor
+				s = mysplit_section(&res, s, index, &two_index); //atama islemleri gerceklesiyor
 			else
 				res[index][two_index++] = *s++;
 		res[index][two_index] = '\0';

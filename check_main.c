@@ -23,7 +23,7 @@ int 	ft_pipecheck(char *str)
 		ft_error("PIPE WRONG!!!");
 	while (str[i]) //double pipe olma durumu soz konusu olursa double pipein arkasina NULL yapistiriyoruz
 	{
-		if (str[i] != ' ')
+		if (str[i] != ' ' && str[i] != '\t')
 			c = str[i];
 		i++;
 		if (c == '|' && str[i] == '|') 

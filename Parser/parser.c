@@ -79,17 +79,17 @@ char	*ft_join_arg(char **mini)
 void	ft_parse(void)
 {
 	ft_create_struct();
-	mini.parse = ft_mysplit(mini.all_line, '|', 1);
+	mini.parse = ft_mysplit(mini.all_line, '|');
 	rediretion_cut_add();
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
     free_array((mini.parse));
-	mini.parse = ft_mysplit(mini.all_line, ' ', 1);
+	mini.parse = ft_mysplit(mini.all_line, ' ');
 	mini.parse = find_dollar_and_change();
     free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
 	free_array((mini.parse));
-	mini.parse = ft_mysplit(mini.all_line, '|', 1);
+	mini.parse = ft_mysplit(mini.all_line, '|');
 	ft_add_struct();
 	free_array(mini.parse);
 }

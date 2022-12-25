@@ -11,6 +11,6 @@ void	set_paths()
 	if (!(*npath))
 		mini.path = NULL;
 	else
-		mini.path = ft_mysplit(npath, ':', 1);
+		mini.path = ft_mysplit(npath, ':');
 	free(npath);
 }

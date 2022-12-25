@@ -100,10 +100,10 @@ void	ft_create_struct(void);
 
 //Parser/ft_mysplit.c
 size_t	len_word(char const *s, char c);
-char	*mysplit_section(char ***res, char *s, int index, size_t *two_index, int key);
-char	*continue_mysplit(char *s, int key);
-size_t	if_word_len(char const *s, char c, int key);
-char	**ft_mysplit(char *str, char c, int key);
+char	*mysplit_section(char ***res, char *s, int index, size_t *two_index);
+char	*continue_mysplit(char *s);
+size_t	if_word_len(char const *s, char c);
+char	**ft_mysplit(char *str, char c);
 
 //Parser/building.c
 void	ft_building(void);
