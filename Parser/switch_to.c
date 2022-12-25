@@ -10,9 +10,10 @@ char	*switch_to_zero(int k)
 	while (mini.parse[k][i])
 	{
 		if (mini.parse[k][i] == '$' && mini.parse[k][i + 1] != ' '\
-		&& mini.parse[k][i] != 0)
+			&& mini.parse[k][i] != 0)
 		{
-			while (mini.parse[k][i] != 32 && mini.parse[k][i] != 0)
+			while ((mini.parse[k][i] != 32 && mini.parse[k][i] != 0) \
+				|| (mini.parse[k][i] != '\t' && mini.parse[k][i] != 0))
 			{
 				i++;
 				j++;

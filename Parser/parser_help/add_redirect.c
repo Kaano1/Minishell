@@ -48,11 +48,11 @@ void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burad
 			c++;
 		mini.iter->redirect[r] = ft_calloc(sizeof(char), redirect_of_string_len(parse, i, c) + 1);
 		rc = 0;
-		while (parse[i][c] != 0 && parse[i][c] != 32)
+		while (parse[i][c] != 0 && parse[i][c] != 32 && mini.parse[i][c] != '\t')
 		{
 			while (parse[i][c] && (parse[i][c] == 34 || parse[i][c] == 39))
 				c++;
-			if (parse[i][c] == 32)
+			if (parse[i][c] == 32 || parse[i][c] == '\t')
 				break;
 			mini.iter->redirect[r][rc] = parse[i][c];
 			c++;
@@ -87,7 +87,8 @@ void	ft_redirection_clean(int i) //ahmet -d < "ceren"< noli | ceren < naptin bu 
 			mini.parse[i][c] = 32;
 		while (mini.parse[i][c] == ' ')
 			c++;
-		while (mini.parse[i][c] != 0 && mini.parse[i][c] != 32 && mini.parse[i][c] != '<' && mini.parse[i][c] != '>')
+		while (mini.parse[i][c] != 0 && mini.parse[i][c] != '\t' && \
+				 mini.parse[i][c] != 32 && mini.parse[i][c] != '<' && mini.parse[i][c] != '>')
 		{
 			mini.parse[i][c] = 32;
 			c++;
@@ -132,11 +133,3 @@ void	rediretion_cut_add(void)
 	}
 	mini.iter = mini.first_struct;
 }
-
-//kafamdaki yapı
-//bütün redirectionlar alınacak
-//bütün redirectionların yerine boşluk ataması yapılacak
-
-//boşluklardan arındırılıp baştakini command ve varsa flags olarak almayı planlıyoruz
-//ardından bir şekilde stringleri almamız gerekiyor bunun için belki virgül temizleme işlemlerinden feragat edilebilinir veya geçici
-//bir değişkene değerler atanabilinir.

@@ -13,12 +13,12 @@ int	where_is_start(int count_word, char *str)
 		return (-1);
 	while (str[i] != 0)
 	{
-		if (str[i] != 32 && key == 0)
+		if ((str[i] != 32 && key == 0) || (str[i] != '\t' && key == 0))
 		{
 			key = 1;
 			len++;
 		}
-		else if (key == 1 && str[i] == 32)
+		else if ((key == 1 && str[i] == 32) || (key == 1 && str[i] == '\t'))
 			key = 0;
 		if (len == count_word)
 			break ;
@@ -33,6 +33,8 @@ int	where_is_end(int column, int start, char **parse, int type)
 	{
 		start++;
 		if (parse[column][start - 1] == type && parse[column][start] == 32)
+			break;
+		else if (parse[column][start - 1] == type && parse[column][start] == '\t')
 			break;
 	}
 	while (parse[column][start] == type)

@@ -10,7 +10,7 @@ int	check_string(char *str, int i) //we can fix this code and we could do it // 
 		key = 1;
 		i++;
 	}
-	while (str[i] != 32 && str[i] != 0 && str[i] != 34 && str[i] != 39)
+	while (str[i] != 32 && str[i] != 0 && str[i] != 34 && str[i] != 39 && str[i] != '\t')
 		i++;
 	if (key == 1 && str[i] != 39 && str[i] != 34)
 		return (0);
@@ -33,7 +33,7 @@ int	ft_word_count(char *str)
 			key = 1;
 			len++;
 		}
-		else if (key == 1 && str[i] == 32)
+		else if ((key == 1 && str[i] == 32) || (key == 1 && str[i] == '\t'))
 			key = 0;
 		i++;
 	}

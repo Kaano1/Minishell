@@ -17,12 +17,12 @@ char	*ft_redirect(char **parse, int j, int i)
 	return (NULL);
 }
 
-int redirect_of_string_len(char **parse, int i, int c) //ne kadar bir alan ayırmamız gerekiyor onu buluyoruz filename için.
+int		redirect_of_string_len(char **parse, int i, int c) //ne kadar bir alan ayırmamız gerekiyor onu buluyoruz filename için.
 {
 	int	len;
 
 	len = 0;
-	while (parse[i][c] != 0 && parse[i][c] != 32)
+	while (parse[i][c] != 0 && parse[i][c] != 32 && parse[i][c] != '\t')
 	{
 		len++;
 		c++;
