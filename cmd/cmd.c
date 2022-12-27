@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:58:46 by fkaratay          #+#    #+#             */
-/*   Updated: 2022/12/25 09:02:56 by marvin           ###   ########.fr       */
+/*   Updated: 2022/12/27 08:55:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	get_builtin(t_command *process)
 	out = dup(1);
 	get_all_inputs(process);
 	set_all_outputs(process);
-	builtin_running(process->command[0]);
+	builtin_running(process->command);
 	dup2(in, 0);
 	dup2(out, 1);
 	close(in);

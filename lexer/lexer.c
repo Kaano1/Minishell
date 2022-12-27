@@ -19,22 +19,22 @@ int builtin_check(char *tmp)
     else
         return (0);
 }
-void    builtin_running(char *tmp)
+void    builtin_running(char **tmp)
 {
-    if (!ft_strncmp(tmp, "echo", 4))
-        ft_echo();
-    else if (!ft_strncmp(tmp, "cd", 2))
-        ft_cd();
-    else if (!ft_strncmp(tmp, "env", 3))
+	if (!ft_strncmp(tmp[0], "echo", 4))
+		ft_echo(tmp);
+	else if (!ft_strncmp(tmp[0], "cd", 2))
+		ft_cd(tmp);
+    else if (!ft_strncmp(tmp[0], "env", 3))
         ft_env();
-    else if (!ft_strncmp(tmp, "exit", 4))
-        ft_exit();
-    else if (!ft_strncmp(tmp, "pwd", 3))
+    else if (!ft_strncmp(tmp[0], "exit", 4))
+        ft_exit(tmp);
+    else if (!ft_strncmp(tmp[0], "pwd", 3))
         ft_pwd();
-    else if (!ft_strncmp(tmp, "export", 6))
-        ft_export();
-    else if (!ft_strncmp(tmp, "unset", 5))
-        ft_unset();
+    else if (!ft_strncmp(tmp[0], "export", 6))
+        ft_export(tmp);
+    else if (!ft_strncmp(tmp[0], "unset", 5))
+        ft_unset(tmp);
 }
 
 char	*ft_exec_join(char *tmp, char *bin)

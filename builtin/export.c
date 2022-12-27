@@ -61,28 +61,28 @@ int	is_include(char *str)
 	return (-1);
 }
 
-void	ft_export(void)
+void	ft_export(char **execute)
 {
 	int		pos;
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	while (mini.iter->string[i])
+	while (execute[i])
 	{
-		if (check_env(mini.iter->string))
+		if (check_env(execute[i]))
 		{
-			pos = is_include(mini.iter->string);
+			pos = is_include(execute[i]);
 			if (pos != -1)
 			{
 				tmp = mini.env[pos];
-				mini.env[pos] = ft_strdup(mini.iter->string);
+				mini.env[pos] = ft_strdup(execute[i]);
 				free(tmp);
 			}
 			else
-				add_env(mini.iter->string);
+				add_env(execute[i]);
 		}
-		mini.iter->string++;
+		i++;
 	}
 	set_paths();
 	if (!is_parent())

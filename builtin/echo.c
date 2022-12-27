@@ -9,7 +9,19 @@ void	put_str(char *str, int i)
 	}
 }
 
-int	ft_echo_flag_check(void)
+int	nflags(char **execute, int j, int i)
+{
+	if (execute[j][i - 1] == '-')
+		return (0);
+	i++;
+	while (execute[j][i] == 'n')
+		i++;
+	if (execute[j][i] == 0)
+		return (1);
+	return (0);
+}
+
+int	ft_echo_flag_check(char **execute)
 {
 	int		i;
 	int		is_nflag;
@@ -18,15 +30,16 @@ int	ft_echo_flag_check(void)
 	i = 0;
 	j = 1;
 	is_nflag = 0;
-	while (mini.iter->command[j])
+	while (execute[j])
 	{
-		if (mini.iter->command[j][i] == '-' && \
-		mini.iter->command[j][i + 1] == 'n')
+		if (execute[j][i] == '-' && \
+		execute[j][i + 1] == 'n' && nflags(execute, j, i))
 			is_nflag = 1;
 		else
 		{
-			put_str(mini.iter->command[j], 0);
-			write(1, " ", 1);
+			put_str(execute[j], 0);
+			if (execute[j + 1] != 0)
+				write(1, " ", 1);
 		}
 		j++;
 	}
@@ -35,19 +48,16 @@ int	ft_echo_flag_check(void)
 	return (1);
 }
 
-int	ft_echo(void)
+int	ft_echo(char **execute)
 {
-	int		j;
 	int		i;
 
-	j = 0;
-	i = ft_echo_flag_check();
-	if (!mini.iter->string[j])
+	if (!execute[1])
 	{
 		write(1, "\n", 1);
 		return (0);
 	}
-	put_str(mini.iter->string, j);
+	i = ft_echo_flag_check(execute);
 	if (!i)
 		write(1, "\n", 1);
 	if (!is_parent())

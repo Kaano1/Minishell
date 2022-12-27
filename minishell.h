@@ -127,7 +127,7 @@ void	output(char *file, int mode);
 void	fill_all_heredoc(void);
 void	set_all_outputs(t_command *process);
 void	get_all_inputs(t_command *process);
-int	is_operator(char *str);
+int		is_operator(char *str);
 
 //cmd/cmd.c
 void	start_cmd(void);
@@ -147,16 +147,16 @@ void	heredoc_route(t_command *process);
 void	pipe_route(t_command *process);
 
 //builtin
-int		ft_cd(void);
-int		ft_echo(void);
-int		ft_exit(void);
+int		ft_cd(char **execute);
+int		ft_echo(char **execute);
+int		ft_exit(char **execute);
 void	ft_env(void);
 static void put_error(char *str);
 void	put_str_fd(int fd, char *str);
 void	put_strnl_fd(int fd, char *str);
 void	ft_pwd(void);
-void	ft_export(void);
-void	ft_unset(void);
+void	ft_export(char **execute);
+void	ft_unset(char **execute);
 int		is_whitespace(char c);
 void	free_array(char **arr);
 void	set_paths(void);
@@ -164,7 +164,7 @@ int		env_len(void);
 int		is_parent(void);
 void	put_str(char *str, int i);
 int		contain_heredoc(t_command *process);
-void	builtin_running(char *tmp);
+void	builtin_running(char **tmp);
 int		builtin_check(char *tmp);
 
 

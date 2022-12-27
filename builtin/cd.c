@@ -11,22 +11,27 @@ static void	put_error(char *str)
 	put_str_fd(2, str);
 }
 
-int	ft_cd(void)
+int	ft_cd(char **execute)
 {
 	int		err;
 	char	*home;
 
-	if (!mini.iter->string)
+	if (!execute[1])
 	{
 		home = getenv("HOME");
 		chdir(home);
 	}
 	else
 	{
-		err = chdir(mini.iter->string);
+		if (execute[2] != 0)
+		{
+			printf("cd: too many arguments\n");
+			return (1);
+		}
+		err = chdir(execute[1]);
 		if (err)
 		{
-			put_error(mini.iter->string);
+			put_error(execute[1]);
 			return (1);
 		}
 	}

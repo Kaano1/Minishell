@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayumusak <ayumusak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:15:09 by fkaratay          #+#    #+#             */
-/*   Updated: 2022/12/24 17:22:29 by ayumusak         ###   ########.fr       */
+/*   Updated: 2022/12/27 14:38:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	run_cmd(t_command *process)
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
 		cmd_route(process);
-		builtin_running(process->command[0]);
+		builtin_running(process->command);
 		path = get_path(process->command[0]);
 		execve(path, process->command, mini.env);
 		command_err(process->command[0]);

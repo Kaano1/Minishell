@@ -23,17 +23,18 @@ void	remove_env(char *data)
 	mini.env = new_env;
 }
 
-void	ft_unset(void)
+void	ft_unset(char **execute)
 {
+	int		j;
 	char	*data;
 
-	mini.iter->string++;
-	while (*mini.iter->string)
+	j = 1;
+	while (execute[j])
 	{
-		data = ft_strjoin(mini.iter->string, "=");
+		data = ft_strjoin(execute[j], "=");
 		remove_env(data);
 		free(data);
-		mini.iter->string++;
+		j++;
 	}
 	set_paths();
 	if (!is_parent())
