@@ -76,7 +76,7 @@ char	*ft_join_arg(char **mini)
 	return (str);
 }
 
-void	ft_parse(void)// fjlakdjlkafjdflakdjlkfajlkfjdlkjfdaflkadjlfkajdlkfjdlkjflkajdflkadjlfkjdalkfjalkfjdklsfajdkf
+void	ft_parse(void)// echo kfdsajflkajdkfljalkfjdalkfjadlkjfd daksfjlkajfjdfalkdjflkadjflkajflkdajflkajf Ahmet
 {
 	ft_create_struct();
 	mini.parse = ft_mysplit(mini.all_line, '|');
@@ -94,6 +94,8 @@ void	ft_parse(void)// fjlakdjlkafjdflakdjlkfajlkfjdlkjfdaflkadjlfkajdlkfjdlkjflk
 	free(mini.parse);
 	mini.parse = ft_mysplit(mini.all_line, '|');
 	ft_add_struct();
+	exit (0);
 	free_array(mini.parse);
 	free(mini.all_line);
+	exit (0);
 }

@@ -63,6 +63,7 @@ void	where_is_command(int index, int *catch)
 	{
 		start = where_is_start(i, mini.parse[index]);
 		mini.iter->command[i - 1] = ft_add(start, index, mini.parse, 1);
+		printf("%s\n", mini.iter->command[i - 1]);
 		i++;
 	}
 	*catch = i;

@@ -72,11 +72,11 @@ char	*ft_add(int start, int column, char **parse, int key)
 	int		i;
 	char	*str;
 
-	i = start;
 	if (start == -1)
 		return (NULL);
-	if (parse[column][i] == 34 || parse[column][i] == 39)
+	if (parse[column][start] == 34 || parse[column][start] == 39)
 		return (ft_add_quotes(column, start, mini.parse, parse[column][i]));
+	i = where_is_start(start + 1, parse[column]);
 	str = ft_calloc(sizeof(char), i - start + 1);
 	if (!str)
 		exit (-1);
