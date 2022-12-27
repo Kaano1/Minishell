@@ -8,7 +8,6 @@ t_command	*init_struct(void)
 	pipe(command->fd);
 	command->pid = -1;
 	command->command = NULL;
-	command->string = NULL;
 	command->redirect = NULL;
 	command->next = NULL;
 	command->prev = NULL;
@@ -97,5 +96,4 @@ void	ft_parse(void)// fjlakdjlkafjdflakdjlkfajlkfjdlkjfdaflkadjlfkajdlkfjdlkjflk
 	ft_add_struct();
 	free_array(mini.parse);
 	free(mini.all_line);
-	exit (0);
 }

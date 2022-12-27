@@ -61,7 +61,7 @@ void function_exec(char *tmp)
 	exec = ft_exec_join(tmp, "/bin/"); //execute mü?
 	/*if (execve(exec, NULL, NULL))
 	{
-		printf("girdi");
+		("girdi");
 	}*/
 	free(exec);
 }

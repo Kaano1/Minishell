@@ -57,20 +57,13 @@ void	where_is_command(int index, int *catch)
 	start = 0;
 	mini.iter->command = ft_calloc(sizeof(char *), len_word(mini.parse[index], ' ') + 1); //look at len_word and ft_worcount fonctions
 	word = ft_word_count(mini.parse[index]);
+	mini.iter->command[0] = ft_add(start, index, mini.parse, 1);
 	i++;
-	while (word != 1)
+	while (word >= i)
 	{
 		start = where_is_start(i, mini.parse[index]);
-		j = start;
-		while (mini.parse[index][j] == 34 || mini.parse[index][j] == 39)
-			j++;
-		if (mini.parse[index][j] == '-' && check_string(mini.parse[index], start))
-			mini.iter->command[i - 1] = ft_add(start, index, mini.parse, 1);
-		else
-			break;
+		mini.iter->command[i - 1] = ft_add(start, index, mini.parse, 1);
 		i++;
 	}
-	if (word == 1)
-		mini.iter->command[0] = ft_add(0, index, mini.parse, 1);
 	*catch = i;
 }

@@ -39,7 +39,6 @@ typedef struct s_command
 	int			fd[2];
 	int			heredoc_fd[2];
 	char		**command;
-	char		*string;
 	char 		**redirect;
 	struct s_command	*next;
 	struct s_command	*prev;

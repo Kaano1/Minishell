@@ -95,45 +95,19 @@ char	*ft_add(int start, int column, char **parse, int key)
 	return (str);
 }
 
-char	*ft_add_string(int index, int start)
-{
-	char	**str;
-	char	*result;
-	int		j;
-	int		i;
-
-	if (mini.parse[index] == 0)
-		return (0);
-	str = ft_calloc(sizeof(char *), \
-	(len_word(mini.parse[index], 32) - start) + 1);
-    int c = (len_word(mini.parse[index], 32) - start+ 1);
-	j = 0;
-	i = 0;
-	while (start <= len_word(mini.parse[index], 32))
-	{
-		i = where_is_start(start, mini.parse[index]);
-		str[j] = ft_add(i, index, mini.parse, 0);
-		start++;
-		j++;
-	}
-	str[j] = 0;
-	result = ft_join_arg(str);
-	return (result);
-}
-
 void	ft_add_struct(void) // fjlakdjlkafjdflakdjlkfajlkfjdlkjfdaflkadjlfkajdlkfjdlkjflkajdflkadjlfkjdalkfjalkfjdklsfajdkf | ceren
 {
 	int		start;
 	int		i;
+	int		j;
 
 	i = 0;
+	j = 0;
 	mini.iter = mini.first_struct;
 	start = 0;
 	while (mini.iter && i < mini.pipe_count + 1)
 	{
 		where_is_command(i, &start);
-		printf("%s\n", mini.iter->command[0]);
-		mini.iter->string = ft_add_string(i, start);
 		i++;
 		mini.iter = mini.iter->next;
 	}
