@@ -55,21 +55,3 @@ char	**find_dollar_and_change(void)
 	}
 	return (check_or_fix_switch(i));
 }
-
-void	ft_add_struct(void)
-{
-	int		start;
-	int		i;
-
-	i = 0;
-	mini.iter = mini.first_struct;
-	start = 0;
-	while (mini.iter && i < mini.pipe_count + 1)
-	{
-		where_is_command(i, &start);
-		mini.iter->string = ft_add_string(i, start);
-		i++;
-		mini.iter = mini.iter->next;
-	}
-	mini.iter = mini.first_struct;
-}

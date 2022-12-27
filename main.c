@@ -49,9 +49,9 @@ int main(int ac, char **av, char **clone_env)
 		}
 		if (*input && !just_space(input))
 		{
-			if (ft_contqoute(input) && ft_pipecheck(input))
+			add_history(input);
+			if (ft_pipecheck(input) && ft_contqoute(input))
 			{
-				add_history(input);
 				ft_pipe_count(input);
 				mini.all_line = ft_strdup(input);
 				ft_parse();

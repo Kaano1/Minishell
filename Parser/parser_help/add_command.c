@@ -55,8 +55,7 @@ void	where_is_command(int index, int *catch)
 		return ;
 	}
 	start = 0;
-	mini.iter->command = ft_calloc(sizeof(char *), len_word(mini.parse[index], ' ') + 1);
-	mini.iter->command[0] = ft_add(start, index, mini.parse, 1);
+	mini.iter->command = ft_calloc(sizeof(char *), len_word(mini.parse[index], ' ') + 1); //look at len_word and ft_worcount fonctions
 	word = ft_word_count(mini.parse[index]);
 	i++;
 	while (word != 1)

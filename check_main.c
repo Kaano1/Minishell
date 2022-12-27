@@ -20,7 +20,7 @@ int 	ft_pipecheck(char *str)
 	mini.pipe_count = 0;
 	len = pipe_space_check(ft_strlen(str) - 1, str);
 	if (str[0] == '|' || str[len] == '|') //basta veya sonra pipe varsa hata mesaji basip cikiyoruz.
-		ft_error("PIPE WRONG!!!");
+		return (ft_error("PIPE WRONG!!!"));
 	while (str[i]) //double pipe olma durumu soz konusu olursa double pipein arkasina NULL yapistiriyoruz
 	{
 		if (str[i] != ' ' && str[i] != '\t')
@@ -58,6 +58,6 @@ int	ft_contqoute(char *str) //cift tirnak veya tek tıragin kapatilip kapatilmad
 		}
 	}
 	if (once % 2 != 0 || twice % 2 != 0)
-		ft_error("Missing character!");
+		return (ft_error("Missing character!"));
 	return (1);
 }

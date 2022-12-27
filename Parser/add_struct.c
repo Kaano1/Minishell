@@ -77,7 +77,7 @@ char	*ft_add(int start, int column, char **parse, int key)
 		return (NULL);
 	if (parse[column][i] == 34 || parse[column][i] == 39)
 		return (ft_add_quotes(column, start, mini.parse, parse[column][i]));
-	str = malloc(sizeof(char) * (i - start + 1));
+	str = ft_calloc(sizeof(char), i - start + 1);
 	if (!str)
 		exit (-1);
 	i = 0;
@@ -121,3 +121,21 @@ char	*ft_add_string(int index, int start)
 	return (result);
 }
 
+void	ft_add_struct(void) // fjlakdjlkafjdflakdjlkfajlkfjdlkjfdaflkadjlfkajdlkfjdlkjflkajdflkadjlfkjdalkfjalkfjdklsfajdkf | ceren
+{
+	int		start;
+	int		i;
+
+	i = 0;
+	mini.iter = mini.first_struct;
+	start = 0;
+	while (mini.iter && i < mini.pipe_count + 1)
+	{
+		where_is_command(i, &start);
+		printf("%s\n", mini.iter->command[0]);
+		mini.iter->string = ft_add_string(i, start);
+		i++;
+		mini.iter = mini.iter->next;
+	}
+	mini.iter = mini.first_struct;
+}
