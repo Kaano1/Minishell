@@ -2,16 +2,16 @@
 
 int	if_while_quotes(char *str, int c)
 {
-	if (str[c] == 34)
+	if (str[c] == DOUBLE_Q)
 	{
 		c++;
-			while (str[c] != 34 && str[c] != 0)
+			while (str[c] != DOUBLE_Q && str[c] != 0)
 				c++;
 	}
-	else if (str[c] == 39)
+	else if (str[c] == SIGNEL_Q)
 	{
 		c++;
-		while (str[c] != 39 && str[c] != 0)
+		while (str[c] != SIGNEL_Q && str[c] != 0)
 			c++;
 	}
 	if (str[c] == 0)
@@ -44,21 +44,21 @@ void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burad
 		r++;
 		while (parse[i][c] == ' ')
 			c++;
-		while (parse[i][c] == 34 || parse[i][c] == 39) //tırnakları geçiyoruz.
+		while (parse[i][c] == DOUBLE_Q || parse[i][c] == SIGNEL_Q) //tırnakları geçiyoruz.
 			c++;
 		mini.iter->redirect[r] = ft_calloc(sizeof(char), redirect_of_string_len(parse, i, c) + 1);
 		rc = 0;
-		while (parse[i][c] != 0 && parse[i][c] != 32 && mini.parse[i][c] != '\t')
+		while (parse[i][c] != 0 && parse[i][c] != SPACE && mini.parse[i][c] != TAB)
 		{
-			while (parse[i][c] && (parse[i][c] == 34 || parse[i][c] == 39))
+			while (parse[i][c] && (parse[i][c] == DOUBLE_Q || parse[i][c] == SIGNEL_Q))
 				c++;
-			if (parse[i][c] == 32 || parse[i][c] == '\t')
+			if (parse[i][c] == SPACE || parse[i][c] == TAB)
 				break;
 			mini.iter->redirect[r][rc] = parse[i][c];
 			c++;
 			rc++;
 		}
-		while (parse[i][c] == 34 || parse[i][c] == 39) //sonda kalan tırnakları geçiyoruz.
+		while (parse[i][c] == DOUBLE_Q || parse[i][c] == SIGNEL_Q) //sonda kalan tırnakları geçiyoruz.
 			c++;
 		mini.iter->redirect[r++][rc] = 0;
 	}
@@ -81,16 +81,16 @@ void	ft_redirection_clean(int i) //ahmet -d < "ceren"< noli | ceren < naptin bu 
 		}
 		if (mini.parse[i][c] == 0)
 			break;
-		mini.parse[i][c] = 32;
+		mini.parse[i][c] = SPACE;
 		c++;
 		if (mini.parse[i][c] == '>' || mini.parse[i][c] == '<')
-			mini.parse[i][c] = 32;
+			mini.parse[i][c] = SPACE;
 		while (mini.parse[i][c] == ' ')
 			c++;
-		while (mini.parse[i][c] != 0 && mini.parse[i][c] != '\t' && \
-				 mini.parse[i][c] != 32 && mini.parse[i][c] != '<' && mini.parse[i][c] != '>')
+		while ((mini.parse[i][c] != 0 && mini.parse[i][c] != TAB) \
+			&&  (mini.parse[i][c] != SPACE && mini.parse[i][c] != '<' && mini.parse[i][c] != '>'))
 		{
-			mini.parse[i][c] = 32;
+			mini.parse[i][c] = SPACE;
 			c++;
 		}
 	}

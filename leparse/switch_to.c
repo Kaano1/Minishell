@@ -9,11 +9,11 @@ char	*switch_to_zero(int k)
 	j = 0;
 	while (mini.parse[k][i])
 	{
-		if (mini.parse[k][i] == '$' && mini.parse[k][i + 1] != ' '\
+		if (mini.parse[k][i] == '$' && mini.parse[k][i + 1] != ' ' \
 			&& mini.parse[k][i] != 0)
 		{
-			while ((mini.parse[k][i] != 32 && mini.parse[k][i] != 0) \
-				|| (mini.parse[k][i] != '\t' && mini.parse[k][i] != 0))
+			while ((mini.parse[k][i] != SPACE && mini.parse[k][i] != 0) \
+				|| (mini.parse[k][i] != TAB && mini.parse[k][i] != 0))
 			{
 				i++;
 				j++;
@@ -58,7 +58,7 @@ char	*switch_shorter(int k, int i, int j, char *tmp)
 	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
 	tm_i = 0;
 	while (mini.parse[k][j] != ' ' && mini.parse[k][j] != 0 && \
-	mini.parse[k][j] != 34 && mini.parse[k][j] != 39)
+	mini.parse[k][j] != DOUBLE_Q && mini.parse[k][j] != SIGNEL_Q)
 		j++;
 	while (tmp[tm_i])
 	{

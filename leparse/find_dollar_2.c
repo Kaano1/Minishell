@@ -14,7 +14,7 @@ int	check_single_quotes(int i, int j, int c_quotes)
 		if (mini.all_line[index] == '$')
 			len++;
 		if (len == c_quotes)
-			if (mini.all_line[index - 1] == 39)
+			if (mini.all_line[index - 1] == SIGNEL_Q)
 				return (0);
 		index++;
 	}

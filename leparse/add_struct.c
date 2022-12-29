@@ -13,12 +13,12 @@ int	where_is_start(int count_word, char *str)
 		return (-1);
 	while (str[i] != 0)
 	{
-		if ((str[i] != 32 && key == 0) || (str[i] != '\t' && key == 0))
+		if ((str[i] != SPACE && key == 0) || (str[i] != TAB && key == 0))
 		{
 			key = 1;
 			len++;
 		}
-		else if ((key == 1 && str[i] == 32) || (key == 1 && str[i] == '\t'))
+		else if ((key == 1 && str[i] == SPACE) || (key == 1 && str[i] == TAB))
 			key = 0;
 		if (len == count_word)
 			break ;
@@ -32,14 +32,15 @@ int	where_is_end(int column, int start, char **parse, int type)
 	while (parse[column][start])
 	{
 		start++;
-		if (parse[column][start - 1] == type && parse[column][start] == 32)
+		if (parse[column][start - 1] == type && parse[column][start] == SPACE)
 			break;
-		else if (parse[column][start - 1] == type && parse[column][start] == '\t')
+		else if (parse[column][start - 1] == type && parse[column][start] == TAB)
 			break;
-		else if (parse[column][start -1] == type && (parse[column][start] == 34 || parse[column][start] == 39))
+		else if (parse[column][start -1] == type && \
+			(parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q))
 			type = parse[column][start];
 	}
-	if (parse[column][start] == 32 || parse[column][start] == '\t')
+	if (parse[column][start] == SPACE || parse[column][start] == TAB)
 		start--;
 	return (start);
 }
@@ -59,7 +60,7 @@ char	*ft_add_quotes(int column, int start, char **parse, int type)
 	i = 0;
 	while (start < end)
 	{
-		while (parse[column][start] == 34 || parse[column][start] == 39)
+		while (parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q)
 			start++;
 		if (start < end)
 			str[i] = parse[column][start];
@@ -77,7 +78,7 @@ char	*ft_add(int start, int column, char **parse, int key)
 
 	if (start == -1)
 		return (NULL);
-	if (parse[column][start] == 34 || parse[column][start] == 39)
+	if (parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q)
 		return (ft_add_quotes(column, start, mini.parse, parse[column][start]));
 	i = where_is_start(start + 1, parse[column]);
 	if (i == 0)
@@ -88,9 +89,9 @@ char	*ft_add(int start, int column, char **parse, int key)
 	i = 0;
 	if (column > 0 && key == 1 && start <= 1)
 		start = 1;
-	while (parse[column][start] && parse[column][start] != ' ')
+	while (parse[column][start] && parse[column][start] != SPACE)
 	{
-		while (parse[column][start] == 34 || parse[column][start] == 39)
+		while (parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q)
 			start++;
 		str[i] = parse[column][start];
 		start++;

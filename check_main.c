@@ -2,9 +2,9 @@
 
 int pipe_space_check(int len, char *str) //all_linenı [0] indisini bosluklardan gectikten sonra ilk gordugu karakter yapıyor ve 
 {										   //arkandanda ilk gordugu karakterin indis numarasını alıyor bu sekilde bas ve sondaki ilk karakterlere bakiyoruz.
-	while (*str == ' ')
+	while (*str == SPACE)
 		str++;
-	while (str[len] == ' ')
+	while (str[len] == SPACE)
 		len--;
 	str = 0;
 	return (len);
@@ -23,7 +23,7 @@ int 	ft_pipecheck(char *str)
 		return (ft_error("PIPE WRONG!!!"));
 	while (str[i]) //double pipe olma durumu soz konusu olursa double pipein arkasina NULL yapistiriyoruz
 	{
-		if (str[i] != ' ' && str[i] != '\t')
+		if (str[i] != SPACE && str[i] != TAB)
 			c = str[i];
 		i++;
 		if (c == '|' && str[i] == '|') 
@@ -46,9 +46,9 @@ int	ft_contqoute(char *str) //cift tirnak veya tek tıragin kapatilip kapatilmad
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == 39 && twice == 0)
+		if (str[i] == SIGNEL_Q && twice == 0)
 			once++;
-		else if (str[i] == 34 && once == 0)
+		else if (str[i] == DOUBLE_Q && once == 0)
 			twice++;
 		i++;
 		if (once == 2 || twice == 2)

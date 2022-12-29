@@ -7,16 +7,16 @@ size_t	if_word_len(char const *s, char c)
 	len = 0;
 	while (s[len] != '\0' && s[len] != c)
 	{
-		if (s[len] == 34)
+		if (s[len] == DOUBLE_Q)
 		{
 			len++;
-			while (s[len] != 34 && s[len] != 0)
+			while (s[len] != DOUBLE_Q && s[len] != 0)
 				len++;
 		}
-		else if (s[len] == 39)
+		else if (s[len] == SIGNEL_Q)
 		{
 			len++;
-			while (s[len] != 39 && s[len] != 0)
+			while (s[len] != SIGNEL_Q && s[len] != 0)
 				len++;
 		}
 		else
@@ -34,7 +34,7 @@ size_t	len_word(char const *s, char c)
 	key = 0;
 	while (*s != '\0')
 	{
-		if (*s == 34 || *s == 39) //burdaki ibare "" or '' ifadelerde icinde bulunan kelimeleri saymasini istemedigimiz icin kullaniyoruz "ahmet mehmet ceren" bu tek kelime sayilsin diye.
+		if (*s == DOUBLE_Q || *s == SIGNEL_Q) //burdaki ibare "" or '' ifadelerde icinde bulunan kelimeleri saymasini istemedigimiz icin kullaniyoruz "ahmet mehmet ceren" bu tek kelime sayilsin diye.
 			key += 1;
 		if (*s != c && (s[1] == '\0' || s[1] == c) && key % 2 == 0)
 			len++;
@@ -43,7 +43,7 @@ size_t	len_word(char const *s, char c)
 	return (len);
 }
 
-char	*mysplit_section(char ***res, char *s, int index, size_t *two_index)
+char	*mysplit_section(char ****res, char *s, int index, size_t *two_index)
 {
 	int	i;
 	int	j;
@@ -51,21 +51,35 @@ char	*mysplit_section(char ***res, char *s, int index, size_t *two_index)
 	i = *two_index;
 	j = 0;
 	//burda tirnagi dahil edip etmiyecegimize karar veriyoruz
-	res[0][index][i++] = s[j];
-	if (s[j] == 34)
+	res[0][0][index][i++] = s[j];
+	if (s[j] == DOUBLE_Q)
 	{
-		while (s[++j] != 34 && s[j] != 0)
-			res[0][index][i++] = s[j];
+		while (s[++j] != DOUBLE_Q && s[j] != 0)
+			res[0][0][index][i++] = s[j];
 	}
-	else if (s[j] == 39)
+	else if (s[j] == SIGNEL_Q)
 	{
-		while (s[++j] != 39 && s[j] != 0)
-			res[0][index][i++] = s[j];
+		while (s[++j] != SIGNEL_Q && s[j] != 0)
+			res[0][0][index][i++] = s[j];
 	}
 	//tirnagi dahil ediyoruz ayni sekilde
-	res[0][index][i++] = s[j++];
+	res[0][0][index][i++] = s[j++];
 	*two_index = i;
 	return ((char *)(s + j));
+}
+
+char	*create_split(char ***res, char *s, int c, int index)
+{
+	size_t	two_index;
+
+	two_index = 0;
+	while (*s != c && *s != '\0')
+		if (*s == DOUBLE_Q || *s == SIGNEL_Q)
+			s = mysplit_section(&res, s, index, &two_index); //atama islemleri gerceklesiyor
+		else
+			res[0][index][two_index++] = *s++;
+	res[0][index][two_index] = '\0';
+	return (s);
 }
 
 char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini kullanarak bir butun seklinde "  naber  "
@@ -87,13 +101,7 @@ char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini 
 		while (*s == c && *s != '\0')
 			s++; // ileriyoruz bir sonraki alinicak kelimeye kadar ama burdaki kod yanlizca ilerlemiyor tirnakta silebiliyor.
 		res[index] = (char *)malloc(sizeof(char) * (if_word_len(s, c) + 1));
-		two_index = 0;
-		while (*s != c && *s != '\0')
-			if (*s == 34 || *s == 39)
-				s = mysplit_section(&res, s, index, &two_index); //atama islemleri gerceklesiyor
-			else
-				res[index][two_index++] = *s++;
-		res[index][two_index] = '\0';
+		s = create_split(&res, s, c, index);
 		index++;
 	}
 	res[index] = 0;

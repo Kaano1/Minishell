@@ -7,7 +7,7 @@ int	just_space(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] != 32 && str[i] != '\t')
+		if (str[i] != SPACE && str[i] != TAB)
 			return (0);
 		i++;
 	}

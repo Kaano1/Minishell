@@ -69,7 +69,7 @@ char	*ft_join_arg(char **mini)
 			save_i++;
 		}
 		if (mini[j + 1] != 0)
-			str[save_i++] = 32;
+			str[save_i++] = SPACE;
 		j++;
 	}
 	str[save_i] = 0;
@@ -79,7 +79,7 @@ char	*ft_join_arg(char **mini)
 void	ft_parse(void) // "echo" 'naber'"b" "" "noli"
 {
 	ft_create_struct();
-	mini.parse = ft_mysplit(mini.all_line, '\t');
+	mini.parse = ft_mysplit(mini.all_line, TAB);
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
 	free(mini.parse);
@@ -88,7 +88,7 @@ void	ft_parse(void) // "echo" 'naber'"b" "" "noli"
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
 	free_array((mini.parse));
-	mini.parse = ft_mysplit(mini.all_line, ' ');
+	mini.parse = ft_mysplit(mini.all_line, SPACE);
 	mini.parse = find_dollar_and_change();
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);

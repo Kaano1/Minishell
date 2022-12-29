@@ -7,11 +7,13 @@ int control_quotes(char *str)
 
     i = 0;
     key = 0;
-    while ((str[i] == 32 || str[i] == '\t' || str[i] == 34 || str[i] == 39) && str[i] != 0)
+    while ((str[i] == SPACE || str[i] == TAB || \
+        str[i] == DOUBLE_Q || str[i] == SIGNEL_Q) && str[i] != 0)
     {
-        if (str[i] == 34 || str[i] == 39)
+        if (str[i] == DOUBLE_Q || str[i] == SIGNEL_Q)
             key = 1;
-        if (str[i] != 32 && str[i] != '\t' && str[i] != 34 && str[i] != 39)
+        if (str[i] != SPACE && str[i] != TAB && \
+             str[i] != DOUBLE_Q && str[i] != SIGNEL_Q)
             return (1);
         i++;
     }

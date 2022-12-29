@@ -23,9 +23,25 @@ void	init_app(char **env)
 {
 	mini.error = 0;
 	mini.path = NULL;
+	mini.ignore = FALSE;
 	mini.parent_pid = getpid();
 	mini.env = set_env(env);
 	set_paths();
+}
+
+void	continue_main(char *input)
+{
+	if (*input && !just_space(input))
+	{
+		add_history(input);
+		if (ft_pipecheck(input) && ft_contqoute(input) && control_quotes(input))
+		{
+			ft_pipe_count(input);
+			mini.all_line = ft_strdup(input);
+			ft_parse();
+			start_cmd();
+		}
+	}
 }
 
 int main(int ac, char **av, char **clone_env)
@@ -35,7 +51,6 @@ int main(int ac, char **av, char **clone_env)
 	init_app(clone_env);
 	while (av && ac)
 	{
-		mini.ignore = FALSE;
 		signal(SIGINT, &ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		write(1, "\033[32m", 5);
@@ -47,31 +62,8 @@ int main(int ac, char **av, char **clone_env)
 			free(input);
 			input = malloc(1);
 		}
-		if (*input && !just_space(input))
-		{
-			add_history(input);
-			if (ft_pipecheck(input) && ft_contqoute(input) && control_quotes(input))
-			{
-				ft_pipe_count(input);
-				mini.all_line = ft_strdup(input);
-				ft_parse();
-				start_cmd();
-			}
-		}
+		continue_main(input);
 		free(input);
 	}
 	return (0);
 }
-
-//redirectionları tanımlayıp siliceğiz
-//structa değerlerin gelip gelmediğene bakıcağız
-//command kontrolleri yapabiliriz
-//builtin yapabiliriz echo, cd, env, pwd, vb...
-//executebale mı diye kontrol et
-//"$" ve '$' olayını halletmemiz gerekiyor. //OK
-
-//çift tırnak arasındaki '|' ları görmemesi gerekiyor //OK
-//command - "echo " "    ahmet" şeklinde veya "echo" "      ahmet" şeklinde gelmiş olabilir. bu durumda hangisi çalışacak bunun ayarlanması gerekiyor.
-
-//flags yapılacak ** şekilde
-//kodlarda temizlik yapılıcak.

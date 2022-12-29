@@ -43,50 +43,21 @@ char	**check_or_fix_switch(int count_parse)
 	return (mini_parse);
 }
 
-char	*split_env(char *str)
-{
-	while (*str != '=')
-		str++;
-	str++;
-	return (ft_strdup(str));
-}
-
-char	*get_env(char *str)
-{
-	size_t	len;
-	char	**env;
-	char	*new_str;
-
-	env = mini.env;
-	new_str = ft_strjoin(str, "=");
-	len = ft_strlen(new_str);
-	while (*env)
-	{
-		if (!ft_strncmp(*env, new_str, len))
-		{
-			free(new_str);
-			return (split_env(*env));
-		}
-		env++;
-	}
-	free(new_str);
-	return (ft_calloc(sizeof(char *), 1));
-}
-
 char	*get_after_dollar(char *parse, int index)
 {
 	char	*str;
 	int		i;
 
 	i = index;
-	while (parse[i] != ' ' && parse[i] != 0 && parse[i] != 34 && parse[i] != 39)
+	while ((parse[i] != ' ' && parse[i] != 0) \
+		&& (parse[i] != DOUBLE_Q && parse[i] != SIGNEL_Q))
 		i++;
 	if (i == index)
 		return (0);
 	str = malloc(sizeof(char) * (i - index) + 1);
 	i = 0;
 	while (parse[index] != ' ' && parse[index] != 0 \
-	&& parse[index] != 34 && parse[index] != 39)
+	&& parse[index] != DOUBLE_Q && parse[index] != SIGNEL_Q)
 	{
 		str[i] = parse[index];
 		i++;

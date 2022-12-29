@@ -5,14 +5,16 @@ int	check_string(char *str, int i) //we can fix this code and we could do it // 
 	int	key;
 
 	key = 0;
-	while (str[i] == 34 || str[i] == 39)
+	while (str[i] == DOUBLE_Q || str[i] == SIGNEL_Q)
 	{
 		key = 1;
 		i++;
 	}
-	while (str[i] != 32 && str[i] != 0 && str[i] != 34 && str[i] != 39 && str[i] != '\t')
+	while ((str[i] != SPACE && str[i] != 0 && str[i] != DOUBLE_Q) \
+		&& (str[i] != SIGNEL_Q && str[i] != TAB))
 		i++;
-	if (key == 1 && str[i] != 39 && str[i] != 34 && str[i] != 0)
+	if ((key == 1 && str[i] != SIGNEL_Q) \
+	&& 	(str[i] != DOUBLE_Q && str[i] != 0))
 		return (0);
 	return (1);
 }
@@ -36,7 +38,7 @@ int	ft_word_count_quotes(char *str, int *i, int len)
 	{
 		if (str[index] == type)
 			key = 1;
-		if ((str[index] == 32 || str[index] == '\t' || str[index] == 0) && key == 1)
+		if ((str[index] == SPACE || str[index] == TAB || str[index] == 0) && key == 1)
 		{
 			*i = index;
 			return (len + 1);
@@ -58,14 +60,14 @@ int	ft_word_count(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] == 34 || str[i] == 39) && key == 0)
+		if ((str[i] == DOUBLE_Q || str[i] == SIGNEL_Q) && key == 0)
 			len = ft_word_count_quotes(str, &i, len);
-		if (key == 0 && str[i] != ' '  && str[i] != '\t')
+		if (key == 0 && str[i] != SPACE  && str[i] != TAB)
 		{
 			key = 1;
 			len++;
 		}
-		else if ((key == 1 && str[i] == 32) || (key == 1 && str[i] == '\t'))
+		else if ((key == 1 && str[i] == SPACE) || (key == 1 && str[i] == TAB))
 			key = 0;
 		i++;
 	}
