@@ -94,8 +94,6 @@ void	ft_parse(void)// echo kfdsajflkajdkfljalkfjdalkfjadlkjfd daksfjlkajfjdfalkd
 	free(mini.parse);
 	mini.parse = ft_mysplit(mini.all_line, '|');
 	ft_add_struct();
-	exit (0);
 	free_array(mini.parse);
 	free(mini.all_line);
-	exit (0);
 }

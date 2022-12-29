@@ -175,6 +175,7 @@ int		builtin_check(char *tmp);
 void	ft_pipe_count(char *str);
 char	**set_env(char **env);
 int		just_space(char *str);
+int control_quotes(char *str);
 
 //ft_error.c
 int		ft_error(char *str);

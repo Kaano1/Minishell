@@ -7,7 +7,7 @@ void	ctrl_d(char *input)
 	if (!input)
 	{
 		printf("exit\n");
-		exit (mini.error);	
+		exit (errno);	
 	}
 }
 
@@ -50,7 +50,7 @@ int main(int ac, char **av, char **clone_env)
 		if (*input && !just_space(input))
 		{
 			add_history(input);
-			if (ft_pipecheck(input) && ft_contqoute(input))
+			if (ft_pipecheck(input) && ft_contqoute(input) && control_quotes(input))
 			{
 				ft_pipe_count(input);
 				mini.all_line = ft_strdup(input);

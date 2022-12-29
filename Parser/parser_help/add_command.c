@@ -12,7 +12,7 @@ int	check_string(char *str, int i) //we can fix this code and we could do it // 
 	}
 	while (str[i] != 32 && str[i] != 0 && str[i] != 34 && str[i] != 39 && str[i] != '\t')
 		i++;
-	if (key == 1 && str[i] != 39 && str[i] != 34)
+	if (key == 1 && str[i] != 39 && str[i] != 34 && str[i] != 0)
 		return (0);
 	return (1);
 }
@@ -51,7 +51,8 @@ void	where_is_command(int index, int *catch)
 	start = where_is_start(i, mini.parse[index]);
 	if (start == -1 || !check_string(mini.parse[index], start))
 	{
-		mini.iter->command[0] = 0;
+		mini.iter->command = ft_calloc(sizeof(char *), 1);
+		mini.iter->command[0] = ft_strdup("");
 		return ;
 	}
 	start = 0;
@@ -63,7 +64,6 @@ void	where_is_command(int index, int *catch)
 	{
 		start = where_is_start(i, mini.parse[index]);
 		mini.iter->command[i - 1] = ft_add(start, index, mini.parse, 1);
-		printf("%s\n", mini.iter->command[i - 1]);
 		i++;
 	}
 	*catch = i;

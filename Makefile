@@ -39,6 +39,7 @@ SRC	= main.c \
 	./utils/set_paths.c \
 	./utils/ft_pipe_count.c \
 	./utils/just_space.c \
+	./utils/control_quotes.c \
 
 OBJ = $(SRC:.c=.o)
 
