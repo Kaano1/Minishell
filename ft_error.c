@@ -2,7 +2,7 @@
 
 int	ft_error(char *str)
 {
-	("%s\n", str);
+	printf("%s\n", str);
 	return (0);
 }
 

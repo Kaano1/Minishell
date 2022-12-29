@@ -14,7 +14,6 @@ int control_quotes(char *str)
         if (str[i] != 32 && str[i] != '\t' && str[i] != 34 && str[i] != 39)
             return (1);
         i++;
-        printf("noli\n");
     }
     if (key == 1 && str[i] == 0)
     {

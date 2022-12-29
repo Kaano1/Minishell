@@ -36,8 +36,10 @@ int	where_is_end(int column, int start, char **parse, int type)
 			break;
 		else if (parse[column][start - 1] == type && parse[column][start] == '\t')
 			break;
+		else if (parse[column][start -1] == type && (parse[column][start] == 34 || parse[column][start] == 39))
+			type = parse[column][start];
 	}
-	while (parse[column][start] == type)
+	if (parse[column][start] == 32 || parse[column][start] == '\t')
 		start--;
 	return (start);
 }
@@ -53,13 +55,14 @@ char	*ft_add_quotes(int column, int start, char **parse, int type)
 	end = where_is_end(column, start, parse, type);
 	if (start >= end)
 		return (NULL);
-	str = malloc(sizeof(char) * (1 + end - start));
+	str = ft_calloc(sizeof(char) ,(1 + end - start));
 	i = 0;
 	while (start < end)
 	{
 		while (parse[column][start] == 34 || parse[column][start] == 39)
 			start++;
-		str[i] = parse[column][start];
+		if (start < end)
+			str[i] = parse[column][start];
 		start++;
 		i++;
 	}
@@ -75,7 +78,7 @@ char	*ft_add(int start, int column, char **parse, int key)
 	if (start == -1)
 		return (NULL);
 	if (parse[column][start] == 34 || parse[column][start] == 39)
-		return (ft_add_quotes(column, start, mini.parse, parse[column][i]));
+		return (ft_add_quotes(column, start, mini.parse, parse[column][start]));
 	i = where_is_start(start + 1, parse[column]);
 	if (i == 0)
 		i = ft_strlen(parse[column]);

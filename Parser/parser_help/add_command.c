@@ -17,6 +17,36 @@ int	check_string(char *str, int i) //we can fix this code and we could do it // 
 	return (1);
 }
 
+int	ft_word_count_quotes(char *str, int *i, int len)
+{
+	int	type;
+	int	key;
+	int	index;
+
+	key = 0;
+	index = *i;
+	type = str[index];
+	index++;
+	if (str[index] == type)
+	{
+		*i = index + 1;
+		return (len);
+	}
+	while (str[index])
+	{
+		if (str[index] == type)
+			key = 1;
+		if ((str[index] == 32 || str[index] == '\t' || str[index] == 0) && key == 1)
+		{
+			*i = index;
+			return (len + 1);
+		}
+		index++;
+	}
+	*i = index;
+	return (len);
+}
+
 int	ft_word_count(char *str)
 {
 	int	i;
@@ -28,7 +58,9 @@ int	ft_word_count(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (key == 0 && str[i] != ' ')
+		if ((str[i] == 34 || str[i] == 39) && key == 0)
+			len = ft_word_count_quotes(str, &i, len);
+		if (key == 0 && str[i] != ' '  && str[i] != '\t')
 		{
 			key = 1;
 			len++;
@@ -40,7 +72,7 @@ int	ft_word_count(char *str)
 	return (len);
 }
 
-void	where_is_command(int index, int *catch)
+void	where_is_command(int index, int *catch) // "echo" 'naber'"b" " " "noli"
 {
     int i;
 	int	j;
@@ -66,5 +98,7 @@ void	where_is_command(int index, int *catch)
 		mini.iter->command[i - 1] = ft_add(start, index, mini.parse, 1);
 		i++;
 	}
+	//if (!mini.iter->command[i - 1])
+		//mini.iter->command[i - 1] = ft_strdup("");
 	*catch = i;
 }
