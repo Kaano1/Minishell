@@ -19,7 +19,7 @@ int control_quotes(char *str)
     }
     if (key == 1 && str[i] == 0)
     {
-        printf("Command '' not found!\n");
+		printf("Command '' not found!\n");
         return (0);
     }
     return (1);

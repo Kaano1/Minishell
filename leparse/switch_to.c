@@ -50,13 +50,17 @@ char	*create_switch_to_zero(int i, int j, int prs_index)
 	return (str);
 }
 
-char	*switch_shorter(int k, int i, int j, char *tmp)
+char	*switch_shorter(char *str, int *index, int *jindex, char *tmp)
 {
-	int		tm_i;
-	char	*str;
+	int	tm_i;
+	int	k;
+	int	i;
+	int	j;
 
-	str = malloc(sizeof(char) * (ft_strlen(tmp)) + 1);
+	i = *index;
+	j = *jindex;
 	tm_i = 0;
+	k = mini.temporary;
 	while (mini.parse[k][j] != ' ' && mini.parse[k][j] != 0 && \
 	mini.parse[k][j] != DOUBLE_Q && mini.parse[k][j] != SIGNEL_Q)
 		j++;
@@ -66,6 +70,8 @@ char	*switch_shorter(int k, int i, int j, char *tmp)
 		i++;
 		tm_i++;
 	}
+	*index = i;
+	*jindex = j;
 	return (str);
 }
 
@@ -79,12 +85,14 @@ char	*switch_to_parse(char *tmp, int k)
 	i = 0;
 	j = 0;
 	key = 1;
+	str = ft_calloc(sizeof(char), ft_strlen(tmp) + ft_strlen(mini.parse[k]));
+	mini.temporary = k;
 	while (ft_strlen(mini.parse[k]) > j)
 	{
 		if (mini.parse[k][j] == '$' && key)
 		{
 			key = 0;
-			str = switch_shorter(k, i, j, tmp);
+			str = switch_shorter(str, &i, &j, tmp);
 		}
 		else
 			str[i++] = mini.parse[k][j++];

@@ -21,7 +21,7 @@ int	check_single_quotes(int i, int j, int c_quotes)
 	return (1);
 }
 
-void	shorter(int i, int j, int c_quotes, char *tmp)
+void	shorter(int i, int j, int c_quotes, char *tmp) //echo $HOME
 {
 	if (check_single_quotes(i, j + 1, ++c_quotes))
 	{
@@ -35,21 +35,29 @@ void	shorter(int i, int j, int c_quotes, char *tmp)
 
 char	**find_dollar_and_change(void)
 {
-	char	*tmp;
 	int		i;
 	int		j;
+	char	*tmp;
 	int		c_quotes;
+	int		type;
 
 	i = 0;
 	c_quotes = 0;
 	while (mini.parse[i])
 	{
 		j = 0;
+		type = -1;
 		while (mini.parse[i][j])
 		{
-			if (mini.parse[i][j] == '$')
+			if ((mini.parse[i][j] == DOUBLE_Q || mini.parse[i][j] == SIGNEL_Q) && type == -1)
+				type = mini.parse[i][j];
+			if (mini.parse[i][j] == '$' && mini.parse[i][j + 1] != DOUBLE_Q && mini.parse[i][j + 1] != SIGNEL_Q)
 				shorter(i, j, c_quotes, tmp);
+			else if (mini.parse[i][j] == '$' && type == -1 && (mini.parse[i][j + 1] == DOUBLE_Q || mini.parse[i][j + 1] == SIGNEL_Q))
+				mini.parse[i][j] = SPACE;
 			j++;
+			if (mini.parse[i][j] == type)
+				type = -1;
 		}
 		i++;
 	}

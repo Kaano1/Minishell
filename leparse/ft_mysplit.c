@@ -25,20 +25,34 @@ size_t	if_word_len(char const *s, char c)
 	return (len);
 }
 
-size_t	len_word(char const *s, char c)
+size_t	len_word(char *str, char c)
 {
 	size_t	len;
-	int		key;
+	int	i;
+	int	key;
 
+	i = 0;
 	len = 0;
 	key = 0;
-	while (*s != '\0')
+	if (!str)
+		return (-1);
+	while (str[i])
 	{
-		if (*s == DOUBLE_Q || *s == SIGNEL_Q) //burdaki ibare "" or '' ifadelerde icinde bulunan kelimeleri saymasini istemedigimiz icin kullaniyoruz "ahmet mehmet ceren" bu tek kelime sayilsin diye.
-			key += 1;
-		if (*s != c && (s[1] == '\0' || s[1] == c) && key % 2 == 0)
+		if (str[i] == DOUBLE_Q || str[i] == SIGNEL_Q)
+		{
+			if (i != 0 && str[i - 1] == c) //i yi kontrol et
+				len++;
+			i = where_is_end(i, str, str[i]);
+		}
+		else if (key == 0 && str[i] != c)
+		{
 			len++;
-		s++;
+			key = 1;
+		}
+		else if (key == 1 && str[i] == c)
+			key = 0;
+		else
+			i++;
 	}
 	return (len);
 }

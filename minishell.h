@@ -35,6 +35,17 @@ enum e_ttype
 	RED_OUTPUT
 };
 
+enum e_built
+{
+	ECHO = 1,
+	CD,
+	ENV,
+	EXIT,
+	PWD,
+	EXPORT,
+	UNSET
+};
+
 typedef struct s_command
 {
 	pid_t		pid;
@@ -56,7 +67,7 @@ typedef struct s_shell
 	struct s_command	*first_struct;
 	struct s_command	*iter;
 	char				**path;
-	int					error;
+	int					temporary;
 	int					pipe_count;
 } t_shell;
 
@@ -90,7 +101,7 @@ char		*split_env(char *str);
 char		*switch_to_parse(char *tmp, int	prs_index);
 char		*create_switch_to_zero(int i, int j, int prs_index);
 char		*switch_to_zero(int	prs_index);
-char		*switch_shorter(int k, int i, int j, char *tmp);
+char		*switch_shorter(char *str, int *i, int *j, char *tmp);
 
 //Parser/parse.c
 void		ft_parse(void);
@@ -99,7 +110,7 @@ size_t		len_word2(char **s);
 void		ft_create_struct(void);
 
 //Parser/ft_mysplit.c
-size_t		len_word(char const *s, char c);
+size_t		len_word(char *s, char c);
 char		*mysplit_section(char ****res, char *s, int index, size_t *two_index);
 char		*continue_mysplit(char *s);
 size_t		if_word_len(char const *s, char c);
@@ -113,6 +124,7 @@ char		*ft_add(int row, int column, char **parse, int key);
 int			where_is_start(int count_word, char *str);
 char		*ft_add_string(int index, int start);
 void		ft_add_struct(void);
+int	where_is_end(int start, char *parse, int type);
 
 //redirect/heredoc.c
 void		heredoc(int *fd, char *endline);
@@ -134,12 +146,12 @@ int			is_operator(char *str);
 void		start_cmd(void);
 void		wait_cmd(void);
 void		get_builtin(t_command *process);
-char		*get_path(char *cmd);
 void		check_dir(char *cmd);
 
 //cmd/close.c
 void		close_all_fd(void);
 void		close_heredoc_fd(t_command *process);
+char		*get_path(char *cmd);
 
 //cmd/run_cmd.c
 void		run_cmd(t_command *process);

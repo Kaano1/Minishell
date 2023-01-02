@@ -3,65 +3,40 @@
 int builtin_check(char *tmp)
 {
     if (!ft_strncmp(tmp, "echo", 4))
-        return (1);
+        return (ECHO);
     else if (!ft_strncmp(tmp, "cd", 2))
-        return (1);
+        return (CD);
     else if (!ft_strncmp(tmp, "env", 3))
-        return (1);
+        return (ENV);
     else if (!ft_strncmp(tmp, "exit", 4))
-        return (1);
+        return (EXIT);
     else if (!ft_strncmp(tmp, "pwd", 3))
-        return (1);
+        return (PWD);
     else if (!ft_strncmp(tmp, "export", 6))
-        return (1);
+        return (EXPORT);
     else if (!ft_strncmp(tmp, "unset", 5))
-        return (1);
-    else
-        return (0);
+        return (UNSET);
+    return (0);
 }
 void    builtin_running(char **tmp)
 {
-	if (!ft_strncmp(tmp[0], "echo", 4))
+    int where;
+
+    where = builtin_check(tmp[0]);
+    if (where == 0)
+        return ;
+	if (where == ECHO)
 		ft_echo(tmp);
-	else if (!ft_strncmp(tmp[0], "cd", 2))
+	else if (where == CD)
 		ft_cd(tmp);
-    else if (!ft_strncmp(tmp[0], "env", 3))
+    else if (where == ENV)
         ft_env();
-    else if (!ft_strncmp(tmp[0], "exit", 4))
+    else if (where == EXIT)
         ft_exit(tmp);
-    else if (!ft_strncmp(tmp[0], "pwd", 3))
+    else if (where == PWD)
         ft_pwd();
-    else if (!ft_strncmp(tmp[0], "export", 6))
+    else if (where == EXPORT)
         ft_export(tmp);
-    else if (!ft_strncmp(tmp[0], "unset", 5))
+    else if (where == UNSET)
         ft_unset(tmp);
-}
-
-char	*ft_exec_join(char *tmp, char *bin)
-{
-	char *str;
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	str = malloc(sizeof(char) * (ft_strlen(tmp) + 6));
-	while (tmp[i])
-	{
-		str[i] = bin[i];
-		i++;
-	}
-	return (0);
-}
-
-void function_exec(char *tmp)
-{
-	char *exec;
-
-	exec = ft_exec_join(tmp, "/bin/"); //execute mü?
-	/*if (execve(exec, NULL, NULL))
-	{
-		("girdi");
-	}*/
-	free(exec);
 }

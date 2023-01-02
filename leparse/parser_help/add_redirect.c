@@ -27,7 +27,7 @@ void	ft_redirection_add(char **parse, int i) // redirectionları alıyoruz burad
 
 	c = 0;
 	r = 0;
-	mini.iter->redirect = ft_calloc(sizeof(char *), 100000); 
+	mini.iter->redirect = ft_calloc(sizeof(char *), (ft_redirect_len(parse[i]) * 2) + 1); 
 	while (r <= ft_redirect_len(parse[i]))
 	{
 		while (parse[i][c] != '>' && parse[i][c] != '<' && parse[i][c] != 0)

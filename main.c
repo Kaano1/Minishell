@@ -21,9 +21,8 @@ void	ctrl_c(int sig)
 
 void	init_app(char **env)
 {
-	mini.error = 0;
+	errno = 0;
 	mini.path = NULL;
-	mini.ignore = FALSE;
 	mini.parent_pid = getpid();
 	mini.env = set_env(env);
 	set_paths();
@@ -51,6 +50,7 @@ int main(int ac, char **av, char **clone_env)
 	init_app(clone_env);
 	while (av && ac)
 	{
+		mini.ignore = FALSE;
 		signal(SIGINT, &ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		write(1, "\033[32m", 5);

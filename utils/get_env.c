@@ -14,6 +14,8 @@ char	*get_env(char *str)
 	char	**env;
 	char	*new_str;
 
+	if (!str)
+		return (0);
 	env = mini.env;
 	new_str = ft_strjoin(str, "=");
 	len = ft_strlen(new_str);

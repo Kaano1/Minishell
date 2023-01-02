@@ -76,7 +76,7 @@ char	*ft_join_arg(char **mini)
 	return (str);
 }
 
-void	ft_parse(void) // "echo" 'naber'"b" "" "noli"
+void	ft_parse(void) // echo ahmet "ahmet ceren                                       "1 "naber ""'"325
 {
 	ft_create_struct();
 	mini.parse = ft_mysplit(mini.all_line, TAB);
