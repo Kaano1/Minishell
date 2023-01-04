@@ -25,6 +25,7 @@ void	ft_create_struct(void)
 	{
 		pipe(mini.iter->fd);
 		mini.iter->next = init_struct();
+		mini.iter->next->prev = mini.iter;
 		mini.iter = mini.iter->next;
 		i++;
 	}

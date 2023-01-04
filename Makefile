@@ -46,6 +46,7 @@ SRC	= main.c \
 	./utils/control_quotes.c \
 	./utils/free_array.c \
 	./utils/get_env.c \
+	./utils/free_process.c \
 
 OBJ = $(SRC:.c=.o)
 

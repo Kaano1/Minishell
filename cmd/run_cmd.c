@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:15:09 by fkaratay          #+#    #+#             */
-/*   Updated: 2023/01/02 21:19:57 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/04 19:50:05 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	heredoc_route(t_command *process)
 
 void	cmd_route(t_command *process)
 {
-	if (mini.pipe_count > 1)
+	if (mini.pipe_count > 0)
 	{
 		if (contain_heredoc(process))
 			heredoc_route(process);

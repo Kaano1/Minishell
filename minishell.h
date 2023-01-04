@@ -191,6 +191,7 @@ int			just_space(char *str);
 int			control_quotes(char *str);
 void		free_array(char **arr);
 char		*get_env(char *str);
+void		free_process(void);
 
 //ft_error.c
 int			ft_error(char *str);

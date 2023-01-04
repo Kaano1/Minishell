@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:58:46 by fkaratay          #+#    #+#             */
-/*   Updated: 2023/01/02 21:20:47 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/04 18:58:17 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ void	start_cmd(void)
 		get_builtin(process);
 		process = process->next;
 	}
-	while (process)
-	{
-		run_cmd(process);
-		process = process->next;
-	}
+	else
+		while (process)
+		{
+			run_cmd(process);
+			process = process->next;
+		}
 	wait_cmd();
 }
