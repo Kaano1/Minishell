@@ -47,6 +47,7 @@ SRC	= main.c \
 	./utils/free_array.c \
 	./utils/get_env.c \
 	./utils/free_process.c \
+	./utils/valid_op.c \
 
 OBJ = $(SRC:.c=.o)
 

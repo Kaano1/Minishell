@@ -9,7 +9,7 @@ char	*switch_to_zero(int k)
 	j = 0;
 	while (mini.parse[k][i])
 	{
-		if (mini.parse[k][i] == '$' && mini.parse[k][i + 1] != ' ' \
+		if (mini.parse[k][i] == DOLLAR_C && mini.parse[k][i + 1] != SPACE \
 			&& mini.parse[k][i] != 0)
 		{
 			while ((mini.parse[k][i] != SPACE && mini.parse[k][i] != 0) \
@@ -37,7 +37,7 @@ char	*create_switch_to_zero(int i, int j, int prs_index)
 	j = 0;
 	while (mini.parse[prs_index][j])
 	{
-		if (key == 0 && mini.parse[prs_index][j] == '$')
+		if (key == 0 && mini.parse[prs_index][j] == DOLLAR_C)
 		{
 			j = i;
 			key = 1;
@@ -89,7 +89,7 @@ char	*switch_to_parse(char *tmp, int k)
 	mini.temporary = k;
 	while (ft_strlen(mini.parse[k]) > j)
 	{
-		if (mini.parse[k][j] == '$' && key)
+		if (mini.parse[k][j] == DOLLAR_C && key)
 		{
 			key = 0;
 			str = switch_shorter(str, &i, &j, tmp);

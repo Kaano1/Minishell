@@ -11,7 +11,7 @@ int	check_single_quotes(int i, int j, int c_quotes)
 	len = 0;
 	while (mini.all_line[index])
 	{
-		if (mini.all_line[index] == '$')
+		if (mini.all_line[index] == DOLLAR_C)
 			len++;
 		if (len == c_quotes)
 			if (mini.all_line[index - 1] == SIGNEL_Q)
@@ -21,12 +21,20 @@ int	check_single_quotes(int i, int j, int c_quotes)
 	return (1);
 }
 
-void	shorter(int i, int j, int c_quotes, char *tmp) //echo $HOME
+char	*dollar_question(int i, int j)
+{
+	return (0);
+}
+
+void	shorter(int i, int j, int c_quotes, char *tmp)
 {
 	if (check_single_quotes(i, j + 1, ++c_quotes))
 	{
 		tmp = get_env(get_after_dollar(mini.parse[i], j + 1));
-		if (!tmp)
+
+		if (mini.parse[i][j + 1] == '?')
+			mini.parse[i] = dollar_question(i, j);
+		else if (!tmp)
 			mini.parse[i] = switch_to_zero(i);
 		else
 			mini.parse[i] = switch_to_parse(tmp, i);
@@ -49,15 +57,9 @@ char	**find_dollar_and_change(void)
 		type = -1;
 		while (mini.parse[i][j])
 		{
-			if ((mini.parse[i][j] == DOUBLE_Q || mini.parse[i][j] == SIGNEL_Q) && type == -1)
-				type = mini.parse[i][j];
-			if (mini.parse[i][j] == '$' && mini.parse[i][j + 1] != DOUBLE_Q && mini.parse[i][j + 1] != SIGNEL_Q)
+			if (mini.parse[i][j] == DOLLAR_C && valid_op(mini.parse[i][j + 1]) && mini.parse[i][j - 1] != DOLLAR_C)
 				shorter(i, j, c_quotes, tmp);
-			else if (mini.parse[i][j] == '$' && type == -1 && (mini.parse[i][j + 1] == DOUBLE_Q || mini.parse[i][j + 1] == SIGNEL_Q))
-				mini.parse[i][j] = SPACE;
 			j++;
-			if (mini.parse[i][j] == type)
-				type = -1;
 		}
 		i++;
 	}

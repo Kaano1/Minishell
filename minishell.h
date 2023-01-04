@@ -22,6 +22,7 @@
 # define MAIN_PROCESS 1
 # define REPLACE 1
 # define APPEND 0
+# define DOLLAR_C '$'
 # define DOUBLE_Q 34
 # define SIGNEL_Q 39
 
@@ -192,6 +193,7 @@ int			control_quotes(char *str);
 void		free_array(char **arr);
 char		*get_env(char *str);
 void		free_process(void);
+int			valid_op(char c);
 
 //ft_error.c
 int			ft_error(char *str);
