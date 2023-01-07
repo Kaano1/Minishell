@@ -94,8 +94,7 @@ char	*ft_add(int start, int column, char **parse, int key)
 		return (NULL);
 	if (parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q)
 		return (ft_add_quotes(column, start, mini.parse, parse[column][start]));
-	if (i == 0)
-		i = ft_strlen(parse[column]);
+	i = where_is_end(start, parse[column], ' ');
 	str = ft_calloc(sizeof(char), i - start + 1);
 	if (!str)
 		exit (-1);
@@ -114,7 +113,7 @@ char	*ft_add(int start, int column, char **parse, int key)
 	return (str);
 }
 
-void	ft_add_struct(void) // echo ahmet "ahmet ceren																"1 "naber"
+void	ft_add_struct(void) // echo kaan""nbrfucksssssssssssssssecho kaan""nbrfucksssssssssssssssecho kaan""nbrfucksssssssssssssssecho kaan""nbrfucksssssssssssssss
 {
 	int		start;
 	int		i;
