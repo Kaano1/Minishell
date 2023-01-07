@@ -125,7 +125,7 @@ char		*ft_add(int row, int column, char **parse, int key);
 int			where_is_start(int count_word, char *str);
 char		*ft_add_string(int index, int start);
 void		ft_add_struct(void);
-int	where_is_end(int start, char *parse, int type);
+int			where_is_end(int start, char *parse, int type);
 
 //redirect/heredoc.c
 void		heredoc(int *fd, char *endline);
@@ -194,6 +194,7 @@ void		free_array(char **arr);
 char		*get_env(char *str);
 void		free_process(void);
 int			valid_op(char c);
+int	ft_strcmp(const char *s1, const char *s2);
 
 //ft_error.c
 int			ft_error(char *str);

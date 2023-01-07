@@ -61,8 +61,8 @@ void	fill_all_heredoc(void)
 	while (process)
 	{
 		i = 0;
-		redirects = mini.first_struct->redirect;
-		while (redirects[i] && !(mini.first_struct))
+		redirects = process->redirect;
+		while (redirects[i] && !(mini.ignore))
 		{
 			if (is_operator(redirects[i]) == HERE_DOC)
 				heredoc(process->heredoc_fd, redirects[i + 1]);

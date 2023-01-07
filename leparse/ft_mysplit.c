@@ -105,8 +105,8 @@ char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini 
 
 	if (!s)
 		return (0);
-	word_len = len_word(s, c);
-	res = (char **)malloc(sizeof(char *) * (word_len + 1));
+	word_len = len_word(s, c) + 1;
+	res = ft_calloc(sizeof(char *), (word_len + 1));
 	if (res == 0)
 		return (0);
 	index = 0;

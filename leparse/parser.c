@@ -48,6 +48,16 @@ size_t	len_word2(char **s)
 	return (len);
 }
 
+size_t	len_word3(char **s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i - 1);
+}
+
 char	*ft_join_arg(char **mini)
 {
 	char	*str;
@@ -55,25 +65,23 @@ char	*ft_join_arg(char **mini)
 	int		j;
 	int		save_i;
 
-	str = malloc(sizeof(char) * len_word2(mini));
+	str = ft_calloc(sizeof(char), len_word2(mini) + 1);
 	j = 0;
+	i = 0;
 	save_i = 0;
-	while (mini[j])
+	while (mini[j] != 0 && mini[j][0] != 0)
 	{
-		i = 0;
-		if (mini[j][i] == 0 && mini[j + 1][i] != 0)
-			j++;
 		while (mini[j][i])
 		{
 			str[save_i] = mini[j][i];
 			i++;
 			save_i++;
 		}
-		if (mini[j + 1] != 0)
+		if (j < len_word3(mini))
 			str[save_i++] = SPACE;
+		i = 0;
 		j++;
 	}
-	str[save_i] = 0;
 	return (str);
 }
 

@@ -17,7 +17,7 @@ void	heredoc(int *fd, char *endline)
 	{
 		signal(SIGINT, &close_heredoc);
 		input = readline("heredoc>> ");
-		if (!input || ft_strncmp(input, endline, ft_strlen(endline)) || mini.ignore)
+		if (!input || ft_strcmp(input, endline) || mini.ignore)
 		{
 			free(input);
 			break ;

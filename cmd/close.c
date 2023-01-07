@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayumusak <ayumusak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 18:56:52 by fkaratay          #+#    #+#             */
-/*   Updated: 2022/12/24 16:11:10 by ayumusak         ###   ########.fr       */
+/*   Updated: 2023/01/08 00:51:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ void	check_dir(char *cmd)
 {
 	DIR	*dir;
 
-	if (!cmd)
+	if (!cmd[0])
+	{
+		free(cmd);
 		exit(EXIT_SUCCESS);
+	}
 	dir = opendir(cmd);
 	if (dir && readdir(dir))
 	{

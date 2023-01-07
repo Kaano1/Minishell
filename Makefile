@@ -2,7 +2,7 @@ CC	= gcc -g
 RM	= rm -rf
 NAME	= minishell
 LIBFT	= ./Libft/libft.a
-CFLGAS	= -g -fsanitize=address
+CFLGAS	= -g #-fsanitize=address
 READLİME = -lreadline -lncurses
 
 SRC	= main.c \
@@ -48,6 +48,7 @@ SRC	= main.c \
 	./utils/get_env.c \
 	./utils/free_process.c \
 	./utils/valid_op.c \
+	./utils/ft_strcmp.c \
 
 OBJ = $(SRC:.c=.o)
 
