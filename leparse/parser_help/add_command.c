@@ -49,7 +49,7 @@ int	ft_word_count_quotes(char *str, int *i, int len)
 	return (len);
 }
 
-int	ft_word_count(char *str)
+int	ft_word_count(char *str)//echo ahmet "ahmet ceren                                       "1 "naber ""'"325
 {
 	int	i;
 	int	key;
@@ -58,7 +58,7 @@ int	ft_word_count(char *str)
 	len = 0;
 	key = 0;
 	i = 0;
-	while (str[i])
+	while (i < ft_strlen(str))
 	{
 		if ((str[i] == DOUBLE_Q || str[i] == SIGNEL_Q) && key == 0)
 			len = ft_word_count_quotes(str, &i, len);
@@ -90,7 +90,7 @@ void	where_is_command(int index, int *catch) //echo ahmet mehmet"naber"bebek > f
 		return ;
 	}
 	start = 0;
-	mini.iter->command = ft_calloc(sizeof(char *), len_word(mini.parse[index], ' ') + 1); //look at len_word and ft_worcount fonctions
+	mini.iter->command = ft_calloc(sizeof(char *), len_word(mini.parse[index], ' ') + 2); //look at len_word and ft_worcount fonctions
 	word = ft_word_count(mini.parse[index]);
 	mini.iter->command[0] = ft_add(start, index, mini.parse, 1);
 	i++;
@@ -100,7 +100,5 @@ void	where_is_command(int index, int *catch) //echo ahmet mehmet"naber"bebek > f
 		mini.iter->command[i - 1] = ft_add(start, index, mini.parse, 1);
 		i++;
 	}
-	//if (!mini.iter->command[i - 1])
-		//mini.iter->command[i - 1] = ft_strdup("");
 	*catch = i;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayumusak <42istanbul.com.tr>               +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 13:10:44 by ayumusak          #+#    #+#             */
-/*   Updated: 2022/01/16 18:46:19 by ayumusak         ###   ########.tr       */
+/*   Updated: 2023/01/08 16:59:26 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	ft_calculate(int number)
 	return (i);
 }
 
-char	*ft_add(long number, size_t size, int control)
+char	*ft_addz(long number, size_t size, int control)
 {
 	char	*add;
 
@@ -61,6 +61,6 @@ char	*ft_itoa(int n)
 		number *= -1;
 		control = 1;
 	}
-	add = ft_add(number, size, control);
+	add = ft_addz(number, size, control);
 	return (add);
 }

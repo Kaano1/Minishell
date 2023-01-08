@@ -7,7 +7,7 @@ void	ctrl_d(char *input)
 	if (!input)
 	{
 		printf("exit\n");
-		exit (errno);	
+		exit (errno);
 	}
 }
 
@@ -30,7 +30,7 @@ void	init_app(char **env)
 
 void	continue_main(char *input)
 {
-	if (*input && !just_space(input))
+	if (*input && !just_space(input) && mini.ignore == FALSE)
 	{
 		add_history(input);
 		if (ft_pipecheck(input) && ft_contqoute(input) && control_quotes(input))

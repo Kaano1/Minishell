@@ -66,7 +66,6 @@ char	*mysplit_section(char ****res, char *s, int index, size_t *two_index)
 
 	i = *two_index;
 	j = 0;
-	//burda tirnagi dahil edip etmiyecegimize karar veriyoruz
 	res[0][0][index][i++] = s[j];
 	if (s[j] == DOUBLE_Q)
 	{
@@ -78,7 +77,6 @@ char	*mysplit_section(char ****res, char *s, int index, size_t *two_index)
 		while (s[++j] != SIGNEL_Q && s[j] != 0)
 			res[0][0][index][i++] = s[j];
 	}
-	//tirnagi dahil ediyoruz ayni sekilde
 	res[0][0][index][i++] = s[j++];
 	*two_index = i;
 	return ((char *)(s + j));
@@ -115,7 +113,7 @@ char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini 
 	while (index < word_len)
 	{
 		while (*s == c && *s != '\0')
-			s++; // ileriyoruz bir sonraki alinicak kelimeye kadar ama burdaki kod yanlizca ilerlemiyor tirnakta silebiliyor.
+			s++;
 		res[index] = ft_calloc(sizeof(char), (if_word_len(s, c) + 1));
 		s = create_split(&res, s, c, index);
 		index++;

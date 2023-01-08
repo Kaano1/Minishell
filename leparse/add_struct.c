@@ -60,6 +60,22 @@ int	where_is_end(int start, char *parse, int type)
 	return (start + 1);
 }
 
+int	forward(char **parse, int column, int type, int start)
+{
+	int	key;
+
+	key = 1;
+	while (parse[column][start] && parse[column][start] == type)
+	{
+		if (parse[column][start] == type)
+			key = 0;
+		else if ((parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q) && key == 0)
+			type = parse[column][start];
+		start++;
+	}
+	return (start);
+}
+
 char	*ft_add_quotes(int column, int start, char **parse, int type)
 {
 	char	*str;
@@ -75,8 +91,7 @@ char	*ft_add_quotes(int column, int start, char **parse, int type)
 	i = 0;
 	while (start < end)
 	{
-		while (parse[column][start] == DOUBLE_Q || parse[column][start] == SIGNEL_Q)
-			start++;
+		start = forward(parse, column, type, start);
 		if (start < end)
 			str[i] = parse[column][start];
 		start++;
@@ -115,7 +130,7 @@ char	*ft_add(int start, int column, char **parse, int key)
 }
 
 void	ft_add_struct(void) // echo kaan""nbrfucksssssssssssssssecho kaan""nbrfucksssssssssssssssecho kaan""nbrfucksssssssssssssssecho kaan""nbrfucksssssssssssssss
-{
+{// echo ahmet "ahmet ceren                                       "1 "naber ""'"325
 	int		start;
 	int		i;
 	int		j;

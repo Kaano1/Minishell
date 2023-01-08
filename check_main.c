@@ -1,7 +1,7 @@
 #include "minishell.h"
 
-int pipe_space_check(int len, char *str) //all_linenı [0] indisini bosluklardan gectikten sonra ilk gordugu karakter yapıyor ve 
-{										   //arkandanda ilk gordugu karakterin indis numarasını alıyor bu sekilde bas ve sondaki ilk karakterlere bakiyoruz.
+int pipe_space_check(int len, char *str)
+{
 	while (*str == SPACE)
 		str++;
 	while (str[len] == SPACE)
@@ -19,9 +19,9 @@ int 	ft_pipecheck(char *str)
 	i = 0;
 	mini.pipe_count = 0;
 	len = pipe_space_check(ft_strlen(str) - 1, str);
-	if (str[0] == '|' || str[len] == '|') //basta veya sonra pipe varsa hata mesaji basip cikiyoruz.
+	if (str[0] == '|' || str[len] == '|')
 		return (ft_error("PIPE WRONG!!!"));
-	while (str[i]) //double pipe olma durumu soz konusu olursa double pipein arkasina NULL yapistiriyoruz
+	while (str[i])
 	{
 		if (str[i] != SPACE && str[i] != TAB)
 			c = str[i];
@@ -29,13 +29,13 @@ int 	ft_pipecheck(char *str)
 		if (c == '|' && str[i] == '|') 
 		{
 			while (len-- > i - 1)
-				str[len] = 0; //NULL yapistirma islemi oldugumuz yere kadar yapiyor.
+				str[len] = 0;
 		}
 	}
 	return (1);
 }
 
-int	ft_contqoute(char *str) //cift tirnak veya tek tıragin kapatilip kapatilmadigina bakiyoruz.
+int	ft_contqoute(char *str)
 {
 	int		i;
 	int		once;
