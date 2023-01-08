@@ -106,6 +106,4 @@ void	ft_parse(void) // echo ahmet "ahmet ceren                                  
 	ft_add_struct();
 	free_array(mini.parse);
 	free(mini.all_line);
-	mini.parse = NULL;
-	mini.all_line = NULL;
 }

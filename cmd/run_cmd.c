@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 19:15:09 by fkaratay          #+#    #+#             */
-/*   Updated: 2023/01/08 02:27:19 by marvin           ###   ########.fr       */
+/*   Updated: 2023/01/08 14:21:40 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	run_cmd(t_command *process)
 	pid_t	pid;
 	char	*path;
 
+	
 	pid = fork();
 	if (pid == CHILD_PROCESS)
 	{

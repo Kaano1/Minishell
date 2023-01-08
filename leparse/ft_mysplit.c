@@ -43,6 +43,8 @@ size_t	len_word(char *str, char c)
 			if (i != 0 && str[i - 1] == c) //i yi kontrol et
 				len++;
 			i = where_is_end(i, str, str[i]);
+			if (str[i - 1] == 0)
+				i--;
 		}
 		else if (key == 0 && str[i] != c)
 		{

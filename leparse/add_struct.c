@@ -40,19 +40,20 @@ int	where_is_end(int start, char *parse, int type)
 {
 	int	key;
 
-	key = 1;
+	key = TRUE;
+	start++;
 	while (parse[start])
 	{
-		start++;
 		if (parse[start] == type && parse[start + 1] != type)
-			key = 0;
-		else if ((parse[start] == SPACE || parse[start] == TAB) && key == 0)
+			key = FALSE;
+		else if ((parse[start] == SPACE || parse[start] == TAB) && key == FALSE)
 			break;
-		else if ((parse[start] == DOUBLE_Q || parse[start] == SIGNEL_Q) && key == 0)
+		else if ((parse[start] == DOUBLE_Q || parse[start] == SIGNEL_Q) && key == FALSE)
 		{
 			type = parse[start];
-			key = 1;
+			key = TRUE;
 		}
+		start++;
 	}
 	if (parse[start] == SPACE || parse[start] == TAB)
 		start--;

@@ -23,8 +23,6 @@ void	init_app(char **env)
 {
 	errno = 0;
 	mini.path = NULL;
-	mini.parse = NULL;
-	mini.all_line = NULL;
 	mini.parent_pid = getpid();
 	mini.env = set_env(env);
 	set_paths();

@@ -23,7 +23,7 @@ void	get_all_inputs(t_command *process)
 	char	**redirects;
 
 	i = 0;
-	redirects = mini.first_struct->redirect;
+	redirects = process->redirect;
 	while (redirects[i])
 	{
 		if (is_operator(redirects[i]) == RED_INPUT)
@@ -40,7 +40,7 @@ void	set_all_outputs(t_command *process)
 	char	**redirects;
 
 	i = 0;
-	redirects = mini.first_struct->redirect;
+	redirects = process->redirect;
 	while (redirects[i])
 	{
 		if (is_operator(redirects[i]) == RED_OUTPUT)

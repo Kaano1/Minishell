@@ -2,7 +2,7 @@ CC	= gcc -g
 RM	= rm -rf
 NAME	= minishell
 LIBFT	= ./Libft/libft.a
-CFLGAS	= -g -fsanitize=address
+CFLGAS	= -g #-fsanitize=address
 READLİME = -lreadline -lncurses
 
 SRC	= main.c \

@@ -74,7 +74,7 @@ int	ft_word_count(char *str)
 	return (len);
 }
 
-void	where_is_command(int index, int *catch) // "echo" 'naber'"b" " " "noli"
+void	where_is_command(int index, int *catch) //echo ahmet mehmet"naber"bebek > file.c 
 {
     int i;
 	int	j;
