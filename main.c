@@ -23,6 +23,8 @@ void	init_app(char **env)
 {
 	errno = 0;
 	mini.path = NULL;
+	mini.parse = NULL;
+	mini.all_line = NULL;
 	mini.parent_pid = getpid();
 	mini.env = set_env(env);
 	set_paths();
@@ -39,6 +41,7 @@ void	continue_main(char *input)
 			mini.all_line = ft_strdup(input);
 			ft_parse();
 			start_cmd();
+			free_process();
 		}
 	}
 }

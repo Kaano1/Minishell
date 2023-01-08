@@ -65,10 +65,10 @@ char	*ft_join_arg(char **mini)
 	int		j;
 	int		save_i;
 
-	str = ft_calloc(sizeof(char), len_word2(mini) + 1);
 	j = 0;
 	i = 0;
 	save_i = 0;
+	str = ft_calloc(sizeof(char), len_word2(mini) + 1);
 	while (mini[j] != 0 && mini[j][0] != 0)
 	{
 		while (mini[j][i])
@@ -91,7 +91,7 @@ void	ft_parse(void) // echo ahmet "ahmet ceren                                  
 	mini.parse = ft_mysplit(mini.all_line, TAB);
 	free(mini.all_line);
 	mini.all_line = ft_join_arg(mini.parse);
-	free(mini.parse);
+	free_array(mini.parse);
 	mini.parse = ft_mysplit(mini.all_line, '|');
 	rediretion_cut_add();
 	free(mini.all_line);
@@ -106,4 +106,6 @@ void	ft_parse(void) // echo ahmet "ahmet ceren                                  
 	ft_add_struct();
 	free_array(mini.parse);
 	free(mini.all_line);
+	mini.parse = NULL;
+	mini.all_line = NULL;
 }

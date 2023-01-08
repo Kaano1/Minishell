@@ -114,10 +114,9 @@ char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini 
 	{
 		while (*s == c && *s != '\0')
 			s++; // ileriyoruz bir sonraki alinicak kelimeye kadar ama burdaki kod yanlizca ilerlemiyor tirnakta silebiliyor.
-		res[index] = (char *)malloc(sizeof(char) * (if_word_len(s, c) + 1));
+		res[index] = ft_calloc(sizeof(char), (if_word_len(s, c) + 1));
 		s = create_split(&res, s, c, index);
 		index++;
 	}
-	res[index] = 0;
 	return (res);
 }
