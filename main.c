@@ -52,6 +52,7 @@ int main(int ac, char **av, char **clone_env)
 	while (av && ac)
 	{
 		mini.ignore = FALSE;
+		mini.err = errno;
 		signal(SIGINT, &ctrl_c);
 		signal(SIGQUIT, SIG_IGN);
 		write(1, "\033[32m", 5);

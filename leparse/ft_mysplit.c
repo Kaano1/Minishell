@@ -106,11 +106,11 @@ char	**ft_mysplit(char *s, char c) //normal split gibi tek degisiklik keylerini 
 	if (!s)
 		return (0);
 	word_len = len_word(s, c) + 1;
-	res = ft_calloc(sizeof(char *), (word_len + 1));
+	res = ft_calloc(sizeof(char *), (word_len));
 	if (res == 0)
 		return (0);
 	index = 0;
-	while (index < word_len)
+	while (index < word_len - 1)
 	{
 		while (*s == c && *s != '\0')
 			s++;

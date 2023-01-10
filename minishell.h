@@ -70,6 +70,7 @@ typedef struct s_shell
 	char				**path;
 	int					temporary;
 	int					pipe_count;
+	int					err;
 } t_shell;
 
 extern t_shell	mini;
@@ -193,7 +194,7 @@ int			control_quotes(char *str);
 void		free_array(char **arr);
 char		*get_env(char *str);
 void		free_process(void);
-int			valid_op(char c);
+int			valid_op(char *str, int index);
 int	ft_strcmp(const char *s1, const char *s2);
 
 //ft_error.c

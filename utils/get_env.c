@@ -24,10 +24,12 @@ char	*get_env(char *str)
 		if (!ft_strncmp(*env, new_str, len))
 		{
 			free(new_str);
+			free(str);
 			return (split_env(*env));
 		}
 		env++;
 	}
 	free(new_str);
+	free(str);
 	return (ft_calloc(sizeof(char *), 1));
 }

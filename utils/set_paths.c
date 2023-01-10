@@ -6,7 +6,7 @@ void	set_paths()
 
 	if (mini.path)
 		free_array(mini.path);
-	npath = get_env("PATH");
+	npath = get_env(ft_strdup("PATH"));
 	if (!(*npath))
 		mini.path = NULL;
 	else

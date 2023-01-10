@@ -47,6 +47,7 @@ char	*create_switch_to_zero(int i, int j, int prs_index)
 		j++;
 	}	
 	str[z] = 0;
+	free(mini.parse[prs_index]);
 	return (str);
 }
 
@@ -98,5 +99,6 @@ char	*switch_to_parse(char *tmp, int k)
 			str[i++] = mini.parse[k][j++];
 	}
 	str[i] = 0;
+	free(mini.parse[k]);
 	return (str);
 }
